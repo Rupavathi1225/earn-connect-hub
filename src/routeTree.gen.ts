@@ -21,6 +21,19 @@ import { Route as AuthenticatedOfferwallsRouteImport } from './routes/_authentic
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedContestsRouteImport } from './routes/_authenticated/contests'
 import { Route as AuthenticatedAnnouncementsRouteImport } from './routes/_authenticated/announcements'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminWithdrawalsRouteImport } from './routes/_authenticated/admin/withdrawals'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminTicketsRouteImport } from './routes/_authenticated/admin/tickets'
+import { Route as AuthenticatedAdminSurveysRouteImport } from './routes/_authenticated/admin/surveys'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
+import { Route as AuthenticatedAdminPromocodesRouteImport } from './routes/_authenticated/admin/promocodes'
+import { Route as AuthenticatedAdminPostbackLogsRouteImport } from './routes/_authenticated/admin/postback-logs'
+import { Route as AuthenticatedAdminOfferwallsRouteImport } from './routes/_authenticated/admin/offerwalls'
+import { Route as AuthenticatedAdminLockedFundsRouteImport } from './routes/_authenticated/admin/locked-funds'
+import { Route as AuthenticatedAdminContestsRouteImport } from './routes/_authenticated/admin/contests'
+import { Route as AuthenticatedAdminChatFeedRouteImport } from './routes/_authenticated/admin/chat-feed'
+import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin/announcements'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -82,6 +95,82 @@ const AuthenticatedAnnouncementsRoute =
     path: '/announcements',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminWithdrawalsRoute =
+  AuthenticatedAdminWithdrawalsRouteImport.update({
+    id: '/admin/withdrawals',
+    path: '/admin/withdrawals',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminTicketsRoute =
+  AuthenticatedAdminTicketsRouteImport.update({
+    id: '/admin/tickets',
+    path: '/admin/tickets',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSurveysRoute =
+  AuthenticatedAdminSurveysRouteImport.update({
+    id: '/admin/surveys',
+    path: '/admin/surveys',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/admin/settings',
+    path: '/admin/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminPromocodesRoute =
+  AuthenticatedAdminPromocodesRouteImport.update({
+    id: '/admin/promocodes',
+    path: '/admin/promocodes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminPostbackLogsRoute =
+  AuthenticatedAdminPostbackLogsRouteImport.update({
+    id: '/admin/postback-logs',
+    path: '/admin/postback-logs',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminOfferwallsRoute =
+  AuthenticatedAdminOfferwallsRouteImport.update({
+    id: '/admin/offerwalls',
+    path: '/admin/offerwalls',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminLockedFundsRoute =
+  AuthenticatedAdminLockedFundsRouteImport.update({
+    id: '/admin/locked-funds',
+    path: '/admin/locked-funds',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminContestsRoute =
+  AuthenticatedAdminContestsRouteImport.update({
+    id: '/admin/contests',
+    path: '/admin/contests',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminChatFeedRoute =
+  AuthenticatedAdminChatFeedRouteImport.update({
+    id: '/admin/chat-feed',
+    path: '/admin/chat-feed',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminAnnouncementsRoute =
+  AuthenticatedAdminAnnouncementsRouteImport.update({
+    id: '/admin/announcements',
+    path: '/admin/announcements',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -95,6 +184,19 @@ export interface FileRoutesByFullPath {
   '/surveys': typeof AuthenticatedSurveysRoute
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
+  '/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
+  '/admin/contests': typeof AuthenticatedAdminContestsRoute
+  '/admin/locked-funds': typeof AuthenticatedAdminLockedFundsRoute
+  '/admin/offerwalls': typeof AuthenticatedAdminOfferwallsRoute
+  '/admin/postback-logs': typeof AuthenticatedAdminPostbackLogsRoute
+  '/admin/promocodes': typeof AuthenticatedAdminPromocodesRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/surveys': typeof AuthenticatedAdminSurveysRoute
+  '/admin/tickets': typeof AuthenticatedAdminTicketsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -108,6 +210,19 @@ export interface FileRoutesByTo {
   '/surveys': typeof AuthenticatedSurveysRoute
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
+  '/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
+  '/admin/contests': typeof AuthenticatedAdminContestsRoute
+  '/admin/locked-funds': typeof AuthenticatedAdminLockedFundsRoute
+  '/admin/offerwalls': typeof AuthenticatedAdminOfferwallsRoute
+  '/admin/postback-logs': typeof AuthenticatedAdminPostbackLogsRoute
+  '/admin/promocodes': typeof AuthenticatedAdminPromocodesRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/surveys': typeof AuthenticatedAdminSurveysRoute
+  '/admin/tickets': typeof AuthenticatedAdminTicketsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -123,6 +238,19 @@ export interface FileRoutesById {
   '/_authenticated/surveys': typeof AuthenticatedSurveysRoute
   '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
   '/_authenticated/withdraw': typeof AuthenticatedWithdrawRoute
+  '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
+  '/_authenticated/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
+  '/_authenticated/admin/contests': typeof AuthenticatedAdminContestsRoute
+  '/_authenticated/admin/locked-funds': typeof AuthenticatedAdminLockedFundsRoute
+  '/_authenticated/admin/offerwalls': typeof AuthenticatedAdminOfferwallsRoute
+  '/_authenticated/admin/postback-logs': typeof AuthenticatedAdminPostbackLogsRoute
+  '/_authenticated/admin/promocodes': typeof AuthenticatedAdminPromocodesRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/surveys': typeof AuthenticatedAdminSurveysRoute
+  '/_authenticated/admin/tickets': typeof AuthenticatedAdminTicketsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -138,6 +266,19 @@ export interface FileRouteTypes {
     | '/surveys'
     | '/tickets'
     | '/withdraw'
+    | '/admin/announcements'
+    | '/admin/chat-feed'
+    | '/admin/contests'
+    | '/admin/locked-funds'
+    | '/admin/offerwalls'
+    | '/admin/postback-logs'
+    | '/admin/promocodes'
+    | '/admin/settings'
+    | '/admin/surveys'
+    | '/admin/tickets'
+    | '/admin/users'
+    | '/admin/withdrawals'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -151,6 +292,19 @@ export interface FileRouteTypes {
     | '/surveys'
     | '/tickets'
     | '/withdraw'
+    | '/admin/announcements'
+    | '/admin/chat-feed'
+    | '/admin/contests'
+    | '/admin/locked-funds'
+    | '/admin/offerwalls'
+    | '/admin/postback-logs'
+    | '/admin/promocodes'
+    | '/admin/settings'
+    | '/admin/surveys'
+    | '/admin/tickets'
+    | '/admin/users'
+    | '/admin/withdrawals'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -165,6 +319,19 @@ export interface FileRouteTypes {
     | '/_authenticated/surveys'
     | '/_authenticated/tickets'
     | '/_authenticated/withdraw'
+    | '/_authenticated/admin/announcements'
+    | '/_authenticated/admin/chat-feed'
+    | '/_authenticated/admin/contests'
+    | '/_authenticated/admin/locked-funds'
+    | '/_authenticated/admin/offerwalls'
+    | '/_authenticated/admin/postback-logs'
+    | '/_authenticated/admin/promocodes'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/surveys'
+    | '/_authenticated/admin/tickets'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/admin/withdrawals'
+    | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -259,6 +426,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAnnouncementsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/withdrawals': {
+      id: '/_authenticated/admin/withdrawals'
+      path: '/admin/withdrawals'
+      fullPath: '/admin/withdrawals'
+      preLoaderRoute: typeof AuthenticatedAdminWithdrawalsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/tickets': {
+      id: '/_authenticated/admin/tickets'
+      path: '/admin/tickets'
+      fullPath: '/admin/tickets'
+      preLoaderRoute: typeof AuthenticatedAdminTicketsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/surveys': {
+      id: '/_authenticated/admin/surveys'
+      path: '/admin/surveys'
+      fullPath: '/admin/surveys'
+      preLoaderRoute: typeof AuthenticatedAdminSurveysRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/promocodes': {
+      id: '/_authenticated/admin/promocodes'
+      path: '/admin/promocodes'
+      fullPath: '/admin/promocodes'
+      preLoaderRoute: typeof AuthenticatedAdminPromocodesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/postback-logs': {
+      id: '/_authenticated/admin/postback-logs'
+      path: '/admin/postback-logs'
+      fullPath: '/admin/postback-logs'
+      preLoaderRoute: typeof AuthenticatedAdminPostbackLogsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/offerwalls': {
+      id: '/_authenticated/admin/offerwalls'
+      path: '/admin/offerwalls'
+      fullPath: '/admin/offerwalls'
+      preLoaderRoute: typeof AuthenticatedAdminOfferwallsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/locked-funds': {
+      id: '/_authenticated/admin/locked-funds'
+      path: '/admin/locked-funds'
+      fullPath: '/admin/locked-funds'
+      preLoaderRoute: typeof AuthenticatedAdminLockedFundsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/contests': {
+      id: '/_authenticated/admin/contests'
+      path: '/admin/contests'
+      fullPath: '/admin/contests'
+      preLoaderRoute: typeof AuthenticatedAdminContestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/chat-feed': {
+      id: '/_authenticated/admin/chat-feed'
+      path: '/admin/chat-feed'
+      fullPath: '/admin/chat-feed'
+      preLoaderRoute: typeof AuthenticatedAdminChatFeedRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/announcements': {
+      id: '/_authenticated/admin/announcements'
+      path: '/admin/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -272,6 +530,19 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSurveysRoute: typeof AuthenticatedSurveysRoute
   AuthenticatedTicketsRoute: typeof AuthenticatedTicketsRoute
   AuthenticatedWithdrawRoute: typeof AuthenticatedWithdrawRoute
+  AuthenticatedAdminAnnouncementsRoute: typeof AuthenticatedAdminAnnouncementsRoute
+  AuthenticatedAdminChatFeedRoute: typeof AuthenticatedAdminChatFeedRoute
+  AuthenticatedAdminContestsRoute: typeof AuthenticatedAdminContestsRoute
+  AuthenticatedAdminLockedFundsRoute: typeof AuthenticatedAdminLockedFundsRoute
+  AuthenticatedAdminOfferwallsRoute: typeof AuthenticatedAdminOfferwallsRoute
+  AuthenticatedAdminPostbackLogsRoute: typeof AuthenticatedAdminPostbackLogsRoute
+  AuthenticatedAdminPromocodesRoute: typeof AuthenticatedAdminPromocodesRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminSurveysRoute: typeof AuthenticatedAdminSurveysRoute
+  AuthenticatedAdminTicketsRoute: typeof AuthenticatedAdminTicketsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminWithdrawalsRoute: typeof AuthenticatedAdminWithdrawalsRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -284,6 +555,19 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSurveysRoute: AuthenticatedSurveysRoute,
   AuthenticatedTicketsRoute: AuthenticatedTicketsRoute,
   AuthenticatedWithdrawRoute: AuthenticatedWithdrawRoute,
+  AuthenticatedAdminAnnouncementsRoute: AuthenticatedAdminAnnouncementsRoute,
+  AuthenticatedAdminChatFeedRoute: AuthenticatedAdminChatFeedRoute,
+  AuthenticatedAdminContestsRoute: AuthenticatedAdminContestsRoute,
+  AuthenticatedAdminLockedFundsRoute: AuthenticatedAdminLockedFundsRoute,
+  AuthenticatedAdminOfferwallsRoute: AuthenticatedAdminOfferwallsRoute,
+  AuthenticatedAdminPostbackLogsRoute: AuthenticatedAdminPostbackLogsRoute,
+  AuthenticatedAdminPromocodesRoute: AuthenticatedAdminPromocodesRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminSurveysRoute: AuthenticatedAdminSurveysRoute,
+  AuthenticatedAdminTicketsRoute: AuthenticatedAdminTicketsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAdminWithdrawalsRoute: AuthenticatedAdminWithdrawalsRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
