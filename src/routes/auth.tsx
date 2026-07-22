@@ -62,9 +62,9 @@ function Auth() {
     });
   }, [navigate]);
 
-  // Render Turnstile widget when in signup mode
+  // Render Turnstile widget when in signup mode (only if a real sitekey is configured)
   useEffect(() => {
-    if (mode !== "signup") return;
+    if (mode !== "signup" || !TURNSTILE_ENABLED) return;
     let cancelled = false;
     const tryRender = () => {
       if (cancelled) return;
@@ -95,7 +95,7 @@ function Auth() {
     setError(null);
     if (mode === "signup") {
       if (!acceptTerms) { setError("You must accept the Terms & Conditions"); return; }
-      if (!turnstileToken) { setError("Please complete the Cloudflare verification"); return; }
+      if (TURNSTILE_ENABLED && !turnstileToken) { setError("Please complete the Cloudflare verification"); return; }
     }
     setLoading(true);
     try {
