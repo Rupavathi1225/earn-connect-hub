@@ -9,38 +9,367 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedWithdrawRouteImport } from './routes/_authenticated/withdraw'
+import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
+import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
+import { Route as AuthenticatedReferralsRouteImport } from './routes/_authenticated/referrals'
+import { Route as AuthenticatedPromocodeRouteImport } from './routes/_authenticated/promocode'
+import { Route as AuthenticatedOfferwallsRouteImport } from './routes/_authenticated/offerwalls'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedContestsRouteImport } from './routes/_authenticated/contests'
+import { Route as AuthenticatedAnnouncementsRouteImport } from './routes/_authenticated/announcements'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminWithdrawalsRouteImport } from './routes/_authenticated/admin/withdrawals'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminTicketsRouteImport } from './routes/_authenticated/admin/tickets'
+import { Route as AuthenticatedAdminSurveysRouteImport } from './routes/_authenticated/admin/surveys'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
+import { Route as AuthenticatedAdminPromocodesRouteImport } from './routes/_authenticated/admin/promocodes'
+import { Route as AuthenticatedAdminPostbackLogsRouteImport } from './routes/_authenticated/admin/postback-logs'
+import { Route as AuthenticatedAdminOfferwallsRouteImport } from './routes/_authenticated/admin/offerwalls'
+import { Route as AuthenticatedAdminLockedFundsRouteImport } from './routes/_authenticated/admin/locked-funds'
+import { Route as AuthenticatedAdminContestsRouteImport } from './routes/_authenticated/admin/contests'
+import { Route as AuthenticatedAdminChatFeedRouteImport } from './routes/_authenticated/admin/chat-feed'
+import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin/announcements'
+import { Route as ApiPublicPostbackProviderRouteImport } from './routes/api/public/postback/$provider'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedWithdrawRoute = AuthenticatedWithdrawRouteImport.update({
+  id: '/withdraw',
+  path: '/withdraw',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTicketsRoute = AuthenticatedTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSurveysRoute = AuthenticatedSurveysRouteImport.update({
+  id: '/surveys',
+  path: '/surveys',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReferralsRoute = AuthenticatedReferralsRouteImport.update({
+  id: '/referrals',
+  path: '/referrals',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPromocodeRoute = AuthenticatedPromocodeRouteImport.update({
+  id: '/promocode',
+  path: '/promocode',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOfferwallsRoute = AuthenticatedOfferwallsRouteImport.update({
+  id: '/offerwalls',
+  path: '/offerwalls',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedContestsRoute = AuthenticatedContestsRouteImport.update({
+  id: '/contests',
+  path: '/contests',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAnnouncementsRoute =
+  AuthenticatedAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminWithdrawalsRoute =
+  AuthenticatedAdminWithdrawalsRouteImport.update({
+    id: '/admin/withdrawals',
+    path: '/admin/withdrawals',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminTicketsRoute =
+  AuthenticatedAdminTicketsRouteImport.update({
+    id: '/admin/tickets',
+    path: '/admin/tickets',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSurveysRoute =
+  AuthenticatedAdminSurveysRouteImport.update({
+    id: '/admin/surveys',
+    path: '/admin/surveys',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/admin/settings',
+    path: '/admin/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminPromocodesRoute =
+  AuthenticatedAdminPromocodesRouteImport.update({
+    id: '/admin/promocodes',
+    path: '/admin/promocodes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminPostbackLogsRoute =
+  AuthenticatedAdminPostbackLogsRouteImport.update({
+    id: '/admin/postback-logs',
+    path: '/admin/postback-logs',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminOfferwallsRoute =
+  AuthenticatedAdminOfferwallsRouteImport.update({
+    id: '/admin/offerwalls',
+    path: '/admin/offerwalls',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminLockedFundsRoute =
+  AuthenticatedAdminLockedFundsRouteImport.update({
+    id: '/admin/locked-funds',
+    path: '/admin/locked-funds',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminContestsRoute =
+  AuthenticatedAdminContestsRouteImport.update({
+    id: '/admin/contests',
+    path: '/admin/contests',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminChatFeedRoute =
+  AuthenticatedAdminChatFeedRouteImport.update({
+    id: '/admin/chat-feed',
+    path: '/admin/chat-feed',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminAnnouncementsRoute =
+  AuthenticatedAdminAnnouncementsRouteImport.update({
+    id: '/admin/announcements',
+    path: '/admin/announcements',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const ApiPublicPostbackProviderRoute =
+  ApiPublicPostbackProviderRouteImport.update({
+    id: '/api/public/postback/$provider',
+    path: '/api/public/postback/$provider',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/announcements': typeof AuthenticatedAnnouncementsRoute
+  '/contests': typeof AuthenticatedContestsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/offerwalls': typeof AuthenticatedOfferwallsRoute
+  '/promocode': typeof AuthenticatedPromocodeRoute
+  '/referrals': typeof AuthenticatedReferralsRoute
+  '/surveys': typeof AuthenticatedSurveysRoute
+  '/tickets': typeof AuthenticatedTicketsRoute
+  '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
+  '/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
+  '/admin/contests': typeof AuthenticatedAdminContestsRoute
+  '/admin/locked-funds': typeof AuthenticatedAdminLockedFundsRoute
+  '/admin/offerwalls': typeof AuthenticatedAdminOfferwallsRoute
+  '/admin/postback-logs': typeof AuthenticatedAdminPostbackLogsRoute
+  '/admin/promocodes': typeof AuthenticatedAdminPromocodesRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/surveys': typeof AuthenticatedAdminSurveysRoute
+  '/admin/tickets': typeof AuthenticatedAdminTicketsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/postback/$provider': typeof ApiPublicPostbackProviderRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/announcements': typeof AuthenticatedAnnouncementsRoute
+  '/contests': typeof AuthenticatedContestsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/offerwalls': typeof AuthenticatedOfferwallsRoute
+  '/promocode': typeof AuthenticatedPromocodeRoute
+  '/referrals': typeof AuthenticatedReferralsRoute
+  '/surveys': typeof AuthenticatedSurveysRoute
+  '/tickets': typeof AuthenticatedTicketsRoute
+  '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
+  '/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
+  '/admin/contests': typeof AuthenticatedAdminContestsRoute
+  '/admin/locked-funds': typeof AuthenticatedAdminLockedFundsRoute
+  '/admin/offerwalls': typeof AuthenticatedAdminOfferwallsRoute
+  '/admin/postback-logs': typeof AuthenticatedAdminPostbackLogsRoute
+  '/admin/promocodes': typeof AuthenticatedAdminPromocodesRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/surveys': typeof AuthenticatedAdminSurveysRoute
+  '/admin/tickets': typeof AuthenticatedAdminTicketsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/api/public/postback/$provider': typeof ApiPublicPostbackProviderRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/announcements': typeof AuthenticatedAnnouncementsRoute
+  '/_authenticated/contests': typeof AuthenticatedContestsRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/offerwalls': typeof AuthenticatedOfferwallsRoute
+  '/_authenticated/promocode': typeof AuthenticatedPromocodeRoute
+  '/_authenticated/referrals': typeof AuthenticatedReferralsRoute
+  '/_authenticated/surveys': typeof AuthenticatedSurveysRoute
+  '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
+  '/_authenticated/withdraw': typeof AuthenticatedWithdrawRoute
+  '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
+  '/_authenticated/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
+  '/_authenticated/admin/contests': typeof AuthenticatedAdminContestsRoute
+  '/_authenticated/admin/locked-funds': typeof AuthenticatedAdminLockedFundsRoute
+  '/_authenticated/admin/offerwalls': typeof AuthenticatedAdminOfferwallsRoute
+  '/_authenticated/admin/postback-logs': typeof AuthenticatedAdminPostbackLogsRoute
+  '/_authenticated/admin/promocodes': typeof AuthenticatedAdminPromocodesRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/surveys': typeof AuthenticatedAdminSurveysRoute
+  '/_authenticated/admin/tickets': typeof AuthenticatedAdminTicketsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/postback/$provider': typeof ApiPublicPostbackProviderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/announcements'
+    | '/contests'
+    | '/dashboard'
+    | '/offerwalls'
+    | '/promocode'
+    | '/referrals'
+    | '/surveys'
+    | '/tickets'
+    | '/withdraw'
+    | '/admin/announcements'
+    | '/admin/chat-feed'
+    | '/admin/contests'
+    | '/admin/locked-funds'
+    | '/admin/offerwalls'
+    | '/admin/postback-logs'
+    | '/admin/promocodes'
+    | '/admin/settings'
+    | '/admin/surveys'
+    | '/admin/tickets'
+    | '/admin/users'
+    | '/admin/withdrawals'
+    | '/admin/'
+    | '/api/public/postback/$provider'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/announcements'
+    | '/contests'
+    | '/dashboard'
+    | '/offerwalls'
+    | '/promocode'
+    | '/referrals'
+    | '/surveys'
+    | '/tickets'
+    | '/withdraw'
+    | '/admin/announcements'
+    | '/admin/chat-feed'
+    | '/admin/contests'
+    | '/admin/locked-funds'
+    | '/admin/offerwalls'
+    | '/admin/postback-logs'
+    | '/admin/promocodes'
+    | '/admin/settings'
+    | '/admin/surveys'
+    | '/admin/tickets'
+    | '/admin/users'
+    | '/admin/withdrawals'
+    | '/admin'
+    | '/api/public/postback/$provider'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/announcements'
+    | '/_authenticated/contests'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/offerwalls'
+    | '/_authenticated/promocode'
+    | '/_authenticated/referrals'
+    | '/_authenticated/surveys'
+    | '/_authenticated/tickets'
+    | '/_authenticated/withdraw'
+    | '/_authenticated/admin/announcements'
+    | '/_authenticated/admin/chat-feed'
+    | '/_authenticated/admin/contests'
+    | '/_authenticated/admin/locked-funds'
+    | '/_authenticated/admin/offerwalls'
+    | '/_authenticated/admin/postback-logs'
+    | '/_authenticated/admin/promocodes'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/surveys'
+    | '/_authenticated/admin/tickets'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/admin/withdrawals'
+    | '/_authenticated/admin/'
+    | '/api/public/postback/$provider'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiPublicPostbackProviderRoute: typeof ApiPublicPostbackProviderRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +377,228 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/withdraw': {
+      id: '/_authenticated/withdraw'
+      path: '/withdraw'
+      fullPath: '/withdraw'
+      preLoaderRoute: typeof AuthenticatedWithdrawRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tickets': {
+      id: '/_authenticated/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof AuthenticatedTicketsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/surveys': {
+      id: '/_authenticated/surveys'
+      path: '/surveys'
+      fullPath: '/surveys'
+      preLoaderRoute: typeof AuthenticatedSurveysRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/referrals': {
+      id: '/_authenticated/referrals'
+      path: '/referrals'
+      fullPath: '/referrals'
+      preLoaderRoute: typeof AuthenticatedReferralsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/promocode': {
+      id: '/_authenticated/promocode'
+      path: '/promocode'
+      fullPath: '/promocode'
+      preLoaderRoute: typeof AuthenticatedPromocodeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/offerwalls': {
+      id: '/_authenticated/offerwalls'
+      path: '/offerwalls'
+      fullPath: '/offerwalls'
+      preLoaderRoute: typeof AuthenticatedOfferwallsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/contests': {
+      id: '/_authenticated/contests'
+      path: '/contests'
+      fullPath: '/contests'
+      preLoaderRoute: typeof AuthenticatedContestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/announcements': {
+      id: '/_authenticated/announcements'
+      path: '/announcements'
+      fullPath: '/announcements'
+      preLoaderRoute: typeof AuthenticatedAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/withdrawals': {
+      id: '/_authenticated/admin/withdrawals'
+      path: '/admin/withdrawals'
+      fullPath: '/admin/withdrawals'
+      preLoaderRoute: typeof AuthenticatedAdminWithdrawalsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/tickets': {
+      id: '/_authenticated/admin/tickets'
+      path: '/admin/tickets'
+      fullPath: '/admin/tickets'
+      preLoaderRoute: typeof AuthenticatedAdminTicketsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/surveys': {
+      id: '/_authenticated/admin/surveys'
+      path: '/admin/surveys'
+      fullPath: '/admin/surveys'
+      preLoaderRoute: typeof AuthenticatedAdminSurveysRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/promocodes': {
+      id: '/_authenticated/admin/promocodes'
+      path: '/admin/promocodes'
+      fullPath: '/admin/promocodes'
+      preLoaderRoute: typeof AuthenticatedAdminPromocodesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/postback-logs': {
+      id: '/_authenticated/admin/postback-logs'
+      path: '/admin/postback-logs'
+      fullPath: '/admin/postback-logs'
+      preLoaderRoute: typeof AuthenticatedAdminPostbackLogsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/offerwalls': {
+      id: '/_authenticated/admin/offerwalls'
+      path: '/admin/offerwalls'
+      fullPath: '/admin/offerwalls'
+      preLoaderRoute: typeof AuthenticatedAdminOfferwallsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/locked-funds': {
+      id: '/_authenticated/admin/locked-funds'
+      path: '/admin/locked-funds'
+      fullPath: '/admin/locked-funds'
+      preLoaderRoute: typeof AuthenticatedAdminLockedFundsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/contests': {
+      id: '/_authenticated/admin/contests'
+      path: '/admin/contests'
+      fullPath: '/admin/contests'
+      preLoaderRoute: typeof AuthenticatedAdminContestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/chat-feed': {
+      id: '/_authenticated/admin/chat-feed'
+      path: '/admin/chat-feed'
+      fullPath: '/admin/chat-feed'
+      preLoaderRoute: typeof AuthenticatedAdminChatFeedRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/announcements': {
+      id: '/_authenticated/admin/announcements'
+      path: '/admin/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/postback/$provider': {
+      id: '/api/public/postback/$provider'
+      path: '/api/public/postback/$provider'
+      fullPath: '/api/public/postback/$provider'
+      preLoaderRoute: typeof ApiPublicPostbackProviderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAnnouncementsRoute: typeof AuthenticatedAnnouncementsRoute
+  AuthenticatedContestsRoute: typeof AuthenticatedContestsRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedOfferwallsRoute: typeof AuthenticatedOfferwallsRoute
+  AuthenticatedPromocodeRoute: typeof AuthenticatedPromocodeRoute
+  AuthenticatedReferralsRoute: typeof AuthenticatedReferralsRoute
+  AuthenticatedSurveysRoute: typeof AuthenticatedSurveysRoute
+  AuthenticatedTicketsRoute: typeof AuthenticatedTicketsRoute
+  AuthenticatedWithdrawRoute: typeof AuthenticatedWithdrawRoute
+  AuthenticatedAdminAnnouncementsRoute: typeof AuthenticatedAdminAnnouncementsRoute
+  AuthenticatedAdminChatFeedRoute: typeof AuthenticatedAdminChatFeedRoute
+  AuthenticatedAdminContestsRoute: typeof AuthenticatedAdminContestsRoute
+  AuthenticatedAdminLockedFundsRoute: typeof AuthenticatedAdminLockedFundsRoute
+  AuthenticatedAdminOfferwallsRoute: typeof AuthenticatedAdminOfferwallsRoute
+  AuthenticatedAdminPostbackLogsRoute: typeof AuthenticatedAdminPostbackLogsRoute
+  AuthenticatedAdminPromocodesRoute: typeof AuthenticatedAdminPromocodesRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminSurveysRoute: typeof AuthenticatedAdminSurveysRoute
+  AuthenticatedAdminTicketsRoute: typeof AuthenticatedAdminTicketsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminWithdrawalsRoute: typeof AuthenticatedAdminWithdrawalsRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAnnouncementsRoute: AuthenticatedAnnouncementsRoute,
+  AuthenticatedContestsRoute: AuthenticatedContestsRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedOfferwallsRoute: AuthenticatedOfferwallsRoute,
+  AuthenticatedPromocodeRoute: AuthenticatedPromocodeRoute,
+  AuthenticatedReferralsRoute: AuthenticatedReferralsRoute,
+  AuthenticatedSurveysRoute: AuthenticatedSurveysRoute,
+  AuthenticatedTicketsRoute: AuthenticatedTicketsRoute,
+  AuthenticatedWithdrawRoute: AuthenticatedWithdrawRoute,
+  AuthenticatedAdminAnnouncementsRoute: AuthenticatedAdminAnnouncementsRoute,
+  AuthenticatedAdminChatFeedRoute: AuthenticatedAdminChatFeedRoute,
+  AuthenticatedAdminContestsRoute: AuthenticatedAdminContestsRoute,
+  AuthenticatedAdminLockedFundsRoute: AuthenticatedAdminLockedFundsRoute,
+  AuthenticatedAdminOfferwallsRoute: AuthenticatedAdminOfferwallsRoute,
+  AuthenticatedAdminPostbackLogsRoute: AuthenticatedAdminPostbackLogsRoute,
+  AuthenticatedAdminPromocodesRoute: AuthenticatedAdminPromocodesRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminSurveysRoute: AuthenticatedAdminSurveysRoute,
+  AuthenticatedAdminTicketsRoute: AuthenticatedAdminTicketsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAdminWithdrawalsRoute: AuthenticatedAdminWithdrawalsRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiPublicPostbackProviderRoute: ApiPublicPostbackProviderRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
