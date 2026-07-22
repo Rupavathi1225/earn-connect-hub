@@ -137,7 +137,10 @@ function Auth() {
             <>
               <input required placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full border rounded-md px-3 py-2 text-sm" />
               <input placeholder="Phone (optional)" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border rounded-md px-3 py-2 text-sm" />
-              <input placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full border rounded-md px-3 py-2 text-sm" />
+              <select required value={country} onChange={(e) => setCountry(e.target.value)} className="w-full border rounded-md px-3 py-2 text-sm bg-white">
+                <option value="">Select Country</option>
+                {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
               <select value={currency} onChange={(e) => setCurrency(e.target.value as "INR" | "USD")} className="w-full border rounded-md px-3 py-2 text-sm">
                 <option value="USD">USD ($)</option>
                 <option value="INR">INR (₹)</option>
