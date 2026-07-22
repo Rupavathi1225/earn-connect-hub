@@ -8,8 +8,11 @@ const searchSchema = z.object({
   ref: z.string().optional(),
 });
 
-// Cloudflare Turnstile test sitekey — always passes. Replace with real key in production.
-const TURNSTILE_SITEKEY = "1x00000000000000000000AA";
+// Set VITE_TURNSTILE_SITEKEY to enable Cloudflare Turnstile. When empty, the widget is skipped.
+const TURNSTILE_SITEKEY = (import.meta.env.VITE_TURNSTILE_SITEKEY as string | undefined) ?? "";
+const TURNSTILE_ENABLED = TURNSTILE_SITEKEY.length > 0;
+
+const COUNTRIES = ["India","United States","United Kingdom","Canada","Australia","Germany","France","Spain","Italy","Netherlands","Brazil","Mexico","Argentina","United Arab Emirates","Saudi Arabia","Singapore","Malaysia","Indonesia","Philippines","Vietnam","Thailand","Japan","South Korea","China","Hong Kong","Taiwan","Pakistan","Bangladesh","Sri Lanka","Nepal","Turkey","South Africa","Nigeria","Kenya","Egypt","Russia","Ukraine","Poland","Sweden","Norway","Denmark","Finland","Ireland","Portugal","Greece","Switzerland","Belgium","Austria","New Zealand","Other"];
 
 export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
@@ -19,9 +22,9 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Sign in or create your GlobalPrime account to start earning cash rewards." },
       { name: "robots", content: "noindex" },
     ],
-    scripts: [
-      { src: "https://challenges.cloudflare.com/turnstile/v0/api.js", async: true, defer: true },
-    ],
+    scripts: TURNSTILE_ENABLED
+      ? [{ src: "https://challenges.cloudflare.com/turnstile/v0/api.js", async: true, defer: true }]
+      : [],
   }),
   component: Auth,
 });
@@ -59,9 +62,9 @@ function Auth() {
     });
   }, [navigate]);
 
-  // Render Turnstile widget when in signup mode
+  // Render Turnstile widget when in signup mode (only if a real sitekey is configured)
   useEffect(() => {
-    if (mode !== "signup") return;
+    if (mode !== "signup" || !TURNSTILE_ENABLED) return;
     let cancelled = false;
     const tryRender = () => {
       if (cancelled) return;
@@ -92,7 +95,7 @@ function Auth() {
     setError(null);
     if (mode === "signup") {
       if (!acceptTerms) { setError("You must accept the Terms & Conditions"); return; }
-      if (!turnstileToken) { setError("Please complete the Cloudflare verification"); return; }
+      if (TURNSTILE_ENABLED && !turnstileToken) { setError("Please complete the Cloudflare verification"); return; }
     }
     setLoading(true);
     try {
@@ -134,7 +137,10 @@ function Auth() {
             <>
               <input required placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full border rounded-md px-3 py-2 text-sm" />
               <input placeholder="Phone (optional)" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border rounded-md px-3 py-2 text-sm" />
-              <input placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} className="w-full border rounded-md px-3 py-2 text-sm" />
+              <select required value={country} onChange={(e) => setCountry(e.target.value)} className="w-full border rounded-md px-3 py-2 text-sm bg-white">
+                <option value="">Select Country</option>
+                {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
               <select value={currency} onChange={(e) => setCurrency(e.target.value as "INR" | "USD")} className="w-full border rounded-md px-3 py-2 text-sm">
                 <option value="USD">USD ($)</option>
                 <option value="INR">INR (₹)</option>
@@ -156,7 +162,7 @@ function Auth() {
                   <a href="/privacy" target="_blank" rel="noreferrer" className="text-[#1a8a7d] underline">Privacy Policy</a>.
                 </span>
               </label>
-              <div ref={turnstileRef} className="flex justify-center" />
+              {TURNSTILE_ENABLED && <div ref={turnstileRef} className="flex justify-center" />}
             </>
           )}
 
