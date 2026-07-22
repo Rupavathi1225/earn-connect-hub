@@ -22,9 +22,9 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Sign in or create your GlobalPrime account to start earning cash rewards." },
       { name: "robots", content: "noindex" },
     ],
-    scripts: [
-      { src: "https://challenges.cloudflare.com/turnstile/v0/api.js", async: true, defer: true },
-    ],
+    scripts: TURNSTILE_ENABLED
+      ? [{ src: "https://challenges.cloudflare.com/turnstile/v0/api.js", async: true, defer: true }]
+      : [],
   }),
   component: Auth,
 });
