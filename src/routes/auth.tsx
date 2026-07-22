@@ -162,7 +162,7 @@ function Auth() {
                   <a href="/privacy" target="_blank" rel="noreferrer" className="text-[#1a8a7d] underline">Privacy Policy</a>.
                 </span>
               </label>
-              <div ref={turnstileRef} className="flex justify-center" />
+              {TURNSTILE_ENABLED && <div ref={turnstileRef} className="flex justify-center" />}
             </>
           )}
 
