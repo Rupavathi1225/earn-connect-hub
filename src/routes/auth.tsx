@@ -8,8 +8,11 @@ const searchSchema = z.object({
   ref: z.string().optional(),
 });
 
-// Cloudflare Turnstile test sitekey — always passes. Replace with real key in production.
-const TURNSTILE_SITEKEY = "1x00000000000000000000AA";
+// Set VITE_TURNSTILE_SITEKEY to enable Cloudflare Turnstile. When empty, the widget is skipped.
+const TURNSTILE_SITEKEY = (import.meta.env.VITE_TURNSTILE_SITEKEY as string | undefined) ?? "";
+const TURNSTILE_ENABLED = TURNSTILE_SITEKEY.length > 0;
+
+const COUNTRIES = ["India","United States","United Kingdom","Canada","Australia","Germany","France","Spain","Italy","Netherlands","Brazil","Mexico","Argentina","United Arab Emirates","Saudi Arabia","Singapore","Malaysia","Indonesia","Philippines","Vietnam","Thailand","Japan","South Korea","China","Hong Kong","Taiwan","Pakistan","Bangladesh","Sri Lanka","Nepal","Turkey","South Africa","Nigeria","Kenya","Egypt","Russia","Ukraine","Poland","Sweden","Norway","Denmark","Finland","Ireland","Portugal","Greece","Switzerland","Belgium","Austria","New Zealand","Other"];
 
 export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
