@@ -64,7 +64,7 @@ function SurveysPage() {
           </div>
         )}
       </div>
-      <div className="hidden xl:block">
+      <div className="hidden lg:block">
         <RightSidebar />
       </div>
     </div>
