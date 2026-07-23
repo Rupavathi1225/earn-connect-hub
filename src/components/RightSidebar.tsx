@@ -4,14 +4,16 @@ import { ChatFeed } from "./ChatFeed";
 
 type Member = { id: string; name: string | null; email: string; points_balance: number };
 type SurveyLite = { id: string; network_name: string };
+type CreditedLite = { id: string; points: number; type: string; created_at: string; user_id: string; display_name?: string };
 
 export function RightSidebar() {
   const [top, setTop] = useState<Member[]>([]);
   const [recent, setRecent] = useState<SurveyLite[]>([]);
+  const [credited, setCredited] = useState<CreditedLite[]>([]);
 
   useEffect(() => {
     (async () => {
-      const [{ data: t }, { data: r }] = await Promise.all([
+      const [{ data: t }, { data: r }, { data: l }] = await Promise.all([
         supabase
           .from("profiles")
           .select("id,name,email,points_balance")
@@ -23,9 +25,25 @@ export function RightSidebar() {
           .eq("active", true)
           .order("created_at", { ascending: false })
           .limit(8),
+        supabase
+          .from("points_ledger")
+          .select("id,points,type,created_at,user_id")
+          .gt("points", 0)
+          .order("created_at", { ascending: false })
+          .limit(8),
       ]);
       setTop((t ?? []) as Member[]);
       setRecent((r ?? []) as SurveyLite[]);
+
+      const ledger = (l ?? []) as CreditedLite[];
+      if (ledger.length) {
+        const ids = Array.from(new Set(ledger.map((x) => x.user_id)));
+        const { data: profs } = await supabase.from("profiles").select("id,name,email").in("id", ids);
+        const map = new Map((profs ?? []).map((p: any) => [p.id, p.name ?? p.email?.split("@")[0] ?? "User"]));
+        setCredited(ledger.map((x) => ({ ...x, display_name: map.get(x.user_id) ?? "User" })));
+      } else {
+        setCredited([]);
+      }
     })();
   }, []);
 
@@ -52,6 +70,19 @@ export function RightSidebar() {
             </li>
           ))}
           {top.length === 0 && <li className="px-3 py-3 text-[11px] text-white/40 text-center">No members yet</li>}
+        </ul>
+      </div>
+
+      <div className="bg-white rounded-lg overflow-hidden">
+        <div className="px-3 py-2 font-bold text-sm text-[#1a1c3a] border-b">Recently Credited Users</div>
+        <ul>
+          {credited.map((c) => (
+            <li key={c.id} className="px-3 py-1.5 text-xs border-b last:border-0 flex justify-between gap-2">
+              <span className="truncate text-[#1a1c3a] font-medium">{c.display_name}</span>
+              <span className="text-green-600 font-bold shrink-0">+{Math.floor(Number(c.points))}p</span>
+            </li>
+          ))}
+          {credited.length === 0 && <li className="px-3 py-3 text-[11px] text-gray-400 text-center">No credits yet</li>}
         </ul>
       </div>
 
