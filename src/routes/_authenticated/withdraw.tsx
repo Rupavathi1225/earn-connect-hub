@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { createWithdrawal } from "@/lib/rewards.functions";
 import { fmtDate, fmtMoney } from "@/lib/format";
-import { StatusBadge } from "./dashboard";
+import { StatusBadge } from "@/components/StatusBadge";
 
 export const Route = createFileRoute("/_authenticated/withdraw")({
   head: () => ({ meta: [{ title: "Withdraw — GlobalPrime" }, { name: "description", content: "Request a withdrawal." }] }),
