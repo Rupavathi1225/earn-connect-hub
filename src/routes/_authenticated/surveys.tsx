@@ -34,17 +34,30 @@ function SurveysPage() {
           No surveys available right now. Check back soon!
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {surveys.map((s) => (
-            <div key={s.id} className="bg-white rounded-lg overflow-hidden shadow-sm">
-              {s.banner_url && <img src={s.banner_url} alt={s.network_name} className="w-full h-32 object-cover" />}
+            <div key={s.id} className="bg-white rounded-lg overflow-hidden shadow-sm relative">
+              {s.banner_url ? (
+                <div className="p-6 bg-white flex items-center justify-center">
+                  <img src={s.banner_url} alt={s.network_name} className="max-h-36 object-contain rounded" />
+                </div>
+              ) : (
+                <div className="h-36 bg-gray-100 flex items-center justify-center"> 
+                  <div className="text-gray-400">No image</div>
+                </div>
+              )}
+
               <div className="p-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-sm">{s.network_name}</h3>
+                  <h3 className="font-bold text-sm text-[#1a1c3a]">{s.network_name}</h3>
                   <span className="text-xs font-bold text-[#e8734a]">+{fmtPoints(s.points)} pts</span>
                 </div>
-                {s.description && <p className="text-xs text-gray-500 mt-1 line-clamp-2">{s.description}</p>}
-                <button onClick={() => openSurvey(s)} className="mt-3 w-full bg-[#1a8a7d] hover:bg-[#157567] text-white text-xs font-semibold py-2 rounded">
+
+                <div className="text-center mt-3">
+                  <div className="text-xs text-gray-500">Complete Survey</div>
+                </div>
+
+                <button onClick={() => openSurvey(s)} className="mt-4 w-full bg-[#1a8a7d] hover:bg-[#157567] text-white text-sm font-semibold py-3 rounded">
                   Start Survey
                 </button>
               </div>

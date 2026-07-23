@@ -11,6 +11,11 @@ const searchSchema = z.object({
 // Set VITE_TURNSTILE_SITEKEY to enable Cloudflare Turnstile. When empty, the widget is skipped.
 const TURNSTILE_SITEKEY = (import.meta.env.VITE_TURNSTILE_SITEKEY as string | undefined) ?? "";
 const TURNSTILE_ENABLED = TURNSTILE_SITEKEY.length > 0;
+const getAppOrigin = () => {
+  const configuredUrl = import.meta.env.VITE_APP_URL as string | undefined;
+  if (configuredUrl) return configuredUrl;
+  return typeof window !== "undefined" ? window.location.origin : "";
+};
 
 const COUNTRIES = ["India","United States","United Kingdom","Canada","Australia","Germany","France","Spain","Italy","Netherlands","Brazil","Mexico","Argentina","United Arab Emirates","Saudi Arabia","Singapore","Malaysia","Indonesia","Philippines","Vietnam","Thailand","Japan","South Korea","China","Hong Kong","Taiwan","Pakistan","Bangladesh","Sri Lanka","Nepal","Turkey","South Africa","Nigeria","Kenya","Egypt","Russia","Ukraine","Poland","Sweden","Norway","Denmark","Finland","Ireland","Portugal","Greece","Switzerland","Belgium","Austria","New Zealand","Other"];
 
@@ -104,7 +109,7 @@ function Auth() {
           email,
           password,
           options: {
-            emailRedirectTo: window.location.origin,
+            emailRedirectTo: getAppOrigin(),
             data: { name, phone, country, currency, referral_code: referral || undefined },
           },
         });

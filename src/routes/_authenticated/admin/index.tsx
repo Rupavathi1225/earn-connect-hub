@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_authenticated/admin/")({
     const { data } = await supabase.from("user_roles").select("role").eq("user_id", context.user.id).eq("role", "admin").maybeSingle();
     if (!data) throw redirect({ to: "/dashboard" });
   },
-  head: () => ({ meta: [{ title: "Admin Overview — GlobalPrime" }, { name: "description", content: "Admin dashboard." }] }),
+  head: () => ({ meta: [{ title: " GlobalPrime" }, { name: "description", content: "Admin dashboard." }] }),
   component: Overview,
 });
 
@@ -47,7 +47,7 @@ function Overview() {
   ];
   return (
     <div>
-      <h1 className="text-lg font-bold text-[#1a1c3a] mb-3">📊 Admin Overview</h1>
+      <h1 className="text-lg font-bold text-[#1a1c3a] mb-3">📊 Global prime</h1>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
         {cards.map((c) => (
           <div key={c.l} style={{ background: c.bg }} className="rounded-lg p-4 text-white">
