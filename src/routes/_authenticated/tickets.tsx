@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { fmtDate } from "@/lib/format";
-import { StatusBadge } from "./dashboard";
+import { StatusBadge } from "@/components/StatusBadge";
 
 export const Route = createFileRoute("/_authenticated/tickets")({
   head: () => ({ meta: [{ title: "Support — GlobalPrime" }, { name: "description", content: "Raise a support ticket." }] }),

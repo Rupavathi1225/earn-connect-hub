@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { fmtDate, fmtMoney } from "@/lib/format";
-import { StatusBadge } from "../dashboard";
+import { StatusBadge } from "@/components/StatusBadge";
 import { processWithdrawal } from "@/lib/rewards.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/withdrawals")({
