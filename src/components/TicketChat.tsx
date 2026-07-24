@@ -131,7 +131,7 @@ export function TicketChat({
         onClick={() => setMenuFor(null)}
       >
         {/* seed / original ticket body — always from the ticket owner */}
-        <Bubble mine={false} side={isAdmin ? "left" : "right"} name={isAdmin ? seedSenderName : "You"} time={timeOf(seedAt)}>
+        <Bubble mine={!isAdmin} side={isAdmin ? "left" : "right"} name={isAdmin ? seedSenderName : "You"} time={timeOf(seedAt)}>
           {seedMessage}
         </Bubble>
 
