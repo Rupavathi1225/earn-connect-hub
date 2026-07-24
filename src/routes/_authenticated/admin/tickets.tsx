@@ -18,7 +18,17 @@ function T() {
   const [sel, setSel] = useState<any | null>(null);
   const [msgs, setMsgs] = useState<any[]>([]);
   const [reply, setReply] = useState("");
-  async function refresh() { const { data } = await supabase.from("tickets").select("*, profiles!inner(name,email)").order("created_at", { ascending: false }); setTickets(data ?? []); }
+  async function refresh() {
+    const { data: ts } = await supabase.from("tickets").select("*").order("created_at", { ascending: false });
+    const rows = ts ?? [];
+    const ids = Array.from(new Set(rows.map((t: any) => t.user_id)));
+    let map = new Map<string, { name: string | null; email: string }>();
+    if (ids.length) {
+      const { data: profs } = await supabase.from("profiles").select("id,name,email").in("id", ids);
+      map = new Map((profs ?? []).map((p: any) => [p.id, { name: p.name, email: p.email }]));
+    }
+    setTickets(rows.map((t: any) => ({ ...t, profiles: map.get(t.user_id) ?? { name: null, email: "—" } })));
+  }
   useEffect(() => { refresh(); }, []);
   useEffect(() => { if (sel) supabase.from("ticket_messages").select("*").eq("ticket_id", sel.id).order("created_at").then(({ data }) => setMsgs(data ?? [])); }, [sel]);
   async function send(e: React.FormEvent) {
