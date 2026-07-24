@@ -1,0 +1,1 @@
+CREATE POLICY admin_profiles_select ON public.profiles FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'));
