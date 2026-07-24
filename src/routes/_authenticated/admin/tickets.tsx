@@ -1,8 +1,9 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { fmtDate } from "@/lib/format";
 import { StatusBadge } from "@/components/StatusBadge";
+import { TicketChat } from "@/components/TicketChat";
 
 export const Route = createFileRoute("/_authenticated/admin/tickets")({
   beforeLoad: async ({ context }) => {
@@ -12,69 +13,174 @@ export const Route = createFileRoute("/_authenticated/admin/tickets")({
   component: T,
 });
 
+type Profile = { name: string | null; email: string };
+type Ticket = {
+  id: string;
+  user_id: string;
+  subject: string;
+  body: string;
+  priority: string;
+  status: string;
+  created_at: string;
+  profile: Profile;
+};
+
+function displayName(p: Profile | undefined) {
+  if (!p) return "Member";
+  if (p.name && p.name.trim()) return p.name.trim();
+  if (p.email) return p.email.split("@")[0];
+  return "Member";
+}
+
 function T() {
   const { user } = Route.useRouteContext();
-  const [tickets, setTickets] = useState<any[]>([]);
-  const [sel, setSel] = useState<any | null>(null);
-  const [msgs, setMsgs] = useState<any[]>([]);
-  const [reply, setReply] = useState("");
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [activeUserId, setActiveUserId] = useState<string | null>(null);
+  const [selId, setSelId] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+
   async function refresh() {
     const { data: ts } = await supabase.from("tickets").select("*").order("created_at", { ascending: false });
-    const rows = ts ?? [];
-    const ids = Array.from(new Set(rows.map((t: any) => t.user_id)));
-    let map = new Map<string, { name: string | null; email: string }>();
+    const rows = (ts ?? []) as any[];
+    const ids = Array.from(new Set(rows.map((t) => t.user_id)));
+    let map = new Map<string, Profile>();
     if (ids.length) {
       const { data: profs } = await supabase.from("profiles").select("id,name,email").in("id", ids);
-      map = new Map((profs ?? []).map((p: any) => [p.id, { name: p.name, email: p.email }]));
+      map = new Map((profs ?? []).map((p: any) => [p.id, { name: p.name, email: p.email } as Profile]));
     }
-    setTickets(rows.map((t: any) => ({ ...t, profiles: map.get(t.user_id) ?? { name: null, email: "—" } })));
+    setTickets(rows.map((t) => ({ ...t, profile: map.get(t.user_id) ?? { name: null, email: "—" } })));
   }
   useEffect(() => { refresh(); }, []);
-  useEffect(() => { if (sel) supabase.from("ticket_messages").select("*").eq("ticket_id", sel.id).order("created_at").then(({ data }) => setMsgs(data ?? [])); }, [sel]);
-  async function send(e: React.FormEvent) {
-    e.preventDefault();
-    await supabase.from("ticket_messages").insert({ ticket_id: sel.id, sender_id: user.id, is_admin: true, message: reply });
-    setReply("");
-    const { data } = await supabase.from("ticket_messages").select("*").eq("ticket_id", sel.id).order("created_at"); setMsgs(data ?? []);
+
+  // Group tickets by user
+  const grouped = useMemo(() => {
+    const g = new Map<string, { profile: Profile; tickets: Ticket[]; lastAt: string }>();
+    for (const t of tickets) {
+      const cur = g.get(t.user_id);
+      if (cur) {
+        cur.tickets.push(t);
+        if (t.created_at > cur.lastAt) cur.lastAt = t.created_at;
+      } else {
+        g.set(t.user_id, { profile: t.profile, tickets: [t], lastAt: t.created_at });
+      }
+    }
+    return Array.from(g.entries())
+      .map(([uid, v]) => ({ uid, ...v }))
+      .filter((u) => {
+        if (!query.trim()) return true;
+        const q = query.toLowerCase();
+        return displayName(u.profile).toLowerCase().includes(q) || (u.profile.email ?? "").toLowerCase().includes(q);
+      })
+      .sort((a, b) => (a.lastAt < b.lastAt ? 1 : -1));
+  }, [tickets, query]);
+
+  const activeUser = grouped.find((g) => g.uid === activeUserId);
+  const selectedTicket = activeUser?.tickets.find((t) => t.id === selId) ?? activeUser?.tickets[0] ?? null;
+
+  async function setStatus(s: string) {
+    if (!selectedTicket) return;
+    await supabase.from("tickets").update({ status: s as any }).eq("id", selectedTicket.id);
+    refresh();
   }
-  async function setStatus(s: string) { await supabase.from("tickets").update({ status: s as any }).eq("id", sel.id); refresh(); setSel({ ...sel, status: s }); }
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <div className="bg-white rounded-lg p-4 lg:col-span-1">
-        <h1 className="text-lg font-bold text-[#1a1c3a] mb-3">🎫 Tickets</h1>
-        <table className="w-full text-xs">
-          <thead className="bg-[#1a1c3a] text-white"><tr>{["ID", "User", "Subject", "Priority", "Status"].map((h) => <th key={h} className="p-2 text-left">{h}</th>)}</tr></thead>
-          <tbody>
-            {tickets.map((t) => (
-              <tr key={t.id} className={`border-b cursor-pointer ${sel?.id === t.id ? "bg-[#1a8a7d]/10" : ""}`} onClick={() => setSel(t)}>
-                <td className="p-2 font-mono text-[10px]">{t.id.slice(0, 6)}</td>
-                <td className="p-2">{t.profiles?.name || t.profiles?.email}</td>
-                <td className="p-2">{t.subject}</td>
-                <td className="p-2">{t.priority}</td>
-                <td className="p-2"><StatusBadge s={t.status} /></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 h-[calc(100vh-140px)]">
+      {/* Users list (WhatsApp-style sidebar) */}
+      <div className="bg-white rounded-lg overflow-hidden flex flex-col">
+        <div className="px-4 py-3 border-b">
+          <h1 className="font-bold text-[#1a1c3a] text-sm mb-2">🎫 Support Chats</h1>
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search users…"
+            className="w-full border rounded-full px-3 py-1.5 text-xs"
+          />
+        </div>
+        <ul className="flex-1 overflow-y-auto">
+          {grouped.length === 0 && <li className="p-4 text-xs text-gray-400 text-center">No tickets yet</li>}
+          {grouped.map((g) => {
+            const name = displayName(g.profile);
+            const openCount = g.tickets.filter((t) => t.status !== "closed").length;
+            const isActive = g.uid === activeUserId;
+            return (
+              <li
+                key={g.uid}
+                onClick={() => { setActiveUserId(g.uid); setSelId(g.tickets[0].id); }}
+                className={`px-3 py-2.5 border-b cursor-pointer flex items-center gap-3 ${isActive ? "bg-[#1a8a7d]/10" : "hover:bg-gray-50"}`}
+              >
+                <div className="w-10 h-10 rounded-full bg-[#008069] text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  {name[0]?.toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-center">
+                    <div className="font-semibold text-sm text-[#1a1c3a] truncate">{name}</div>
+                    <div className="text-[9px] text-gray-400">{fmtDate(g.lastAt)}</div>
+                  </div>
+                  <div className="text-[11px] text-gray-500 truncate">{g.tickets[0].subject}</div>
+                </div>
+                {openCount > 0 && (
+                  <span className="bg-[#e8734a] text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                    {openCount}
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </div>
-      <div className="lg:col-span-2">
-        {sel ? (
-          <div className="bg-white rounded-lg p-4">
-            <div className="flex justify-between mb-3">
-              <div><b>{sel.subject}</b><div className="text-xs text-gray-500">{sel.profiles?.email} · {fmtDate(sel.created_at)}</div></div>
-              <div className="flex gap-1">
+
+      {/* Chat panel */}
+      <div className="flex flex-col gap-3 min-h-0">
+        {activeUser && selectedTicket ? (
+          <>
+            {/* Ticket picker for this user + status controls */}
+            <div className="bg-white rounded-lg p-3 flex flex-wrap items-center gap-2 justify-between">
+              <div className="flex gap-2 flex-wrap items-center">
+                <span className="text-xs text-gray-500">Tickets:</span>
+                {activeUser.tickets.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setSelId(t.id)}
+                    className={`text-[11px] px-2 py-1 rounded border flex items-center gap-1.5 ${selectedTicket.id === t.id ? "bg-[#1a1c3a] text-white border-[#1a1c3a]" : "bg-white"}`}
+                    title={t.subject}
+                  >
+                    <span className="truncate max-w-[140px]">{t.subject}</span>
+                    <StatusBadge s={t.status} />
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-1 items-center">
+                <span className="text-[11px] text-gray-500 mr-1">Priority: <b>{selectedTicket.priority}</b></span>
                 {["open", "in_progress", "closed"].map((s) => (
-                  <button key={s} onClick={() => setStatus(s)} className={`text-[10px] px-2 py-1 rounded ${sel.status === s ? "bg-[#1a1c3a] text-white" : "border"}`}>{s}</button>
+                  <button
+                    key={s}
+                    onClick={() => setStatus(s)}
+                    className={`text-[10px] px-2 py-1 rounded ${selectedTicket.status === s ? "bg-[#1a8a7d] text-white" : "border"}`}
+                  >
+                    {s}
+                  </button>
                 ))}
               </div>
             </div>
-            <div className="max-h-64 overflow-y-auto space-y-2 mb-3">
-              <div className="bg-gray-50 p-2 rounded text-xs"><b>User:</b> {sel.body}</div>
-              {msgs.map((m) => <div key={m.id} className={`p-2 rounded text-xs ${m.is_admin ? "bg-[#1a8a7d]/10" : "bg-gray-50"}`}><b>{m.is_admin ? "Admin" : "User"}:</b> {m.message}</div>)}
+
+            <div className="flex-1 min-h-0">
+              <TicketChat
+                ticketId={selectedTicket.id}
+                currentUserId={user.id}
+                isAdmin={true}
+                seedMessage={selectedTicket.body}
+                seedAt={selectedTicket.created_at}
+                seedSenderName={displayName(activeUser.profile)}
+                counterpartName={displayName(activeUser.profile)}
+                counterpartSubtitle={activeUser.profile.email}
+              />
             </div>
-            <form onSubmit={send} className="flex gap-2"><input required value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Reply…" className="flex-1 border rounded px-3 py-2 text-sm" /><button className="bg-[#1a8a7d] text-white px-4 rounded text-sm">Send</button></form>
+          </>
+        ) : (
+          <div className="bg-white rounded-lg p-8 text-center text-gray-400 text-sm h-full flex items-center justify-center">
+            Select a user to open their support chat
           </div>
-        ) : <div className="bg-white rounded-lg p-8 text-center text-gray-400 text-sm">Select a ticket to view</div>}
+        )}
       </div>
     </div>
   );
