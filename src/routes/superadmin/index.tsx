@@ -49,7 +49,7 @@ async function loadDashboard() {
   const since = new Date(Date.now() - 29 * 86400000);
 
   const count = (t: string, build?: (q: any) => any) => {
-    const q = supabase.from(t).select("id", { count: "exact", head: true });
+    const q = (supabase.from as any)(t).select("id", { count: "exact", head: true });
     return build ? build(q) : q;
   };
 
