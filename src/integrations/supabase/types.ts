@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_domains: {
+        Row: {
+          admin_id: string
+          created_at: string
+          domain_id: string
+          id: string
+        }
+        Insert: {
+          admin_id: string
+          created_at?: string
+          domain_id: string
+          id?: string
+        }
+        Update: {
+          admin_id?: string
+          created_at?: string
+          domain_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_domains_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "admins"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "admin_domains_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      admins: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          last_login_at: string | null
+          name: string
+          notes: string | null
+          revenue_share: number
+          role_key: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          last_login_at?: string | null
+          name: string
+          notes?: string | null
+          revenue_share?: number
+          role_key?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          last_login_at?: string | null
+          name?: string
+          notes?: string | null
+          revenue_share?: number
+          role_key?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       announcements: {
         Row: {
           active: boolean
@@ -35,6 +113,39 @@ export type Database = {
           created_at?: string
           id?: string
           title?: string
+        }
+        Relationships: []
+      }
+      api_keys: {
+        Row: {
+          active: boolean
+          created_at: string
+          environment: string
+          id: string
+          key_value: string
+          last_used_at: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          environment?: string
+          id?: string
+          key_value: string
+          last_used_at?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          environment?: string
+          id?: string
+          key_value?: string
+          last_used_at?: string | null
+          name?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -71,6 +182,87 @@ export type Database = {
           referral_commission_points?: number
           signup_bonus_points?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      audit_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_name: string | null
+          created_at: string
+          domain: string | null
+          entity: string
+          entity_id: string | null
+          id: string
+          ip_address: string | null
+          new_value: Json | null
+          old_value: Json | null
+          user_agent: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_name?: string | null
+          created_at?: string
+          domain?: string | null
+          entity: string
+          entity_id?: string | null
+          id?: string
+          ip_address?: string | null
+          new_value?: Json | null
+          old_value?: Json | null
+          user_agent?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_name?: string | null
+          created_at?: string
+          domain?: string | null
+          entity?: string
+          entity_id?: string | null
+          id?: string
+          ip_address?: string | null
+          new_value?: Json | null
+          old_value?: Json | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      backups: {
+        Row: {
+          error: string | null
+          finished_at: string | null
+          id: string
+          kind: string
+          location: string | null
+          size_bytes: number | null
+          started_at: string
+          status: string
+          trigger_type: string
+        }
+        Insert: {
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          kind?: string
+          location?: string | null
+          size_bytes?: number | null
+          started_at?: string
+          status?: string
+          trigger_type?: string
+        }
+        Update: {
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          kind?: string
+          location?: string | null
+          size_bytes?: number | null
+          started_at?: string
+          status?: string
+          trigger_type?: string
         }
         Relationships: []
       }
@@ -134,6 +326,90 @@ export type Database = {
         }
         Relationships: []
       }
+      cron_jobs: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: string
+          last_duration_ms: number | null
+          last_error: string | null
+          last_run_at: string | null
+          last_status: string
+          name: string
+          queued: number
+          schedule: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          last_duration_ms?: number | null
+          last_error?: string | null
+          last_run_at?: string | null
+          last_status?: string
+          name: string
+          queued?: number
+          schedule?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          last_duration_ms?: number | null
+          last_error?: string | null
+          last_run_at?: string | null
+          last_status?: string
+          name?: string
+          queued?: number
+          schedule?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      domains: {
+        Row: {
+          created_at: string
+          currency: string
+          domain: string
+          id: string
+          language: string
+          notes: string | null
+          owner_id: string | null
+          ssl_status: string
+          status: string
+          theme: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          domain: string
+          id?: string
+          language?: string
+          notes?: string | null
+          owner_id?: string | null
+          ssl_status?: string
+          status?: string
+          theme?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          domain?: string
+          id?: string
+          language?: string
+          notes?: string | null
+          owner_id?: string | null
+          ssl_status?: string
+          status?: string
+          theme?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       locked_funds: {
         Row: {
           amount: number
@@ -170,42 +446,300 @@ export type Database = {
         }
         Relationships: []
       }
+      network_request_history: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_name: string | null
+          created_at: string
+          from_status: string | null
+          id: string
+          note: string | null
+          request_id: string
+          to_status: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_name?: string | null
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          note?: string | null
+          request_id: string
+          to_status?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_name?: string | null
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          note?: string | null
+          request_id?: string
+          to_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "network_request_history_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "network_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      network_requests: {
+        Row: {
+          admin_name: string | null
+          callback_url: string | null
+          created_at: string
+          domain_id: string | null
+          id: string
+          network_name: string
+          notes: string | null
+          offer_id: string | null
+          offer_name: string | null
+          payout_variable: string
+          points: number
+          requested_by: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          status_variable: string
+          tracking_url: string
+          transaction_variable: string
+          updated_at: string
+          user_variable: string
+        }
+        Insert: {
+          admin_name?: string | null
+          callback_url?: string | null
+          created_at?: string
+          domain_id?: string | null
+          id?: string
+          network_name: string
+          notes?: string | null
+          offer_id?: string | null
+          offer_name?: string | null
+          payout_variable?: string
+          points?: number
+          requested_by?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          status_variable?: string
+          tracking_url: string
+          transaction_variable?: string
+          updated_at?: string
+          user_variable?: string
+        }
+        Update: {
+          admin_name?: string | null
+          callback_url?: string | null
+          created_at?: string
+          domain_id?: string | null
+          id?: string
+          network_name?: string
+          notes?: string | null
+          offer_id?: string | null
+          offer_name?: string | null
+          payout_variable?: string
+          points?: number
+          requested_by?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          status_variable?: string
+          tracking_url?: string
+          transaction_variable?: string
+          updated_at?: string
+          user_variable?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "network_requests_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      networks: {
+        Row: {
+          category: string | null
+          conversions: number
+          created_at: string
+          id: string
+          name: string
+          revenue: number
+          status: string
+          tracking_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          conversions?: number
+          created_at?: string
+          id?: string
+          name: string
+          revenue?: number
+          status?: string
+          tracking_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          conversions?: number
+          created_at?: string
+          id?: string
+          name?: string
+          revenue?: number
+          status?: string
+          tracking_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read: boolean
+          severity: string
+          title: string
+          type: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          severity?: string
+          title: string
+          type: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          severity?: string
+          title?: string
+          type?: string
+        }
+        Relationships: []
+      }
       offerwalls: {
         Row: {
           active: boolean
+          api_key: string | null
+          api_url: string | null
+          category: string | null
           config: Json
           created_at: string
           description: string | null
           display_name: string
+          domain_id: string | null
           id: string
+          iframe_url: string | null
+          last_error: string | null
+          last_postback_at: string | null
           logo_url: string | null
+          postback_url: string | null
+          priority: number
           provider: string
+          revenue: number
+          revenue_share: number
+          secret_key: string | null
           updated_at: string
           url_template: string
         }
         Insert: {
           active?: boolean
+          api_key?: string | null
+          api_url?: string | null
+          category?: string | null
           config?: Json
           created_at?: string
           description?: string | null
           display_name: string
+          domain_id?: string | null
           id?: string
+          iframe_url?: string | null
+          last_error?: string | null
+          last_postback_at?: string | null
           logo_url?: string | null
+          postback_url?: string | null
+          priority?: number
           provider: string
+          revenue?: number
+          revenue_share?: number
+          secret_key?: string | null
           updated_at?: string
           url_template: string
         }
         Update: {
           active?: boolean
+          api_key?: string | null
+          api_url?: string | null
+          category?: string | null
           config?: Json
           created_at?: string
           description?: string | null
           display_name?: string
+          domain_id?: string | null
           id?: string
+          iframe_url?: string | null
+          last_error?: string | null
+          last_postback_at?: string | null
           logo_url?: string | null
+          postback_url?: string | null
+          priority?: number
           provider?: string
+          revenue?: number
+          revenue_share?: number
+          secret_key?: string | null
           updated_at?: string
           url_template?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "offerwalls_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      permissions: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          label: string
+          resource: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          label: string
+          resource: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          label?: string
+          resource?: string
         }
         Relationships: []
       }
@@ -287,6 +821,75 @@ export type Database = {
         }
         Relationships: []
       }
+      postbacks: {
+        Row: {
+          created_at: string
+          domain_id: string | null
+          error: string | null
+          id: string
+          network: string | null
+          offer_id: string | null
+          offerwall_id: string | null
+          payout: number | null
+          points: number | null
+          processed: boolean
+          raw: Json | null
+          signature_valid: boolean
+          status: string | null
+          transaction_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          domain_id?: string | null
+          error?: string | null
+          id?: string
+          network?: string | null
+          offer_id?: string | null
+          offerwall_id?: string | null
+          payout?: number | null
+          points?: number | null
+          processed?: boolean
+          raw?: Json | null
+          signature_valid?: boolean
+          status?: string | null
+          transaction_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          domain_id?: string | null
+          error?: string | null
+          id?: string
+          network?: string | null
+          offer_id?: string | null
+          offerwall_id?: string | null
+          payout?: number | null
+          points?: number | null
+          processed?: boolean
+          raw?: Json | null
+          signature_valid?: boolean
+          status?: string | null
+          transaction_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "postbacks_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "postbacks_offerwall_id_fkey"
+            columns: ["offerwall_id"]
+            isOneToOne: false
+            referencedRelation: "offerwalls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           banned: boolean
@@ -295,6 +898,7 @@ export type Database = {
           country: string | null
           created_at: string
           currency: Database["public"]["Enums"]["currency_type"]
+          domain_id: string | null
           email: string
           id: string
           ip_address: string | null
@@ -315,6 +919,7 @@ export type Database = {
           country?: string | null
           created_at?: string
           currency?: Database["public"]["Enums"]["currency_type"]
+          domain_id?: string | null
           email: string
           id: string
           ip_address?: string | null
@@ -335,6 +940,7 @@ export type Database = {
           country?: string | null
           created_at?: string
           currency?: Database["public"]["Enums"]["currency_type"]
+          domain_id?: string | null
           email?: string
           id?: string
           ip_address?: string | null
@@ -348,7 +954,15 @@ export type Database = {
           updated_at?: string
           verified?: boolean
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       promocode_redemptions: {
         Row: {
@@ -412,6 +1026,65 @@ export type Database = {
         }
         Relationships: []
       }
+      publishers: {
+        Row: {
+          country: string | null
+          created_at: string
+          domain_id: string | null
+          email: string
+          id: string
+          iframe_status: string
+          name: string
+          postback_status: string
+          revenue: number
+          status: string
+          total_clicks: number
+          total_conversions: number
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          domain_id?: string | null
+          email: string
+          id?: string
+          iframe_status?: string
+          name: string
+          postback_status?: string
+          revenue?: number
+          status?: string
+          total_clicks?: number
+          total_conversions?: number
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          domain_id?: string | null
+          email?: string
+          id?: string
+          iframe_status?: string
+          name?: string
+          postback_status?: string
+          revenue?: number
+          status?: string
+          total_clicks?: number
+          total_conversions?: number
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "publishers_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       referrals: {
         Row: {
           commission_points: number
@@ -433,6 +1106,153 @@ export type Database = {
           id?: string
           referred_id?: string
           referrer_id?: string
+        }
+        Relationships: []
+      }
+      revenue_reports: {
+        Row: {
+          admin_id: string | null
+          conversions: number
+          country: string | null
+          created_at: string
+          day: string
+          domain_id: string | null
+          id: string
+          network_id: string | null
+          offerwall_id: string | null
+          payout: number
+          publisher_id: string | null
+          revenue: number
+        }
+        Insert: {
+          admin_id?: string | null
+          conversions?: number
+          country?: string | null
+          created_at?: string
+          day: string
+          domain_id?: string | null
+          id?: string
+          network_id?: string | null
+          offerwall_id?: string | null
+          payout?: number
+          publisher_id?: string | null
+          revenue?: number
+        }
+        Update: {
+          admin_id?: string | null
+          conversions?: number
+          country?: string | null
+          created_at?: string
+          day?: string
+          domain_id?: string | null
+          id?: string
+          network_id?: string | null
+          offerwall_id?: string | null
+          payout?: number
+          publisher_id?: string | null
+          revenue?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "revenue_reports_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "admins"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_reports_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_reports_network_id_fkey"
+            columns: ["network_id"]
+            isOneToOne: false
+            referencedRelation: "networks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_reports_offerwall_id_fkey"
+            columns: ["offerwall_id"]
+            isOneToOne: false
+            referencedRelation: "offerwalls"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_reports_publisher_id_fkey"
+            columns: ["publisher_id"]
+            isOneToOne: false
+            referencedRelation: "publishers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      role_permissions: {
+        Row: {
+          created_at: string
+          id: string
+          permission_id: string
+          role_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          permission_id: string
+          role_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          permission_id?: string
+          role_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "role_permissions_permission_id_fkey"
+            columns: ["permission_id"]
+            isOneToOne: false
+            referencedRelation: "permissions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "role_permissions_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      roles: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_system: boolean
+          key: string
+          label: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_system?: boolean
+          key: string
+          label: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_system?: boolean
+          key?: string
+          label?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -478,6 +1298,45 @@ export type Database = {
           points?: number
           updated_at?: string
           user_variable?: string
+        }
+        Relationships: []
+      }
+      system_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_name: string | null
+          category: string
+          created_at: string
+          detail: string | null
+          domain: string | null
+          id: string
+          ip_address: string | null
+          level: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_name?: string | null
+          category?: string
+          created_at?: string
+          detail?: string | null
+          domain?: string | null
+          id?: string
+          ip_address?: string | null
+          level?: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_name?: string | null
+          category?: string
+          created_at?: string
+          detail?: string | null
+          domain?: string | null
+          id?: string
+          ip_address?: string | null
+          level?: string
         }
         Relationships: []
       }
@@ -606,6 +1465,7 @@ export type Database = {
           amount: number
           created_at: string
           currency: Database["public"]["Enums"]["currency_type"]
+          domain_id: string | null
           id: string
           method_code: string
           payment_details: Json
@@ -619,6 +1479,7 @@ export type Database = {
           amount: number
           created_at?: string
           currency: Database["public"]["Enums"]["currency_type"]
+          domain_id?: string | null
           id?: string
           method_code: string
           payment_details: Json
@@ -632,6 +1493,7 @@ export type Database = {
           amount?: number
           created_at?: string
           currency?: Database["public"]["Enums"]["currency_type"]
+          domain_id?: string | null
           id?: string
           method_code?: string
           payment_details?: Json
@@ -640,7 +1502,15 @@ export type Database = {
           status?: Database["public"]["Enums"]["withdraw_status"]
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "withdrawals_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -664,10 +1534,12 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
+      is_super_admin: { Args: { _user_id: string }; Returns: boolean }
       release_locked_fund: { Args: { _id: string }; Returns: undefined }
     }
     Enums: {
-      app_role: "admin" | "user"
+      app_role: "admin" | "user" | "super_admin"
       chat_event_type:
         | "user_joined"
         | "survey_completed"
@@ -806,7 +1678,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "user"],
+      app_role: ["admin", "user", "super_admin"],
       chat_event_type: [
         "user_joined",
         "survey_completed",
