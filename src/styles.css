@@ -142,3 +142,54 @@
     color: var(--color-foreground);
   }
 }
+
+/* ---------- Super Admin scoped theme ---------- */
+.sa-root {
+  --sa-bg: #0c0e1a;
+  --sa-panel: #12152a;
+  --sa-card: #1a1d2e;
+  --sa-input: #0f1225;
+  --sa-border: rgba(255, 255, 255, 0.07);
+  --sa-text: #e0e3f0;
+  --sa-muted: #7a7e9a;
+  --sa-soft: #b0b4cc;
+  --sa-accent: #60a5fa;
+  --sa-blue: #3b82f6;
+  --sa-green: #10b981;
+  --sa-red: #ef4444;
+  --sa-yellow: #f59e0b;
+  --sa-purple: #8b5cf6;
+  background: var(--sa-bg);
+  color: var(--sa-text);
+}
+.sa-root[data-sa-theme="light"] {
+  --sa-bg: #f3f5fa;
+  --sa-panel: #ffffff;
+  --sa-card: #ffffff;
+  --sa-input: #f7f8fc;
+  --sa-border: rgba(15, 18, 37, 0.1);
+  --sa-text: #12152a;
+  --sa-muted: #6b7088;
+  --sa-soft: #3f445c;
+  --sa-accent: #2563eb;
+}
+.sa-root input,
+.sa-root select,
+.sa-root textarea {
+  background: var(--sa-input);
+  border: 1px solid var(--sa-border);
+  border-radius: 6px;
+  padding: 8px 11px;
+  font-size: 12px;
+  width: 100%;
+  color: var(--sa-text);
+}
+.sa-root input:focus,
+.sa-root select:focus,
+.sa-root textarea:focus {
+  outline: none;
+  border-color: var(--sa-blue);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.18);
+}
+.sa-root textarea { min-height: 60px; resize: vertical; }
+.sa-root option { background: var(--sa-panel); color: var(--sa-text); }
