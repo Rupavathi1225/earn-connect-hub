@@ -132,7 +132,7 @@ function SuperAdminLayout() {
               {NAV.filter((n) => n.group === g).map((n) => (
                 <Link
                   key={n.to}
-                  to={n.to}
+                  to={n.to as never}
                   activeOptions={{ exact: n.to === "/superadmin" }}
                   className="flex items-center gap-2.5 border-l-[3px] border-transparent px-4 py-2 text-[11.5px] text-[var(--sa-muted)] transition hover:bg-white/[0.04] [&.active]:border-[var(--sa-accent)] [&.active]:bg-[var(--sa-accent)]/10 [&.active]:font-semibold [&.active]:text-[var(--sa-accent)]"
                 >
