@@ -19,6 +19,7 @@ import { Route as SuperadminIndexRouteImport } from './routes/superadmin/index'
 import { Route as SuperadminPublishersRouteImport } from './routes/superadmin/publishers'
 import { Route as SuperadminOfferwallsRouteImport } from './routes/superadmin/offerwalls'
 import { Route as SuperadminDomainsRouteImport } from './routes/superadmin/domains'
+import { Route as SuperadminCronRouteImport } from './routes/superadmin/cron'
 import { Route as AuthenticatedWithdrawRouteImport } from './routes/_authenticated/withdraw'
 import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
 import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
@@ -90,6 +91,11 @@ const SuperadminOfferwallsRoute = SuperadminOfferwallsRouteImport.update({
 const SuperadminDomainsRoute = SuperadminDomainsRouteImport.update({
   id: '/domains',
   path: '/domains',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminCronRoute = SuperadminCronRouteImport.update({
+  id: '/cron',
+  path: '/cron',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
 const AuthenticatedWithdrawRoute = AuthenticatedWithdrawRouteImport.update({
@@ -236,6 +242,7 @@ export interface FileRoutesByFullPath {
   '/surveys': typeof AuthenticatedSurveysRoute
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/cron': typeof SuperadminCronRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
   '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
@@ -269,6 +276,7 @@ export interface FileRoutesByTo {
   '/surveys': typeof AuthenticatedSurveysRoute
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/cron': typeof SuperadminCronRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
   '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
@@ -305,6 +313,7 @@ export interface FileRoutesById {
   '/_authenticated/surveys': typeof AuthenticatedSurveysRoute
   '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
   '/_authenticated/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/cron': typeof SuperadminCronRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
   '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
@@ -341,6 +350,7 @@ export interface FileRouteTypes {
     | '/surveys'
     | '/tickets'
     | '/withdraw'
+    | '/superadmin/cron'
     | '/superadmin/domains'
     | '/superadmin/offerwalls'
     | '/superadmin/publishers'
@@ -374,6 +384,7 @@ export interface FileRouteTypes {
     | '/surveys'
     | '/tickets'
     | '/withdraw'
+    | '/superadmin/cron'
     | '/superadmin/domains'
     | '/superadmin/offerwalls'
     | '/superadmin/publishers'
@@ -409,6 +420,7 @@ export interface FileRouteTypes {
     | '/_authenticated/surveys'
     | '/_authenticated/tickets'
     | '/_authenticated/withdraw'
+    | '/superadmin/cron'
     | '/superadmin/domains'
     | '/superadmin/offerwalls'
     | '/superadmin/publishers'
@@ -509,6 +521,13 @@ declare module '@tanstack/react-router' {
       path: '/domains'
       fullPath: '/superadmin/domains'
       preLoaderRoute: typeof SuperadminDomainsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/cron': {
+      id: '/superadmin/cron'
+      path: '/cron'
+      fullPath: '/superadmin/cron'
+      preLoaderRoute: typeof SuperadminCronRouteImport
       parentRoute: typeof SuperadminRouteRoute
     }
     '/_authenticated/withdraw': {
@@ -729,6 +748,7 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface SuperadminRouteRouteChildren {
+  SuperadminCronRoute: typeof SuperadminCronRoute
   SuperadminDomainsRoute: typeof SuperadminDomainsRoute
   SuperadminOfferwallsRoute: typeof SuperadminOfferwallsRoute
   SuperadminPublishersRoute: typeof SuperadminPublishersRoute
@@ -736,6 +756,7 @@ interface SuperadminRouteRouteChildren {
 }
 
 const SuperadminRouteRouteChildren: SuperadminRouteRouteChildren = {
+  SuperadminCronRoute: SuperadminCronRoute,
   SuperadminDomainsRoute: SuperadminDomainsRoute,
   SuperadminOfferwallsRoute: SuperadminOfferwallsRoute,
   SuperadminPublishersRoute: SuperadminPublishersRoute,
