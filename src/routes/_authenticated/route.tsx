@@ -16,17 +16,21 @@ function Layout() {
   const { user } = Route.useRouteContext();
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isSuper, setIsSuper] = useState(false);
   const [profile, setProfile] = useState<{ name: string | null; email: string } | null>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     (async () => {
       const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id);
-      setIsAdmin((roles ?? []).some((r) => r.role === "admin"));
+      const list = (roles ?? []).map((r) => r.role as string);
+      setIsSuper(list.includes("super_admin"));
+      setIsAdmin(list.includes("admin"));
       const { data: p } = await supabase.from("profiles").select("name,email").eq("id", user.id).maybeSingle();
       if (p) setProfile(p);
     })();
   }, [user.id]);
+
 
   const userLinks = [
     { to: "/dashboard", label: "Dashboard", icon: "🏠" },
@@ -84,14 +88,21 @@ function Layout() {
         </nav>
         <div className="p-3 border-t border-white/10 text-xs">
           <div className="mb-2 text-[#b0b3c5] truncate">{profile?.name ?? profile?.email ?? user.email}</div>
-          {isAdmin && (
-            <Link
-              to={inAdmin ? "/dashboard" : "/admin"}
-              className="block mb-2 text-center bg-[#5a3dba] hover:bg-[#4a2fa8] rounded py-1.5"
-            >
-              {inAdmin ? "← User View" : "Admin Panel →"}
+          {isSuper ? (
+            <Link to="/superadmin" className="block mb-2 text-center bg-[#5a3dba] hover:bg-[#4a2fa8] rounded py-1.5">
+              Super Admin Panel →
             </Link>
+          ) : (
+            isAdmin && (
+              <Link
+                to={inAdmin ? "/dashboard" : "/admin"}
+                className="block mb-2 text-center bg-[#5a3dba] hover:bg-[#4a2fa8] rounded py-1.5"
+              >
+                {inAdmin ? "← User View" : "Admin Panel →"}
+              </Link>
+            )
           )}
+
           <button onClick={signOut} className="w-full bg-[#e8734a] hover:bg-[#d66339] rounded py-1.5 font-semibold">
             Sign Out
           </button>
