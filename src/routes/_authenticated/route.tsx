@@ -88,14 +88,21 @@ function Layout() {
         </nav>
         <div className="p-3 border-t border-white/10 text-xs">
           <div className="mb-2 text-[#b0b3c5] truncate">{profile?.name ?? profile?.email ?? user.email}</div>
-          {isAdmin && (
-            <Link
-              to={inAdmin ? "/dashboard" : "/admin"}
-              className="block mb-2 text-center bg-[#5a3dba] hover:bg-[#4a2fa8] rounded py-1.5"
-            >
-              {inAdmin ? "← User View" : "Admin Panel →"}
+          {isSuper ? (
+            <Link to="/superadmin" className="block mb-2 text-center bg-[#5a3dba] hover:bg-[#4a2fa8] rounded py-1.5">
+              Super Admin Panel →
             </Link>
+          ) : (
+            isAdmin && (
+              <Link
+                to={inAdmin ? "/dashboard" : "/admin"}
+                className="block mb-2 text-center bg-[#5a3dba] hover:bg-[#4a2fa8] rounded py-1.5"
+              >
+                {inAdmin ? "← User View" : "Admin Panel →"}
+              </Link>
+            )
           )}
+
           <button onClick={signOut} className="w-full bg-[#e8734a] hover:bg-[#d66339] rounded py-1.5 font-semibold">
             Sign Out
           </button>
