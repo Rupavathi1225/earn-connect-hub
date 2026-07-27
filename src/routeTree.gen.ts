@@ -16,6 +16,16 @@ import { Route as SuperadminRouteRouteImport } from './routes/superadmin/route'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SuperadminIndexRouteImport } from './routes/superadmin/index'
+import { Route as SuperadminWithdrawalsRouteImport } from './routes/superadmin/withdrawals'
+import { Route as SuperadminUsersRouteImport } from './routes/superadmin/users'
+import { Route as SuperadminRolesRouteImport } from './routes/superadmin/roles'
+import { Route as SuperadminPublishersRouteImport } from './routes/superadmin/publishers'
+import { Route as SuperadminOfferwallsRouteImport } from './routes/superadmin/offerwalls'
+import { Route as SuperadminLogsRouteImport } from './routes/superadmin/logs'
+import { Route as SuperadminDomainsRouteImport } from './routes/superadmin/domains'
+import { Route as SuperadminCronRouteImport } from './routes/superadmin/cron'
+import { Route as SuperadminAuditRouteImport } from './routes/superadmin/audit'
+import { Route as SuperadminAdminsRouteImport } from './routes/superadmin/admins'
 import { Route as AuthenticatedWithdrawRouteImport } from './routes/_authenticated/withdraw'
 import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
 import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
@@ -72,6 +82,56 @@ const IndexRoute = IndexRouteImport.update({
 const SuperadminIndexRoute = SuperadminIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminWithdrawalsRoute = SuperadminWithdrawalsRouteImport.update({
+  id: '/withdrawals',
+  path: '/withdrawals',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminUsersRoute = SuperadminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminRolesRoute = SuperadminRolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminPublishersRoute = SuperadminPublishersRouteImport.update({
+  id: '/publishers',
+  path: '/publishers',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminOfferwallsRoute = SuperadminOfferwallsRouteImport.update({
+  id: '/offerwalls',
+  path: '/offerwalls',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminLogsRoute = SuperadminLogsRouteImport.update({
+  id: '/logs',
+  path: '/logs',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminDomainsRoute = SuperadminDomainsRouteImport.update({
+  id: '/domains',
+  path: '/domains',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminCronRoute = SuperadminCronRouteImport.update({
+  id: '/cron',
+  path: '/cron',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminAuditRoute = SuperadminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminAdminsRoute = SuperadminAdminsRouteImport.update({
+  id: '/admins',
+  path: '/admins',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
 const AuthenticatedWithdrawRoute = AuthenticatedWithdrawRouteImport.update({
@@ -218,6 +278,16 @@ export interface FileRoutesByFullPath {
   '/surveys': typeof AuthenticatedSurveysRoute
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/admins': typeof SuperadminAdminsRoute
+  '/superadmin/audit': typeof SuperadminAuditRoute
+  '/superadmin/cron': typeof SuperadminCronRoute
+  '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/logs': typeof SuperadminLogsRoute
+  '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
+  '/superadmin/publishers': typeof SuperadminPublishersRoute
+  '/superadmin/roles': typeof SuperadminRolesRoute
+  '/superadmin/users': typeof SuperadminUsersRoute
+  '/superadmin/withdrawals': typeof SuperadminWithdrawalsRoute
   '/superadmin/': typeof SuperadminIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
@@ -248,6 +318,16 @@ export interface FileRoutesByTo {
   '/surveys': typeof AuthenticatedSurveysRoute
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/admins': typeof SuperadminAdminsRoute
+  '/superadmin/audit': typeof SuperadminAuditRoute
+  '/superadmin/cron': typeof SuperadminCronRoute
+  '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/logs': typeof SuperadminLogsRoute
+  '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
+  '/superadmin/publishers': typeof SuperadminPublishersRoute
+  '/superadmin/roles': typeof SuperadminRolesRoute
+  '/superadmin/users': typeof SuperadminUsersRoute
+  '/superadmin/withdrawals': typeof SuperadminWithdrawalsRoute
   '/superadmin': typeof SuperadminIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
@@ -281,6 +361,16 @@ export interface FileRoutesById {
   '/_authenticated/surveys': typeof AuthenticatedSurveysRoute
   '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
   '/_authenticated/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/admins': typeof SuperadminAdminsRoute
+  '/superadmin/audit': typeof SuperadminAuditRoute
+  '/superadmin/cron': typeof SuperadminCronRoute
+  '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/logs': typeof SuperadminLogsRoute
+  '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
+  '/superadmin/publishers': typeof SuperadminPublishersRoute
+  '/superadmin/roles': typeof SuperadminRolesRoute
+  '/superadmin/users': typeof SuperadminUsersRoute
+  '/superadmin/withdrawals': typeof SuperadminWithdrawalsRoute
   '/superadmin/': typeof SuperadminIndexRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
@@ -314,6 +404,16 @@ export interface FileRouteTypes {
     | '/surveys'
     | '/tickets'
     | '/withdraw'
+    | '/superadmin/admins'
+    | '/superadmin/audit'
+    | '/superadmin/cron'
+    | '/superadmin/domains'
+    | '/superadmin/logs'
+    | '/superadmin/offerwalls'
+    | '/superadmin/publishers'
+    | '/superadmin/roles'
+    | '/superadmin/users'
+    | '/superadmin/withdrawals'
     | '/superadmin/'
     | '/admin/announcements'
     | '/admin/chat-feed'
@@ -344,6 +444,16 @@ export interface FileRouteTypes {
     | '/surveys'
     | '/tickets'
     | '/withdraw'
+    | '/superadmin/admins'
+    | '/superadmin/audit'
+    | '/superadmin/cron'
+    | '/superadmin/domains'
+    | '/superadmin/logs'
+    | '/superadmin/offerwalls'
+    | '/superadmin/publishers'
+    | '/superadmin/roles'
+    | '/superadmin/users'
+    | '/superadmin/withdrawals'
     | '/superadmin'
     | '/admin/announcements'
     | '/admin/chat-feed'
@@ -376,6 +486,16 @@ export interface FileRouteTypes {
     | '/_authenticated/surveys'
     | '/_authenticated/tickets'
     | '/_authenticated/withdraw'
+    | '/superadmin/admins'
+    | '/superadmin/audit'
+    | '/superadmin/cron'
+    | '/superadmin/domains'
+    | '/superadmin/logs'
+    | '/superadmin/offerwalls'
+    | '/superadmin/publishers'
+    | '/superadmin/roles'
+    | '/superadmin/users'
+    | '/superadmin/withdrawals'
     | '/superadmin/'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/chat-feed'
@@ -452,6 +572,76 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/superadmin/'
       preLoaderRoute: typeof SuperadminIndexRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/withdrawals': {
+      id: '/superadmin/withdrawals'
+      path: '/withdrawals'
+      fullPath: '/superadmin/withdrawals'
+      preLoaderRoute: typeof SuperadminWithdrawalsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/users': {
+      id: '/superadmin/users'
+      path: '/users'
+      fullPath: '/superadmin/users'
+      preLoaderRoute: typeof SuperadminUsersRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/roles': {
+      id: '/superadmin/roles'
+      path: '/roles'
+      fullPath: '/superadmin/roles'
+      preLoaderRoute: typeof SuperadminRolesRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/publishers': {
+      id: '/superadmin/publishers'
+      path: '/publishers'
+      fullPath: '/superadmin/publishers'
+      preLoaderRoute: typeof SuperadminPublishersRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/offerwalls': {
+      id: '/superadmin/offerwalls'
+      path: '/offerwalls'
+      fullPath: '/superadmin/offerwalls'
+      preLoaderRoute: typeof SuperadminOfferwallsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/logs': {
+      id: '/superadmin/logs'
+      path: '/logs'
+      fullPath: '/superadmin/logs'
+      preLoaderRoute: typeof SuperadminLogsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/domains': {
+      id: '/superadmin/domains'
+      path: '/domains'
+      fullPath: '/superadmin/domains'
+      preLoaderRoute: typeof SuperadminDomainsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/cron': {
+      id: '/superadmin/cron'
+      path: '/cron'
+      fullPath: '/superadmin/cron'
+      preLoaderRoute: typeof SuperadminCronRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/audit': {
+      id: '/superadmin/audit'
+      path: '/audit'
+      fullPath: '/superadmin/audit'
+      preLoaderRoute: typeof SuperadminAuditRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/admins': {
+      id: '/superadmin/admins'
+      path: '/admins'
+      fullPath: '/superadmin/admins'
+      preLoaderRoute: typeof SuperadminAdminsRouteImport
       parentRoute: typeof SuperadminRouteRoute
     }
     '/_authenticated/withdraw': {
@@ -672,10 +862,30 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface SuperadminRouteRouteChildren {
+  SuperadminAdminsRoute: typeof SuperadminAdminsRoute
+  SuperadminAuditRoute: typeof SuperadminAuditRoute
+  SuperadminCronRoute: typeof SuperadminCronRoute
+  SuperadminDomainsRoute: typeof SuperadminDomainsRoute
+  SuperadminLogsRoute: typeof SuperadminLogsRoute
+  SuperadminOfferwallsRoute: typeof SuperadminOfferwallsRoute
+  SuperadminPublishersRoute: typeof SuperadminPublishersRoute
+  SuperadminRolesRoute: typeof SuperadminRolesRoute
+  SuperadminUsersRoute: typeof SuperadminUsersRoute
+  SuperadminWithdrawalsRoute: typeof SuperadminWithdrawalsRoute
   SuperadminIndexRoute: typeof SuperadminIndexRoute
 }
 
 const SuperadminRouteRouteChildren: SuperadminRouteRouteChildren = {
+  SuperadminAdminsRoute: SuperadminAdminsRoute,
+  SuperadminAuditRoute: SuperadminAuditRoute,
+  SuperadminCronRoute: SuperadminCronRoute,
+  SuperadminDomainsRoute: SuperadminDomainsRoute,
+  SuperadminLogsRoute: SuperadminLogsRoute,
+  SuperadminOfferwallsRoute: SuperadminOfferwallsRoute,
+  SuperadminPublishersRoute: SuperadminPublishersRoute,
+  SuperadminRolesRoute: SuperadminRolesRoute,
+  SuperadminUsersRoute: SuperadminUsersRoute,
+  SuperadminWithdrawalsRoute: SuperadminWithdrawalsRoute,
   SuperadminIndexRoute: SuperadminIndexRoute,
 }
 
