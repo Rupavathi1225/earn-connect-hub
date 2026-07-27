@@ -17,6 +17,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SuperadminIndexRouteImport } from './routes/superadmin/index'
 import { Route as SuperadminPublishersRouteImport } from './routes/superadmin/publishers'
+import { Route as SuperadminOfferwallsRouteImport } from './routes/superadmin/offerwalls'
 import { Route as SuperadminDomainsRouteImport } from './routes/superadmin/domains'
 import { Route as AuthenticatedWithdrawRouteImport } from './routes/_authenticated/withdraw'
 import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
@@ -79,6 +80,11 @@ const SuperadminIndexRoute = SuperadminIndexRouteImport.update({
 const SuperadminPublishersRoute = SuperadminPublishersRouteImport.update({
   id: '/publishers',
   path: '/publishers',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminOfferwallsRoute = SuperadminOfferwallsRouteImport.update({
+  id: '/offerwalls',
+  path: '/offerwalls',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
 const SuperadminDomainsRoute = SuperadminDomainsRouteImport.update({
@@ -231,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
   '/superadmin/': typeof SuperadminIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
@@ -263,6 +270,7 @@ export interface FileRoutesByTo {
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
   '/superadmin': typeof SuperadminIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
@@ -298,6 +306,7 @@ export interface FileRoutesById {
   '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
   '/_authenticated/withdraw': typeof AuthenticatedWithdrawRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
   '/superadmin/': typeof SuperadminIndexRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
@@ -333,6 +342,7 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/withdraw'
     | '/superadmin/domains'
+    | '/superadmin/offerwalls'
     | '/superadmin/publishers'
     | '/superadmin/'
     | '/admin/announcements'
@@ -365,6 +375,7 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/withdraw'
     | '/superadmin/domains'
+    | '/superadmin/offerwalls'
     | '/superadmin/publishers'
     | '/superadmin'
     | '/admin/announcements'
@@ -399,6 +410,7 @@ export interface FileRouteTypes {
     | '/_authenticated/tickets'
     | '/_authenticated/withdraw'
     | '/superadmin/domains'
+    | '/superadmin/offerwalls'
     | '/superadmin/publishers'
     | '/superadmin/'
     | '/_authenticated/admin/announcements'
@@ -483,6 +495,13 @@ declare module '@tanstack/react-router' {
       path: '/publishers'
       fullPath: '/superadmin/publishers'
       preLoaderRoute: typeof SuperadminPublishersRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/offerwalls': {
+      id: '/superadmin/offerwalls'
+      path: '/offerwalls'
+      fullPath: '/superadmin/offerwalls'
+      preLoaderRoute: typeof SuperadminOfferwallsRouteImport
       parentRoute: typeof SuperadminRouteRoute
     }
     '/superadmin/domains': {
@@ -711,12 +730,14 @@ const AuthenticatedRouteRouteWithChildren =
 
 interface SuperadminRouteRouteChildren {
   SuperadminDomainsRoute: typeof SuperadminDomainsRoute
+  SuperadminOfferwallsRoute: typeof SuperadminOfferwallsRoute
   SuperadminPublishersRoute: typeof SuperadminPublishersRoute
   SuperadminIndexRoute: typeof SuperadminIndexRoute
 }
 
 const SuperadminRouteRouteChildren: SuperadminRouteRouteChildren = {
   SuperadminDomainsRoute: SuperadminDomainsRoute,
+  SuperadminOfferwallsRoute: SuperadminOfferwallsRoute,
   SuperadminPublishersRoute: SuperadminPublishersRoute,
   SuperadminIndexRoute: SuperadminIndexRoute,
 }
