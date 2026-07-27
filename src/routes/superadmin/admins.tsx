@@ -60,7 +60,7 @@ function Admins() {
     },
   });
 
-  const { data: roles } = useQuery({ queryKey: ["sa", "user_roles"], queryFn: () => rolesFn({ data: undefined as never }) });
+  const { data: roles } = useQuery({ queryKey: ["sa", "user_roles"], queryFn: () => rolesFn({}) });
   const roleSet = new Set((roles ?? []).map((r) => `${r.user_id}:${r.role}`));
 
   const invalidate = () => {
