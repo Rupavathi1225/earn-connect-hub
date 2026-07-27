@@ -16,6 +16,7 @@ import { Route as SuperadminRouteRouteImport } from './routes/superadmin/route'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SuperadminIndexRouteImport } from './routes/superadmin/index'
+import { Route as SuperadminPublishersRouteImport } from './routes/superadmin/publishers'
 import { Route as SuperadminDomainsRouteImport } from './routes/superadmin/domains'
 import { Route as AuthenticatedWithdrawRouteImport } from './routes/_authenticated/withdraw'
 import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
@@ -73,6 +74,11 @@ const IndexRoute = IndexRouteImport.update({
 const SuperadminIndexRoute = SuperadminIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminPublishersRoute = SuperadminPublishersRouteImport.update({
+  id: '/publishers',
+  path: '/publishers',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
 const SuperadminDomainsRoute = SuperadminDomainsRouteImport.update({
@@ -225,6 +231,7 @@ export interface FileRoutesByFullPath {
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/publishers': typeof SuperadminPublishersRoute
   '/superadmin/': typeof SuperadminIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
@@ -256,6 +263,7 @@ export interface FileRoutesByTo {
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/publishers': typeof SuperadminPublishersRoute
   '/superadmin': typeof SuperadminIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
@@ -290,6 +298,7 @@ export interface FileRoutesById {
   '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
   '/_authenticated/withdraw': typeof AuthenticatedWithdrawRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
+  '/superadmin/publishers': typeof SuperadminPublishersRoute
   '/superadmin/': typeof SuperadminIndexRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/chat-feed': typeof AuthenticatedAdminChatFeedRoute
@@ -324,6 +333,7 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/withdraw'
     | '/superadmin/domains'
+    | '/superadmin/publishers'
     | '/superadmin/'
     | '/admin/announcements'
     | '/admin/chat-feed'
@@ -355,6 +365,7 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/withdraw'
     | '/superadmin/domains'
+    | '/superadmin/publishers'
     | '/superadmin'
     | '/admin/announcements'
     | '/admin/chat-feed'
@@ -388,6 +399,7 @@ export interface FileRouteTypes {
     | '/_authenticated/tickets'
     | '/_authenticated/withdraw'
     | '/superadmin/domains'
+    | '/superadmin/publishers'
     | '/superadmin/'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/chat-feed'
@@ -464,6 +476,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/superadmin/'
       preLoaderRoute: typeof SuperadminIndexRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/publishers': {
+      id: '/superadmin/publishers'
+      path: '/publishers'
+      fullPath: '/superadmin/publishers'
+      preLoaderRoute: typeof SuperadminPublishersRouteImport
       parentRoute: typeof SuperadminRouteRoute
     }
     '/superadmin/domains': {
@@ -692,11 +711,13 @@ const AuthenticatedRouteRouteWithChildren =
 
 interface SuperadminRouteRouteChildren {
   SuperadminDomainsRoute: typeof SuperadminDomainsRoute
+  SuperadminPublishersRoute: typeof SuperadminPublishersRoute
   SuperadminIndexRoute: typeof SuperadminIndexRoute
 }
 
 const SuperadminRouteRouteChildren: SuperadminRouteRouteChildren = {
   SuperadminDomainsRoute: SuperadminDomainsRoute,
+  SuperadminPublishersRoute: SuperadminPublishersRoute,
   SuperadminIndexRoute: SuperadminIndexRoute,
 }
 
