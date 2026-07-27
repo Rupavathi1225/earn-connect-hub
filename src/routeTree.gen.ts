@@ -21,6 +21,7 @@ import { Route as SuperadminOfferwallsRouteImport } from './routes/superadmin/of
 import { Route as SuperadminLogsRouteImport } from './routes/superadmin/logs'
 import { Route as SuperadminDomainsRouteImport } from './routes/superadmin/domains'
 import { Route as SuperadminCronRouteImport } from './routes/superadmin/cron'
+import { Route as SuperadminAuditRouteImport } from './routes/superadmin/audit'
 import { Route as AuthenticatedWithdrawRouteImport } from './routes/_authenticated/withdraw'
 import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
 import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
@@ -102,6 +103,11 @@ const SuperadminDomainsRoute = SuperadminDomainsRouteImport.update({
 const SuperadminCronRoute = SuperadminCronRouteImport.update({
   id: '/cron',
   path: '/cron',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminAuditRoute = SuperadminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
 const AuthenticatedWithdrawRoute = AuthenticatedWithdrawRouteImport.update({
@@ -248,6 +254,7 @@ export interface FileRoutesByFullPath {
   '/surveys': typeof AuthenticatedSurveysRoute
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/audit': typeof SuperadminAuditRoute
   '/superadmin/cron': typeof SuperadminCronRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
   '/superadmin/logs': typeof SuperadminLogsRoute
@@ -283,6 +290,7 @@ export interface FileRoutesByTo {
   '/surveys': typeof AuthenticatedSurveysRoute
   '/tickets': typeof AuthenticatedTicketsRoute
   '/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/audit': typeof SuperadminAuditRoute
   '/superadmin/cron': typeof SuperadminCronRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
   '/superadmin/logs': typeof SuperadminLogsRoute
@@ -321,6 +329,7 @@ export interface FileRoutesById {
   '/_authenticated/surveys': typeof AuthenticatedSurveysRoute
   '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
   '/_authenticated/withdraw': typeof AuthenticatedWithdrawRoute
+  '/superadmin/audit': typeof SuperadminAuditRoute
   '/superadmin/cron': typeof SuperadminCronRoute
   '/superadmin/domains': typeof SuperadminDomainsRoute
   '/superadmin/logs': typeof SuperadminLogsRoute
@@ -359,6 +368,7 @@ export interface FileRouteTypes {
     | '/surveys'
     | '/tickets'
     | '/withdraw'
+    | '/superadmin/audit'
     | '/superadmin/cron'
     | '/superadmin/domains'
     | '/superadmin/logs'
@@ -394,6 +404,7 @@ export interface FileRouteTypes {
     | '/surveys'
     | '/tickets'
     | '/withdraw'
+    | '/superadmin/audit'
     | '/superadmin/cron'
     | '/superadmin/domains'
     | '/superadmin/logs'
@@ -431,6 +442,7 @@ export interface FileRouteTypes {
     | '/_authenticated/surveys'
     | '/_authenticated/tickets'
     | '/_authenticated/withdraw'
+    | '/superadmin/audit'
     | '/superadmin/cron'
     | '/superadmin/domains'
     | '/superadmin/logs'
@@ -547,6 +559,13 @@ declare module '@tanstack/react-router' {
       path: '/cron'
       fullPath: '/superadmin/cron'
       preLoaderRoute: typeof SuperadminCronRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/audit': {
+      id: '/superadmin/audit'
+      path: '/audit'
+      fullPath: '/superadmin/audit'
+      preLoaderRoute: typeof SuperadminAuditRouteImport
       parentRoute: typeof SuperadminRouteRoute
     }
     '/_authenticated/withdraw': {
@@ -767,6 +786,7 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface SuperadminRouteRouteChildren {
+  SuperadminAuditRoute: typeof SuperadminAuditRoute
   SuperadminCronRoute: typeof SuperadminCronRoute
   SuperadminDomainsRoute: typeof SuperadminDomainsRoute
   SuperadminLogsRoute: typeof SuperadminLogsRoute
@@ -776,6 +796,7 @@ interface SuperadminRouteRouteChildren {
 }
 
 const SuperadminRouteRouteChildren: SuperadminRouteRouteChildren = {
+  SuperadminAuditRoute: SuperadminAuditRoute,
   SuperadminCronRoute: SuperadminCronRoute,
   SuperadminDomainsRoute: SuperadminDomainsRoute,
   SuperadminLogsRoute: SuperadminLogsRoute,
