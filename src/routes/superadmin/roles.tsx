@@ -22,7 +22,7 @@ export const Route = createFileRoute("/superadmin/roles")({
 function Roles() {
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ key: "", name: "", description: "" });
+  const [form, setForm] = useState({ key: "", label: "", description: "" });
   const [matrixFor, setMatrixFor] = useState<any | null>(null);
 
   const roles = useQuery({
@@ -65,7 +65,7 @@ function Roles() {
     onSuccess: () => {
       toast.success("Role created");
       setOpen(false);
-      setForm({ key: "", name: "", description: "" });
+      setForm({ key: "", label: "", description: "" });
       invalidate();
     },
     onError: (e: Error) => toast.error(e.message),
@@ -117,7 +117,7 @@ function Roles() {
             rows={(roles.data ?? []) as any[]}
             exportName="roles"
             columns={[
-              { key: "name", header: "Role" },
+              { key: "label", header: "Role" },
               { key: "key", header: "Key", render: (r: any) => <Badge tone="purple">{r.key}</Badge> },
               { key: "description", header: "Description" },
               {
@@ -133,7 +133,7 @@ function Roles() {
                 render: (r: any) => (
                   <div className="flex gap-1.5">
                     <Btn onClick={() => setMatrixFor(r)}>Permissions</Btn>
-                    <ConfirmButton message={`Delete role ${r.name}?`} onConfirm={() => remove.mutate(r.id)}>
+                    <ConfirmButton message={`Delete role ${r.label}?`} onConfirm={() => remove.mutate(r.id)}>
                       Delete
                     </ConfirmButton>
                   </div>
@@ -151,7 +151,7 @@ function Roles() {
               <input value={form.key} onChange={(e) => setForm({ ...form, key: e.target.value })} placeholder="finance_admin" />
             </Field>
             <Field label="Name">
-              <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+              <input value={form.label} onChange={(e) => setForm({ ...form, label: e.target.value })} />
             </Field>
             <Field label="Description">
               <textarea rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
@@ -169,7 +169,7 @@ function Roles() {
       )}
 
       {matrixFor && (
-        <Modal title={`Permissions · ${matrixFor.name}`} onClose={() => setMatrixFor(null)} wide>
+        <Modal title={`Permissions · ${matrixFor.label}`} onClose={() => setMatrixFor(null)} wide>
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             {(perms.data ?? []).map((p: any) => {
               const on = has(matrixFor.id, p.id);
