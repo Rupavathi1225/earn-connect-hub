@@ -468,3 +468,44 @@ export const buildOfferwallPostback = createServerFn({ method: "POST" })
       url: `${data.base_url.replace(/\/$/, "")}/api/public/postback/${slugify(data.provider)}?user_id={user_id}&payout={payout}&status={status}&trans_id={trans_id}&offer_id={offer_id}&signature={signature}`,
     };
   });
+
+/* ---------------- role assignment ---------------- */
+
+export const setUserRoleFlags = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { user_id: string; super_admin?: boolean; admin?: boolean }) => d)
+  .handler(async ({ data, context }) => {
+    await assertSuperAdmin(context.supabase, context.userId);
+    const admin = await getAdminClient();
+    const who = await actorName(context.supabase, context.userId);
+
+    const apply = async (role: "admin" | "super_admin", on: boolean) => {
+      if (on) {
+        await admin.from("user_roles").upsert({ user_id: data.user_id, role }, { onConflict: "user_id,role" });
+      } else {
+        await admin.from("user_roles").delete().eq("user_id", data.user_id).eq("role", role);
+      }
+    };
+
+    if (data.super_admin !== undefined) await apply("super_admin", data.super_admin);
+    if (data.admin !== undefined) await apply("admin", data.admin);
+
+    await writeAudit(admin, {
+      actorId: context.userId,
+      actorName: who,
+      entity: "user_roles",
+      entityId: data.user_id,
+      action: "role_change",
+      newValue: { admin: data.admin, super_admin: data.super_admin },
+    });
+    return { ok: true };
+  });
+
+export const listUserRoles = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertSuperAdmin(context.supabase, context.userId);
+    const admin = await getAdminClient();
+    const { data } = await admin.from("user_roles").select("user_id,role");
+    return (data ?? []) as { user_id: string; role: string }[];
+  });
