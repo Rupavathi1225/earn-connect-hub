@@ -54,13 +54,13 @@ export function RightSidebar() {
   }, []);
 
   return (
-    <aside className="w-80 shrink-0 space-y-5">
-      <div className="bg-[#1a1c3a] text-white rounded-lg overflow-hidden shadow-sm">
+    <aside className="w-80 shrink-0 space-y-5 p-4 bg-[#0f172a] rounded-3xl">
+      <div className="bg-[#1a1c3a] text-white rounded-3xl overflow-hidden shadow-sm border border-white/10">
         <div className="px-4 py-3 font-bold text-sm border-b border-white/10">Globalprime Chat Box</div>
         <ChatFeed compact />
       </div>
 
-      <div className="bg-[#1a1c3a] text-white rounded-lg overflow-hidden shadow-sm">
+      <div className="bg-[#1a1c3a] text-white rounded-3xl overflow-hidden shadow-sm border border-white/10">
         <div className="px-4 py-3 font-bold text-sm text-center border-b border-white/10">Top Members</div>
         <ul className="max-h-80 overflow-y-auto">
           {top.map((m) => (

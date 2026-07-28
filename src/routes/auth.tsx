@@ -177,7 +177,19 @@ function Auth() {
           </button>
         </form>
         <div className="text-center mt-4 text-xs">
-          <Link to="/dashboard" className="text-gray-500 hover:text-gray-700">← Back</Link>
+          {mode === "signup" ? (
+            <button
+              type="button"
+              onClick={() => setMode("signin")}
+              className="text-gray-500 hover:text-gray-700 bg-transparent border-none p-0 cursor-pointer font-semibold"
+            >
+              ← Back
+            </button>
+          ) : (
+            <Link to="/" className="text-gray-500 hover:text-gray-700">
+              ← Back
+            </Link>
+          )}
         </div>
       </div>
     </div>

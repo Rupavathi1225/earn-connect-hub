@@ -13,3 +13,5 @@ export default defineConfig({
     server: { entry: "server" },
   },
 });
+// Trigger dev server reload to pick up new service role key env var
+

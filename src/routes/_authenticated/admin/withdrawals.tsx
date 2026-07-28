@@ -16,12 +16,52 @@ export const Route = createFileRoute("/_authenticated/admin/withdrawals")({
 function W() {
   const [items, setItems] = useState<any[]>([]);
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("pending");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   async function refresh() {
-    let q = supabase.from("withdrawals").select("*, profiles!inner(name,email)").order("created_at", { ascending: false });
-    if (filter !== "all") q = q.eq("status", filter);
-    const { data } = await q;
-    setItems(data ?? []);
+    setLoading(true);
+    setError(null);
+    try {
+      let q = supabase.from("withdrawals").select("*").order("created_at", { ascending: false });
+      if (filter !== "all") q = q.eq("status", filter);
+      const { data: wData, error: wErr } = await q;
+
+      if (wErr) {
+        throw wErr;
+      }
+
+      if (!wData || wData.length === 0) {
+        setItems([]);
+        setLoading(false);
+        return;
+      }
+
+      const userIds = Array.from(new Set(wData.map((x) => x.user_id)));
+      const { data: profilesData, error: profErr } = await supabase
+        .from("profiles")
+        .select("id, name, email")
+        .in("id", userIds);
+
+      if (profErr) {
+        console.error("Error fetching profiles:", profErr);
+      }
+
+      const profilesMap = new Map((profilesData ?? []).map((p) => [p.id, p]));
+      const joined = wData.map((w) => ({
+        ...w,
+        profiles: profilesMap.get(w.user_id) || null,
+      }));
+
+      setItems(joined);
+    } catch (err: any) {
+      console.error(err);
+      setError(err?.message || "Failed to load withdrawals");
+    } finally {
+      setLoading(false);
+    }
   }
+
   useEffect(() => { refresh(); }, [filter]);
   async function act(id: string, action: "approve" | "reject") {
     const note = action === "reject" ? prompt("Reason for rejection?") ?? "" : "";
@@ -63,6 +103,21 @@ function W() {
             ))}
           </tbody>
         </table>
+        {loading && (
+          <div className="p-6 text-center text-xs text-gray-500 font-medium">
+            Loading withdrawals...
+          </div>
+        )}
+        {error && (
+          <div className="p-6 text-center text-xs text-red-500 font-medium bg-red-50/50">
+            ⚠️ Error: {error}
+          </div>
+        )}
+        {!loading && !error && items.length === 0 && (
+          <div className="p-8 text-center text-xs text-gray-500 font-medium">
+            No withdrawals found for this filter.
+          </div>
+        )}
       </div>
     </div>
   );

@@ -77,6 +77,58 @@ export const createAdminAccount = createServerFn({ method: "POST" })
     return row;
   });
 
+export const createAdminAccountFromUser = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (d: { user_id: string; role_key: string; revenue_share?: number; notes?: string }) => d,
+  )
+  .handler(async ({ data, context }) => {
+    await assertSuperAdmin(context.supabase, context.userId);
+    const admin = await getAdminClient();
+    const who = await actorName(context.supabase, context.userId);
+
+    const { data: profile, error: profileError } = await admin
+      .from("profiles")
+      .select("id,name,email")
+      .eq("id", data.user_id)
+      .maybeSingle();
+    if (profileError || !profile) throw new Error(profileError?.message ?? "User not found");
+
+    const { data: existingAdmin } = await admin.from("admins").select("id").eq("user_id", data.user_id).maybeSingle();
+    if (existingAdmin) throw new Error("This user is already an admin");
+
+    await admin.from("user_roles").upsert(
+      { user_id: data.user_id, role: data.role_key === "super_admin" ? "super_admin" : "admin" },
+      { onConflict: "user_id,role" },
+    );
+
+    const { data: row, error } = await admin
+      .from("admins")
+      .insert({
+        user_id: data.user_id,
+        name: profile.name ?? "",
+        email: profile.email,
+        role_key: data.role_key,
+        revenue_share: data.revenue_share ?? 0,
+        notes: data.notes ?? null,
+      })
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+
+    await writeAudit(admin, {
+      actorId: context.userId,
+      actorName: who,
+      entity: "admins",
+      entityId: row.id,
+      action: "create",
+      newValue: { ...row, password: undefined },
+    });
+    await writeLog(admin, { actorId: context.userId, actorName: who, action: "Admin Created", detail: profile.email, category: "admin" });
+    await notify(admin, { type: "new_admin", title: "New admin created", body: `${profile.name ?? profile.email} (${profile.email})` });
+    return row;
+  });
+
 export const updateAdminAccount = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
@@ -152,6 +204,47 @@ export const resetAdminPassword = createServerFn({ method: "POST" })
 
 /* ---------------- users ---------------- */
 
+export const listProfiles = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertSuperAdmin(context.supabase, context.userId);
+    const admin = await getAdminClient();
+
+    const { data: profiles, error: pErr } = await admin
+      .from("profiles")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(1000);
+    if (pErr) throw new Error(pErr.message);
+
+    try {
+      const { data: authData, error: authErr } = await admin.auth.admin.listUsers({
+        page: 1,
+        perPage: 1000,
+      });
+      if (!authErr && authData?.users) {
+        const authMap = new Map(authData.users.map((u) => [u.id, u]));
+        const toUpdate: string[] = [];
+
+        for (const p of profiles) {
+          const au = authMap.get(p.id);
+          if (au && au.email_confirmed_at && !p.verified) {
+            toUpdate.push(p.id);
+            p.verified = true;
+          }
+        }
+
+        if (toUpdate.length > 0) {
+          await admin.from("profiles").update({ verified: true }).in("id", toUpdate);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to sync auth verification status:", e);
+    }
+
+    return profiles ?? [];
+  });
+
 export const adjustUserBalance = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { user_id: string; cash_delta: number; points_delta: number; reason: string }) => d)
@@ -192,6 +285,93 @@ export const adjustUserBalance = createServerFn({ method: "POST" })
       newValue: next,
     });
     return next;
+  });
+
+export const lockUserPoints = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { user_id: string; points: number; reason: string; release_days?: number }) => d)
+  .handler(async ({ data, context }) => {
+    await assertSuperAdmin(context.supabase, context.userId);
+    const admin = await getAdminClient();
+    const who = await actorName(context.supabase, context.userId);
+
+    let { data: p, error: pe } = await admin
+      .from("profiles")
+      .select("points_balance,currency,locked_balance,name,email")
+      .eq("id", data.user_id)
+      .maybeSingle();
+    if (pe) throw new Error(pe.message);
+    if (!p && data.user_id.includes("@")) {
+      const { data: fallback, error: fallbackError } = await admin
+        .from("profiles")
+        .select("points_balance,currency,locked_balance,name,email")
+        .eq("email", data.user_id)
+        .maybeSingle();
+      if (fallbackError) throw new Error(fallbackError.message);
+      p = fallback;
+    }
+    if (!p) throw new Error("User not found");
+    if (data.points <= 0) throw new Error("Points must be greater than zero");
+    if (Number(p.points_balance) < data.points) throw new Error("Insufficient available points");
+
+    const { data: settings, error: settingsError } = await admin
+      .from("app_settings")
+      .select("points_per_inr,points_per_usd,lock_days")
+      .eq("id", 1)
+      .maybeSingle();
+    if (settingsError || !settings) throw new Error(settingsError?.message ?? "App settings not found");
+
+    const rate = p.currency === "INR" ? Number(settings.points_per_inr) : Number(settings.points_per_usd);
+    if (!rate || rate <= 0) throw new Error("Invalid points conversion rate");
+
+    const amount = Number((data.points / rate).toFixed(4));
+    const releaseDays = data.release_days && data.release_days > 0 ? data.release_days : Number(settings.lock_days ?? 0);
+    const releaseAt = new Date(Date.now() + releaseDays * 24 * 60 * 60 * 1000).toISOString();
+
+    const { error: updateError } = await admin.from("profiles").update({
+      points_balance: Number(p.points_balance) - data.points,
+      locked_balance: Number(p.locked_balance ?? 0) + amount,
+    }).eq("id", data.user_id);
+    if (updateError) throw new Error(updateError.message);
+
+    const { error: lfError } = await admin.from("locked_funds").insert({
+      user_id: data.user_id,
+      offer_source: "manual_lock",
+      amount,
+      points: data.points,
+      release_at: releaseAt,
+    });
+    if (lfError) throw new Error(lfError.message);
+
+    await admin.from("points_ledger").insert({
+      user_id: data.user_id,
+      points: -data.points,
+      cash_delta: 0,
+      type: "manual_lock",
+      description: data.reason || "Admin locked points",
+    });
+
+    await admin.from("chat_feed").insert({
+      user_id: data.user_id,
+      event_type: "points_locked",
+      display_name: p.name ?? p.email,
+      message: `${p.name ?? p.email} had ${data.points} points locked by admin.${data.reason ? ` Reason: ${data.reason}` : ""}`,
+    });
+
+    await writeAudit(admin, {
+      actorId: context.userId,
+      actorName: who,
+      entity: "profiles",
+      entityId: data.user_id,
+      action: "points_locked",
+      oldValue: p,
+      newValue: {
+        points_balance: Number(p.points_balance) - data.points,
+        locked_balance: Number(p.locked_balance ?? 0) + amount,
+      },
+    });
+
+    return { ok: true };
   });
 
 export const setUserStatus = createServerFn({ method: "POST" })
@@ -508,4 +688,18 @@ export const listUserRoles = createServerFn({ method: "POST" })
     const admin = await getAdminClient();
     const { data } = await admin.from("user_roles").select("user_id,role");
     return (data ?? []) as { user_id: string; role: string }[];
+  });
+
+export const listSystemLogs = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertSuperAdmin(context.supabase, context.userId);
+    const admin = await getAdminClient();
+    const { data, error } = await admin
+      .from("system_logs")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(500);
+    if (error) throw new Error(error.message);
+    return data ?? [];
   });

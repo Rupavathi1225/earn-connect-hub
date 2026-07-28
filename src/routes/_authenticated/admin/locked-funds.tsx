@@ -15,7 +15,53 @@ export const Route = createFileRoute("/_authenticated/admin/locked-funds")({
 
 function LF() {
   const [items, setItems] = useState<any[]>([]);
-  async function refresh() { const { data } = await supabase.from("locked_funds").select("*, profiles!inner(name,email,currency)").order("locked_at", { ascending: false }); setItems(data ?? []); }
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  async function refresh() {
+    setLoading(true);
+    setError(null);
+    try {
+      const { data: lfData, error: lfErr } = await supabase
+        .from("locked_funds")
+        .select("*")
+        .order("locked_at", { ascending: false });
+
+      if (lfErr) {
+        throw lfErr;
+      }
+
+      if (!lfData || lfData.length === 0) {
+        setItems([]);
+        setLoading(false);
+        return;
+      }
+
+      const userIds = Array.from(new Set(lfData.map((x) => x.user_id)));
+      const { data: profilesData, error: profErr } = await supabase
+        .from("profiles")
+        .select("id, name, email, currency")
+        .in("id", userIds);
+
+      if (profErr) {
+        console.error("Error fetching profiles:", profErr);
+      }
+
+      const profilesMap = new Map((profilesData ?? []).map((p) => [p.id, p]));
+      const joined = lfData.map((lf) => ({
+        ...lf,
+        profiles: profilesMap.get(lf.user_id) || null,
+      }));
+
+      setItems(joined);
+    } catch (err: any) {
+      console.error(err);
+      setError(err?.message || "Failed to load locked funds");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => { refresh(); }, []);
   async function release(id: string) { if (confirm("Release these funds now?")) { await releaseLockedFund({ data: { id } }); refresh(); } }
   return (
@@ -27,7 +73,7 @@ function LF() {
           <tbody>
             {items.map((l) => (
               <tr key={l.id} className="border-b">
-                <td className="p-2">{l.profiles?.name || l.profiles?.email}</td>
+                <td className="p-2">{l.profiles?.name || l.profiles?.email || "Unknown User"}</td>
                 <td className="p-2">{l.offer_source}</td>
                 <td className="p-2 font-semibold">{fmtMoney(Number(l.amount), l.profiles?.currency)}</td>
                 <td className="p-2">{fmtDate(l.locked_at)}</td>
@@ -38,6 +84,21 @@ function LF() {
             ))}
           </tbody>
         </table>
+        {loading && (
+          <div className="p-6 text-center text-xs text-gray-500 font-medium">
+            Loading locked funds...
+          </div>
+        )}
+        {error && (
+          <div className="p-6 text-center text-xs text-red-500 font-medium bg-red-50/50">
+            ⚠️ Error: {error}
+          </div>
+        )}
+        {!loading && !error && items.length === 0 && (
+          <div className="p-8 text-center text-xs text-gray-500 font-medium">
+            No locked funds found in the database.
+          </div>
+        )}
       </div>
     </div>
   );

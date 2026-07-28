@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Card, DataTable, Badge, Loading, ErrorState, SectionTitle } from "@/components/superadmin/kit";
+import { useServerFn } from "@tanstack/react-start";
+import { Card, DataTable, Badge, Loading, ErrorState, SectionTitle, Empty } from "@/components/superadmin/kit";
 import { fmtDate } from "@/lib/format";
+import { listSystemLogs } from "@/lib/superadmin.functions";
 
 export const Route = createFileRoute("/superadmin/logs")({
   head: () => ({
@@ -18,13 +19,10 @@ export const Route = createFileRoute("/superadmin/logs")({
 });
 
 function Logs() {
+  const logsFn = useServerFn(listSystemLogs);
   const { data, isLoading, error } = useQuery({
     queryKey: ["sa", "system_logs"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("system_logs").select("*").order("created_at", { ascending: false }).limit(500);
-      if (error) throw new Error(error.message);
-      return data ?? [];
-    },
+    queryFn: () => logsFn({}),
   });
 
   return (
@@ -34,7 +32,7 @@ function Logs() {
         <Loading />
       ) : error ? (
         <ErrorState error={error} />
-      ) : (
+      ) : (data?.length ? (
         <DataTable
           rows={(data ?? []) as any[]}
           exportName="system_logs"
@@ -50,7 +48,9 @@ function Logs() {
             { key: "domain", header: "Domain" },
           ]}
         />
-      )}
+      ) : (
+        <Empty>No system log entries found yet.</Empty>
+      ))}
     </Card>
   );
 }

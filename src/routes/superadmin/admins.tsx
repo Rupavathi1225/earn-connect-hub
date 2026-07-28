@@ -18,6 +18,7 @@ import {
 } from "@/components/superadmin/kit";
 import {
   createAdminAccount,
+  createAdminAccountFromUser,
   deleteAdminAccount,
   resetAdminPassword,
   setUserRoleFlags,
@@ -41,6 +42,7 @@ export const Route = createFileRoute("/superadmin/admins")({
 function Admins() {
   const qc = useQueryClient();
   const createFn = useServerFn(createAdminAccount);
+  const createFromUserFn = useServerFn(createAdminAccountFromUser);
   const deleteFn = useServerFn(deleteAdminAccount);
   const resetFn = useServerFn(resetAdminPassword);
   const roleFn = useServerFn(setUserRoleFlags);
@@ -48,8 +50,21 @@ function Admins() {
 
   const [open, setOpen] = useState(false);
   const [pwFor, setPwFor] = useState<any | null>(null);
-  const [form, setForm] = useState({ name: "", email: "", password: "", role_key: "admin", revenue_share: 0, notes: "" });
+  const [form, setForm] = useState({ user_id: "", name: "", email: "", password: "", role_key: "admin", revenue_share: 0, notes: "" });
   const [pw, setPw] = useState("");
+
+  const { data: profiles, isLoading: profilesLoading } = useQuery({
+    queryKey: ["sa", "profiles", "admin-promote"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("id,name,email")
+        .order("created_at", { ascending: false })
+        .limit(1000);
+      if (error) throw new Error(error.message);
+      return data ?? [];
+    },
+  });
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["sa", "admins"],
@@ -69,11 +84,21 @@ function Admins() {
   };
 
   const create = useMutation({
-    mutationFn: () => createFn({ data: { ...form, revenue_share: Number(form.revenue_share) } }),
+    mutationFn: () =>
+      form.user_id
+        ? createFromUserFn({
+            data: {
+              user_id: form.user_id,
+              role_key: form.role_key,
+              revenue_share: Number(form.revenue_share),
+              notes: form.notes,
+            },
+          })
+        : createFn({ data: { ...form, revenue_share: Number(form.revenue_share) } }),
     onSuccess: () => {
       toast.success("Admin created");
       setOpen(false);
-      setForm({ name: "", email: "", password: "", role_key: "admin", revenue_share: 0, notes: "" });
+      setForm({ user_id: "", name: "", email: "", password: "", role_key: "admin", revenue_share: 0, notes: "" });
       invalidate();
     },
     onError: (e: Error) => toast.error(e.message),
@@ -166,15 +191,52 @@ function Admins() {
       {open && (
         <Modal title="Create Admin Account" onClose={() => setOpen(false)} wide>
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <Field label="Existing platform user">
+              <select
+                value={form.user_id}
+                onChange={(e) => {
+                  const userId = e.target.value;
+                  if (!userId) {
+                    setForm({ ...form, user_id: "", name: "", email: "", password: "" });
+                    return;
+                  }
+                  const user = profiles?.find((p) => p.id === userId);
+                  setForm({
+                    ...form,
+                    user_id: userId,
+                    name: user?.name ?? "",
+                    email: user?.email ?? "",
+                    password: "",
+                  });
+                }}
+              >
+                <option value="">Create new admin login</option>
+                {profiles?.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name ? `${user.name} (${user.email})` : user.email}
+                  </option>
+                ))}
+              </select>
+            </Field>
             <Field label="Name">
-              <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+              <input
+                value={form.name}
+                disabled={Boolean(form.user_id)}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+              />
             </Field>
             <Field label="Email">
-              <input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+              <input
+                value={form.email}
+                disabled={Boolean(form.user_id)}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
             </Field>
-            <Field label="Password">
-              <input value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-            </Field>
+            {!form.user_id && (
+              <Field label="Password">
+                <input value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+              </Field>
+            )}
             <Field label="Role">
               <select value={form.role_key} onChange={(e) => setForm({ ...form, role_key: e.target.value })}>
                 <option value="admin">Admin</option>
@@ -197,7 +259,7 @@ function Admins() {
               Cancel
             </Btn>
             <Btn tone="green" disabled={create.isPending} onClick={() => create.mutate()}>
-              {create.isPending ? "Creating…" : "Create"}
+              {create.isPending ? "Creating…" : form.user_id ? "Promote user" : "Create"}
             </Btn>
           </div>
         </Modal>

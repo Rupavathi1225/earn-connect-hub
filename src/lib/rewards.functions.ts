@@ -55,9 +55,19 @@ export const redeemPromocode = createServerFn({ method: "POST" })
     if (!promo) throw new Error("Invalid or inactive code");
     if (promo.expires_at && new Date(promo.expires_at) < new Date()) throw new Error("Code expired");
     if (promo.used_count >= promo.usage_limit) throw new Error("Code usage limit reached");
+    const { data: existing } = await supabase.from("promocode_redemptions").select("id").eq("promocode_id", promo.id).eq("user_id", userId).maybeSingle();
+    if (existing) {
+      throw new Error("You already redeemed this code");
+    }
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error: re } = await supabaseAdmin.from("promocode_redemptions").insert({ promocode_id: promo.id, user_id: userId });
-    if (re) throw new Error("You already redeemed this code");
+    if (re) {
+      console.error("Promocode redemption database error:", re);
+      if (re.code === "23505") {
+        throw new Error("You already redeemed this code");
+      }
+      throw new Error(`Database error: ${re.message} (code: ${re.code})`);
+    }
     await supabaseAdmin.from("promocodes").update({ used_count: promo.used_count + 1 }).eq("id", promo.id);
     await supabaseAdmin.rpc("award_points", { _user_id: userId, _points: promo.points, _type: "promocode", _description: `Promo: ${promo.code}`, _reference_id: promo.id });
     return { ok: true, points: promo.points };
@@ -139,3 +149,74 @@ export const updateUserFlags = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+export const convertPointsToCash = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ points: z.number().int().positive() }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context;
+    const { data: p, error: pe } = await supabase.from("profiles").select("points_balance,cash_balance,currency").eq("id", userId).maybeSingle();
+    if (pe || !p) throw new Error("Profile not found");
+    if (Number(p.points_balance) < data.points) throw new Error("Insufficient points balance");
+
+    const { data: settings } = await supabase.from("app_settings").select("points_per_inr,points_per_usd").eq("id", 1).maybeSingle();
+    const rate = p.currency === "INR" ? Number(settings?.points_per_inr ?? 100) : Number(settings?.points_per_usd ?? 100);
+    if (rate <= 0) throw new Error("Invalid conversion rate");
+
+    const cashDelta = Number((data.points / rate).toFixed(4));
+    const nextPoints = Number(p.points_balance) - data.points;
+    const nextCash = Number(p.cash_balance) + cashDelta;
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error: ue } = await supabaseAdmin.from("profiles").update({
+      points_balance: nextPoints,
+      cash_balance: nextCash,
+    }).eq("id", userId);
+    if (ue) throw new Error(ue.message);
+
+    await supabaseAdmin.from("points_ledger").insert({
+      user_id: userId,
+      points: -data.points,
+      cash_delta: cashDelta,
+      type: "points_to_cash",
+      description: `Converted ${data.points} points to cash`,
+    });
+
+    return { points_balance: nextPoints, cash_balance: nextCash };
+  });
+
+export const convertCashToPoints = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ cash: z.number().positive() }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context;
+    const { data: p, error: pe } = await supabase.from("profiles").select("points_balance,cash_balance,currency").eq("id", userId).maybeSingle();
+    if (pe || !p) throw new Error("Profile not found");
+    if (Number(p.cash_balance) < data.cash) throw new Error("Insufficient cash balance");
+
+    const { data: settings } = await supabase.from("app_settings").select("points_per_inr,points_per_usd").eq("id", 1).maybeSingle();
+    const rate = p.currency === "INR" ? Number(settings?.points_per_inr ?? 100) : Number(settings?.points_per_usd ?? 100);
+    if (rate <= 0) throw new Error("Invalid conversion rate");
+
+    const pointsDelta = Math.floor(data.cash * rate);
+    const nextPoints = Number(p.points_balance) + pointsDelta;
+    const nextCash = Number(p.cash_balance) - data.cash;
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error: ue } = await supabaseAdmin.from("profiles").update({
+      points_balance: nextPoints,
+      cash_balance: nextCash,
+    }).eq("id", userId);
+    if (ue) throw new Error(ue.message);
+
+    await supabaseAdmin.from("points_ledger").insert({
+      user_id: userId,
+      points: pointsDelta,
+      cash_delta: -data.cash,
+      type: "cash_to_points",
+      description: `Converted ${p.currency === "INR" ? "₹" : "$"}${data.cash} cash to points`,
+    });
+
+    return { points_balance: nextPoints, cash_balance: nextCash };
+  });
+

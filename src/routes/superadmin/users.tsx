@@ -16,7 +16,7 @@ import {
   Field,
   StatCard,
 } from "@/components/superadmin/kit";
-import { adjustUserBalance, setUserStatus, setUserRoleFlags, listUserRoles } from "@/lib/superadmin.functions";
+import { listProfiles, adjustUserBalance, lockUserPoints, setUserStatus, setUserRoleFlags, listUserRoles } from "@/lib/superadmin.functions";
 import { fmtDate } from "@/lib/format";
 
 export const Route = createFileRoute("/superadmin/users")({
@@ -34,21 +34,24 @@ export const Route = createFileRoute("/superadmin/users")({
 
 function Users() {
   const qc = useQueryClient();
+  const listProfilesFn = useServerFn(listProfiles);
   const adjustFn = useServerFn(adjustUserBalance);
+  const lockFn = useServerFn(lockUserPoints);
   const statusFn = useServerFn(setUserStatus);
   const roleFn = useServerFn(setUserRoleFlags);
   const rolesFn = useServerFn(listUserRoles);
 
-  const [adj, setAdj] = useState<any | null>(null);
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [modalAction, setModalAction] = useState<"adjust" | "lock" | null>(null);
   const [form, setForm] = useState({ cash_delta: 0, points_delta: 0, reason: "" });
+  const [lockAmount, setLockAmount] = useState(0);
+  const [lockReason, setLockReason] = useState("");
+  const selectedUserId =
+    selectedUser?.id ?? selectedUser?.user_id ?? selectedUser?.profile_id ?? selectedUser?.email ?? "";
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["sa", "profiles"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("profiles").select("*").order("created_at", { ascending: false }).limit(1000);
-      if (error) throw new Error(error.message);
-      return data ?? [];
-    },
+    queryFn: () => listProfilesFn({}),
   });
 
   const { data: roles } = useQuery({ queryKey: ["sa", "user_roles"], queryFn: () => rolesFn({}) });
@@ -60,18 +63,21 @@ function Users() {
   };
 
   const adjust = useMutation({
-    mutationFn: () =>
-      adjustFn({
+    mutationFn: () => {
+      if (!selectedUserId) throw new Error("Selected user is missing an ID");
+      return adjustFn({
         data: {
-          user_id: adj.id,
+          user_id: selectedUserId,
           cash_delta: Number(form.cash_delta),
           points_delta: Number(form.points_delta),
           reason: form.reason || "Manual adjustment",
         },
-      }),
+      });
+    },
     onSuccess: () => {
       toast.success("Balance updated");
-      setAdj(null);
+      setSelectedUser(null);
+      setModalAction(null);
       setForm({ cash_delta: 0, points_delta: 0, reason: "" });
       invalidate();
     },
@@ -85,6 +91,34 @@ function Users() {
       invalidate();
     },
     onError: (e: Error) => toast.error(e.message),
+  });
+
+  const lock = useMutation({
+    mutationFn: () => {
+      if (!selectedUserId) throw new Error("Selected user is missing an ID");
+      return lockFn({
+        data: {
+          user_id: selectedUserId,
+          points: Number(lockAmount),
+          reason: lockReason || "Lock points",
+        },
+      });
+    },
+    onSuccess: () => {
+      toast.success("Points locked");
+      setSelectedUser(null);
+      setModalAction(null);
+      setLockAmount(0);
+      setLockReason("");
+      invalidate();
+    },
+    onError: (e: Error) => {
+      toast.error(e.message);
+      if (e.message === "Selected user is missing an ID") {
+        setSelectedUser(null);
+        setModalAction(null);
+      }
+    },
   });
 
   const role = useMutation({
@@ -160,7 +194,21 @@ function Users() {
                 sortable: false,
                 render: (r: any) => (
                   <div className="flex flex-wrap gap-1.5">
-                    <Btn onClick={() => setAdj(r)}>Balance</Btn>
+                    <Btn onClick={() => {
+                      setSelectedUser(r);
+                      setModalAction("adjust");
+                      setForm({ cash_delta: 0, points_delta: 0, reason: "" });
+                    }}>
+                      Balance
+                    </Btn>
+                    <Btn tone="orange" onClick={() => {
+                      setSelectedUser(r);
+                      setModalAction("lock");
+                      setLockAmount(0);
+                      setLockReason("");
+                    }}>
+                      Lock Points
+                    </Btn>
                     <Btn tone={r.verified ? "dark" : "green"} onClick={() => status.mutate({ user_id: r.id, verified: !r.verified })}>
                       {r.verified ? "Unverify" : "Verify"}
                     </Btn>
@@ -187,8 +235,11 @@ function Users() {
         )}
       </Card>
 
-      {adj && (
-        <Modal title={`Adjust balance · ${adj.name ?? adj.email}`} onClose={() => setAdj(null)}>
+      {selectedUser && modalAction === "adjust" && (
+        <Modal title={`Adjust balance · ${selectedUser.name ?? selectedUser.email}`} onClose={() => {
+          setSelectedUser(null);
+          setModalAction(null);
+        }}>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Cash delta">
               <input type="number" value={form.cash_delta} onChange={(e) => setForm({ ...form, cash_delta: Number(e.target.value) })} />
@@ -201,11 +252,43 @@ function Users() {
             </Field>
           </div>
           <div className="mt-5 flex justify-end gap-2">
-            <Btn tone="dark" onClick={() => setAdj(null)}>
+            <Btn tone="dark" onClick={() => {
+              setSelectedUser(null);
+              setModalAction(null);
+            }}>
               Cancel
             </Btn>
             <Btn tone="green" disabled={adjust.isPending} onClick={() => adjust.mutate()}>
               Apply
+            </Btn>
+          </div>
+        </Modal>
+      )}
+      {selectedUser && modalAction === "lock" && (
+        <Modal title={`Lock points · ${selectedUser.name ?? selectedUser.email}`} onClose={() => {
+          setSelectedUser(null);
+          setModalAction(null);
+        }}>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="col-span-2 text-xs text-white/60">
+              Available points: <span className="font-semibold text-white">{Number(selectedUser.points_balance ?? 0).toLocaleString()}</span>
+            </div>
+            <Field label="Points to lock" className="col-span-2">
+              <input type="number" value={lockAmount} onChange={(e) => setLockAmount(Number(e.target.value))} />
+            </Field>
+            <Field label="Reason" className="col-span-2">
+              <input value={lockReason} onChange={(e) => setLockReason(e.target.value)} placeholder="Visible to the user" />
+            </Field>
+          </div>
+          <div className="mt-5 flex justify-end gap-2">
+            <Btn tone="dark" onClick={() => {
+              setSelectedUser(null);
+              setModalAction(null);
+            }}>
+              Cancel
+            </Btn>
+            <Btn tone="orange" disabled={lock.isPending} onClick={() => lock.mutate()}>
+              Lock Points
             </Btn>
           </div>
         </Modal>

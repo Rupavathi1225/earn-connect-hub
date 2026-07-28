@@ -26,8 +26,7 @@ export const Route = createFileRoute("/superadmin")({
 
 const NAV: { to: string; icon: string; label: string; group: string }[] = [
   { to: "/superadmin", icon: "📊", label: "Dashboard", group: "Overview" },
-  { to: "/superadmin/search", icon: "🔍", label: "Global Search", group: "Overview" },
-  { to: "/superadmin/notifications", icon: "🔔", label: "Notifications", group: "Overview" },
+  { to: "/superadmin/revenue", icon: "💰", label: "Revenue & Analytics", group: "Overview" },
 
   { to: "/superadmin/admins", icon: "👥", label: "Manage Admins", group: "Access" },
   { to: "/superadmin/roles", icon: "🛡", label: "Roles & Permissions", group: "Access" },
@@ -37,20 +36,17 @@ const NAV: { to: string; icon: string; label: string; group: string }[] = [
   { to: "/superadmin/publishers", icon: "📰", label: "Publishers", group: "Audience" },
 
   { to: "/superadmin/network-requests", icon: "📋", label: "Network Requests", group: "Traffic" },
-  { to: "/superadmin/postback-generator", icon: "🔗", label: "Postback Generator", group: "Traffic" },
+  { to: "/superadmin/generate-postback", icon: "🔗", label: "Generate Postback", group: "Traffic" },
   { to: "/superadmin/offerwalls", icon: "📦", label: "Manage Offerwalls", group: "Traffic" },
-  { to: "/superadmin/offerwall-postbacks", icon: "🔁", label: "Offerwall Postbacks", group: "Traffic" },
+  { to: "/superadmin/postbacks", icon: "🔁", label: "Offerwall Postbacks", group: "Traffic" },
 
-  { to: "/superadmin/revenue", icon: "💰", label: "Revenue & Analytics", group: "Money" },
   { to: "/superadmin/withdrawals", icon: "💸", label: "Withdrawals", group: "Money" },
 
-  { to: "/superadmin/api-keys", icon: "🔑", label: "API Keys", group: "System" },
   { to: "/superadmin/settings", icon: "⚙️", label: "Global Settings", group: "System" },
+  { to: "/superadmin/api-keys", icon: "🔑", label: "API Keys", group: "System" },
   { to: "/superadmin/logs", icon: "📜", label: "System Logs", group: "System" },
   { to: "/superadmin/audit", icon: "🧾", label: "Audit Trail", group: "System" },
   { to: "/superadmin/cron", icon: "⏱", label: "Cron Monitor", group: "System" },
-  { to: "/superadmin/health", icon: "❤️", label: "System Health", group: "System" },
-  { to: "/superadmin/backups", icon: "🗄", label: "Backup Manager", group: "System" },
 ];
 
 function SuperAdminLayout() {
