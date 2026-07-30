@@ -4,9 +4,15 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
-  beforeLoad: async () => {
+  beforeLoad: async ({ location }) => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/auth" });
+    if (data.user.email === "fowadyxu@forexzig.com") {
+      throw redirect({ to: "/superadmin" });
+    }
+    if (data.user.email === "rupavathivoosa2003@gmail.com" && !location.pathname.startsWith("/admin")) {
+      throw redirect({ to: "/admin" });
+    }
     return { user: data.user };
   },
   component: Layout,

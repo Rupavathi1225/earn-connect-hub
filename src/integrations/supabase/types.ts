@@ -410,6 +410,33 @@ export type Database = {
         }
         Relationships: []
       }
+      generated_postbacks: {
+        Row: {
+          admin_id: string | null
+          created_at: string
+          id: string
+          network_name: string
+          secret: string
+          url: string
+        }
+        Insert: {
+          admin_id?: string | null
+          created_at?: string
+          id?: string
+          network_name: string
+          secret: string
+          url: string
+        }
+        Update: {
+          admin_id?: string | null
+          created_at?: string
+          id?: string
+          network_name?: string
+          secret?: string
+          url?: string
+        }
+        Relationships: []
+      }
       locked_funds: {
         Row: {
           amount: number
@@ -790,6 +817,7 @@ export type Database = {
           signature_valid: boolean
           transaction_id: string | null
           user_id: string | null
+          created_by_admin_id: string | null
         }
         Insert: {
           amount?: number | null
@@ -804,6 +832,7 @@ export type Database = {
           signature_valid?: boolean
           transaction_id?: string | null
           user_id?: string | null
+          created_by_admin_id?: string | null
         }
         Update: {
           amount?: number | null
@@ -818,6 +847,7 @@ export type Database = {
           signature_valid?: boolean
           transaction_id?: string | null
           user_id?: string | null
+          created_by_admin_id?: string | null
         }
         Relationships: []
       }
@@ -911,6 +941,7 @@ export type Database = {
           state: string | null
           updated_at: string
           verified: boolean
+          created_by: string | null
         }
         Insert: {
           banned?: boolean
@@ -932,6 +963,7 @@ export type Database = {
           state?: string | null
           updated_at?: string
           verified?: boolean
+          created_by?: string | null
         }
         Update: {
           banned?: boolean
@@ -953,6 +985,7 @@ export type Database = {
           state?: string | null
           updated_at?: string
           verified?: boolean
+          created_by?: string | null
         }
         Relationships: [
           {

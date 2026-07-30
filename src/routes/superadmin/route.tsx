@@ -8,6 +8,9 @@ export const Route = createFileRoute("/superadmin")({
   beforeLoad: async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/auth" });
+    if (data.user.email === "rupavathivoosa2003@gmail.com") {
+      throw redirect({ to: "/admin" });
+    }
     const { data: ok } = await supabase.rpc("is_super_admin", { _user_id: data.user.id });
     if (!ok) throw redirect({ to: "/dashboard" });
     return { user: data.user };
@@ -38,6 +41,7 @@ const NAV: { to: string; icon: string; label: string; group: string }[] = [
   { to: "/superadmin/network-requests", icon: "📋", label: "Network Requests", group: "Traffic" },
   { to: "/superadmin/generate-postback", icon: "🔗", label: "Generate Postback", group: "Traffic" },
   { to: "/superadmin/offerwalls", icon: "📦", label: "Manage Offerwalls", group: "Traffic" },
+  { to: "/superadmin/surveys", icon: "📝", label: "Manage Surveys", group: "Traffic" },
   { to: "/superadmin/postbacks", icon: "🔁", label: "Offerwall Postbacks", group: "Traffic" },
 
   { to: "/superadmin/withdrawals", icon: "💸", label: "Withdrawals", group: "Money" },

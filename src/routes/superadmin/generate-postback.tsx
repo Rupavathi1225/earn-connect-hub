@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -10,6 +11,7 @@ import {
   Loading,
 } from "@/components/superadmin/kit";
 import { toast } from "sonner";
+import { saveGeneratedPostback } from "@/lib/superadmin.functions";
 
 export const Route = createFileRoute("/superadmin/generate-postback")({
   head: () => ({
@@ -23,6 +25,7 @@ export const Route = createFileRoute("/superadmin/generate-postback")({
 });
 
 function GeneratePostback() {
+  const savePostbackFn = useServerFn(saveGeneratedPostback);
   const [form, setForm] = useState({
     adminId: "",
     networkName: "",
@@ -44,16 +47,43 @@ function GeneratePostback() {
     },
   });
 
-  function handleGenerate() {
+  const saveMutation = useMutation({
+    mutationFn: (variables: {
+      network_name: string;
+      secret: string;
+      url: string;
+      admin_id?: string;
+    }) => savePostbackFn({ data: variables }),
+    onError: (err: Error) => {
+      toast.error(err.message || "Failed to save postback configuration to database");
+    },
+  });
+
+  async function handleGenerate() {
     if (!form.networkName) {
       toast.error("Network Name is required");
       return;
     }
     const origin = window.location.origin;
-    const randomSecret = Math.random().toString(36).substring(2, 10);
-    const url = `${origin}/postback?network=${encodeURIComponent(form.networkName)}&offer_id=${form.offerId || "{offer_id}"}&user_id={${form.userVar}}&payout={${form.payoutVar}}&status={${form.statusVar}}&trans_id={${form.txnVar}}&secret=gp_sec_${randomSecret}`;
-    setGeneratedUrl(url);
-    toast.success("Postback URL generated!");
+    const randomSecret = Math.random().toString(36).substring(2, 15);
+    const secret = `gp_sec_${randomSecret}`;
+    const providerPath = form.networkName.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+    
+    // Correct URL format: /api/public/postback/$provider
+    const url = `${origin}/api/public/postback/${providerPath}?network=${encodeURIComponent(form.networkName)}&offer_id=${form.offerId || "{offer_id}"}&user_id={${form.userVar}}&payout={${form.payoutVar}}&status={${form.statusVar}}&trans_id={${form.txnVar}}&secret=${secret}`;
+
+    try {
+      await saveMutation.mutateAsync({
+        network_name: form.networkName,
+        secret,
+        url,
+        admin_id: form.adminId || undefined,
+      });
+      setGeneratedUrl(url);
+      toast.success("Postback URL generated and saved!");
+    } catch (e) {
+      // Error toast shown by mutation onError handler
+    }
   }
 
   if (isLoading) return <Loading />;

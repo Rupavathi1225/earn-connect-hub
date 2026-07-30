@@ -63,6 +63,20 @@ async function handle({ request, params }: { request: Request; params: { provide
     }
   }
 
+  // Look up who created this postback using the secret parameter
+  const secretParam = q.secret ?? "";
+  let createdByAdminId: string | null = null;
+  if (secretParam) {
+    const { data: genPb } = await supabaseAdmin
+      .from("generated_postbacks")
+      .select("admin_id")
+      .eq("secret", secretParam)
+      .maybeSingle();
+    if (genPb) {
+      createdByAdminId = genPb.admin_id;
+    }
+  }
+
   // Log everything
   const { error: logErr } = await supabaseAdmin.from("postback_logs").insert({
     provider,
@@ -74,6 +88,7 @@ async function handle({ request, params }: { request: Request; params: { provide
     signature_valid,
     processed: false,
     error,
+    created_by_admin_id: createdByAdminId,
   });
   // Dedupe by (provider, tx_id) — insert conflict means already processed
   if (logErr && logErr.code === "23505") {

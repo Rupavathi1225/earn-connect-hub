@@ -204,7 +204,10 @@ export function RecordForm({
   const [values, setValues] = useState<Row>(() => {
     const v: Row = {};
     for (const f of fields) {
-      const raw = initial[f.name];
+      let raw = initial[f.name];
+      if (Array.isArray(raw)) {
+        raw = raw.join(", ");
+      }
       v[f.name] = raw ?? f.defaultValue ?? (f.type === "checkbox" ? false : "");
     }
     return v;

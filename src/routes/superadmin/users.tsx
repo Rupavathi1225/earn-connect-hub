@@ -16,7 +16,7 @@ import {
   Field,
   StatCard,
 } from "@/components/superadmin/kit";
-import { listProfiles, adjustUserBalance, lockUserPoints, setUserStatus, setUserRoleFlags, listUserRoles } from "@/lib/superadmin.functions";
+import { listProfiles, adjustUserBalance, lockUserPoints, setUserStatus, setUserRoleFlags, listUserRoles, createUserAccount } from "@/lib/superadmin.functions";
 import { fmtDate } from "@/lib/format";
 
 export const Route = createFileRoute("/superadmin/users")({
@@ -40,12 +40,15 @@ function Users() {
   const statusFn = useServerFn(setUserStatus);
   const roleFn = useServerFn(setUserRoleFlags);
   const rolesFn = useServerFn(listUserRoles);
+  const createUserFn = useServerFn(createUserAccount);
 
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [modalAction, setModalAction] = useState<"adjust" | "lock" | null>(null);
   const [form, setForm] = useState({ cash_delta: 0, points_delta: 0, reason: "" });
   const [lockAmount, setLockAmount] = useState(0);
   const [lockReason, setLockReason] = useState("");
+  const [createOpen, setCreateOpen] = useState(false);
+  const [createForm, setCreateForm] = useState({ name: "", email: "", password: "" });
   const selectedUserId =
     selectedUser?.id ?? selectedUser?.user_id ?? selectedUser?.profile_id ?? selectedUser?.email ?? "";
 
@@ -130,6 +133,17 @@ function Users() {
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const createUser = useMutation({
+    mutationFn: () => createUserFn({ data: createForm }),
+    onSuccess: () => {
+      toast.success("User account created successfully!");
+      setCreateOpen(false);
+      setCreateForm({ name: "", email: "", password: "" });
+      invalidate();
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
   const rows = data ?? [];
 
   return (
@@ -145,7 +159,7 @@ function Users() {
       </div>
 
       <Card>
-        <SectionTitle>All Users</SectionTitle>
+        <SectionTitle right={<Btn onClick={() => setCreateOpen(true)}>+ Create User</Btn>}>All Users</SectionTitle>
         {isLoading ? (
           <Loading />
         ) : error ? (
@@ -158,6 +172,24 @@ function Users() {
             columns={[
               { key: "name", header: "Name" },
               { key: "email", header: "Email" },
+              {
+                key: "created_by",
+                header: "Created By",
+                value: (r: any) => {
+                  if (!r.created_by) return "Self Sign Up";
+                  const creator = rows.find((u: any) => u.id === r.created_by);
+                  return creator ? `${creator.name || creator.email}` : "Admin";
+                },
+                render: (r: any) => {
+                  if (!r.created_by) return <Badge tone="dark">Self Sign Up</Badge>;
+                  const creator = rows.find((u: any) => u.id === r.created_by);
+                  return (
+                    <Badge tone="blue">
+                      {creator ? `${creator.name || creator.email}` : "Admin"}
+                    </Badge>
+                  );
+                },
+              },
               { key: "phone", header: "Phone" },
               { key: "country", header: "Country" },
               { key: "currency", header: "Currency" },
@@ -289,6 +321,45 @@ function Users() {
             </Btn>
             <Btn tone="orange" disabled={lock.isPending} onClick={() => lock.mutate()}>
               Lock Points
+            </Btn>
+          </div>
+        </Modal>
+      )}
+
+      {createOpen && (
+        <Modal title="Create User Account" onClose={() => setCreateOpen(false)}>
+          <div className="space-y-3">
+            <Field label="Full Name">
+              <input
+                type="text"
+                value={createForm.name}
+                onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
+                placeholder="John Doe"
+              />
+            </Field>
+            <Field label="Email Address">
+              <input
+                type="email"
+                value={createForm.email}
+                onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
+                placeholder="john@example.com"
+              />
+            </Field>
+            <Field label="Password">
+              <input
+                type="password"
+                value={createForm.password}
+                onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+                placeholder="Min 8 characters"
+              />
+            </Field>
+          </div>
+          <div className="mt-5 flex justify-end gap-2">
+            <Btn tone="dark" onClick={() => setCreateOpen(false)}>
+              Cancel
+            </Btn>
+            <Btn tone="green" disabled={createUser.isPending} onClick={() => createUser.mutate()}>
+              Create Account
             </Btn>
           </div>
         </Modal>

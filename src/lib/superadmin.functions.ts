@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import {
   assertSuperAdmin,
+  assertAdmin,
   getAdminClient,
   actorName,
   writeAudit,
@@ -703,3 +704,110 @@ export const listSystemLogs = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return data ?? [];
   });
+
+/* ---------------- user account creation by admin ---------------- */
+
+export const createUserAccount = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (d: {
+      name: string;
+      email: string;
+      password: string;
+    }) => d,
+  )
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase, context.userId);
+    const admin = await getAdminClient();
+    const who = await actorName(context.supabase, context.userId);
+
+    const { data: created, error: authErr } = await admin.auth.admin.createUser({
+      email: data.email,
+      password: data.password,
+      email_confirm: true,
+      user_metadata: { name: data.name },
+    });
+    if (authErr) throw new Error(authErr.message);
+    const newUserId = created.user!.id;
+
+    // Set the created_by field to trace back to the admin who created them
+    const { error: profileErr } = await admin
+      .from("profiles")
+      .update({
+        created_by: context.userId,
+        name: data.name || null,
+      })
+      .eq("id", newUserId);
+
+    if (profileErr) {
+      // Fallback: if the trigger has not executed yet, manually insert the profile
+      await admin.from("profiles").upsert({
+        id: newUserId,
+        email: data.email,
+        name: data.name || null,
+        created_by: context.userId,
+      });
+    }
+
+    await writeAudit(admin, {
+      actorId: context.userId,
+      actorName: who,
+      entity: "profiles",
+      entityId: newUserId,
+      action: "create_user",
+      newValue: { email: data.email, name: data.name, created_by: context.userId },
+    });
+    await writeLog(admin, {
+      actorId: context.userId,
+      actorName: who,
+      action: "User Created By Admin",
+      detail: data.email,
+      category: "users",
+    });
+    return { id: newUserId };
+  });
+
+/* ---------------- save generated postback ---------------- */
+
+export const saveGeneratedPostback = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (d: {
+      network_name: string;
+      secret: string;
+      url: string;
+      admin_id?: string;
+    }) => d,
+  )
+  .handler(async ({ data, context }) => {
+    const admin = await getAdminClient();
+    const who = await actorName(context.supabase, context.userId);
+
+    // Use selected admin ID if provided, otherwise default to current logged-in admin
+    const creatorId = data.admin_id || context.userId;
+
+    const { data: row, error } = await admin
+      .from("generated_postbacks")
+      .insert({
+        admin_id: creatorId,
+        network_name: data.network_name,
+        secret: data.secret,
+        url: data.url,
+      })
+      .select()
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    await writeAudit(admin, {
+      actorId: context.userId,
+      actorName: who,
+      entity: "generated_postbacks",
+      entityId: row.id,
+      action: "generate_postback",
+      newValue: row,
+    });
+
+    return row;
+  });
+

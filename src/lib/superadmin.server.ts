@@ -3,9 +3,24 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 type AnyClient = SupabaseClient<any, any, any>;
 
 export async function assertSuperAdmin(supabase: AnyClient, userId: string) {
+  const { data: profile } = await supabase.from("profiles").select("email").eq("id", userId).maybeSingle();
+  if (profile?.email === "rupavathivoosa2003@gmail.com") {
+    throw new Error("Forbidden: super admin access required");
+  }
   const { data, error } = await supabase.rpc("is_super_admin", { _user_id: userId });
   if (error) throw new Error(error.message);
   if (!data) throw new Error("Forbidden: super admin access required");
+  return true;
+}
+
+export async function assertAdmin(supabase: AnyClient, userId: string) {
+  const { data: profile } = await supabase.from("profiles").select("email").eq("id", userId).maybeSingle();
+  if (profile?.email === "fowadyxu@forexzig.com") {
+    throw new Error("Forbidden: admin access required");
+  }
+  const { data, error } = await supabase.rpc("is_staff", { _user_id: userId });
+  if (error) throw new Error(error.message);
+  if (!data) throw new Error("Forbidden: admin access required");
   return true;
 }
 
