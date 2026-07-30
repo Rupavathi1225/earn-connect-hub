@@ -663,6 +663,84 @@ export type Database = {
         }
         Relationships: []
       }
+      offers: {
+        Row: {
+          active: boolean
+          category: string | null
+          countries: string[]
+          created_at: string
+          currency: string
+          description: string | null
+          device: string | null
+          expiry_date: string | null
+          id: string
+          image_url: string | null
+          is_public: boolean
+          offer_id: string
+          payout: number
+          payout_model: string
+          percent: number
+          platform: string | null
+          points: number
+          title: string
+          tracking_url: string | null
+          traffic_sources: string | null
+          updated_at: string
+          url: string
+          user_variable: string
+        }
+        Insert: {
+          active?: boolean
+          category?: string | null
+          countries?: string[]
+          created_at?: string
+          currency?: string
+          description?: string | null
+          device?: string | null
+          expiry_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_public?: boolean
+          offer_id: string
+          payout?: number
+          payout_model?: string
+          percent?: number
+          platform?: string | null
+          points?: number
+          title: string
+          tracking_url?: string | null
+          traffic_sources?: string | null
+          updated_at?: string
+          url: string
+          user_variable?: string
+        }
+        Update: {
+          active?: boolean
+          category?: string | null
+          countries?: string[]
+          created_at?: string
+          currency?: string
+          description?: string | null
+          device?: string | null
+          expiry_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_public?: boolean
+          offer_id?: string
+          payout?: number
+          payout_model?: string
+          percent?: number
+          platform?: string | null
+          points?: number
+          title?: string
+          tracking_url?: string | null
+          traffic_sources?: string | null
+          updated_at?: string
+          url?: string
+          user_variable?: string
+        }
+        Relationships: []
+      }
       offerwalls: {
         Row: {
           active: boolean
