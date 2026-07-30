@@ -24,9 +24,40 @@ function SurveysPage() {
   const [surveys, setSurveys] = useState<Survey[]>([]);
 
   useEffect(() => {
-    supabase.from("surveys").select("id,network_name,network_url,points,description,banner_url,user_variable,offer_id").eq("active", true).then(({ data }) => {
-      setSurveys((data ?? []) as Survey[]);
-    });
+    let cancelled = false;
+    (async () => {
+      const [{ data: sData }, { data: oData }] = await Promise.all([
+        supabase
+          .from("surveys")
+          .select("id,network_name,network_url,points,description,banner_url,user_variable,offer_id")
+          .eq("active", true),
+        supabase
+          .from("offers")
+          .select("id,offer_id,title,url,tracking_url,points,description,image_url,user_variable,expiry_date")
+          .eq("active", true)
+          .eq("is_public", true)
+          .order("created_at", { ascending: false }),
+      ]);
+
+      const today = new Date().toISOString().slice(0, 10);
+      const offerItems: Survey[] = ((oData ?? []) as any[])
+        .filter((o) => !o.expiry_date || o.expiry_date >= today)
+        .map((o) => ({
+          id: `offer-${o.id}`,
+          network_name: o.title,
+          network_url: o.tracking_url || o.url,
+          points: Number(o.points ?? 0),
+          description: o.description,
+          banner_url: o.image_url,
+          user_variable: o.user_variable || "aff_sub",
+          offer_id: o.offer_id,
+        }));
+
+      if (!cancelled) setSurveys([...((sData ?? []) as Survey[]), ...offerItems]);
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   function openSurvey(s: Survey) {
@@ -34,6 +65,7 @@ function SurveysPage() {
     const url = `${s.network_url}${sep}${s.user_variable}=${user.id}${s.offer_id ? `&offer_id=${s.offer_id}` : ""}`;
     window.open(url, "_blank", "noopener,noreferrer");
   }
+
 
   return (
     <div className="flex gap-4">
