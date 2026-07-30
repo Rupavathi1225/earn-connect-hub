@@ -42,6 +42,7 @@ const NAV: { to: string; icon: string; label: string; group: string }[] = [
   { to: "/superadmin/generate-postback", icon: "🔗", label: "Generate Postback", group: "Traffic" },
   { to: "/superadmin/offerwalls", icon: "📦", label: "Manage Offerwalls", group: "Traffic" },
   { to: "/superadmin/surveys", icon: "📝", label: "Manage Surveys", group: "Traffic" },
+  { to: "/superadmin/offers", icon: "🎁", label: "Manage Offers", group: "Traffic" },
   { to: "/superadmin/postbacks", icon: "🔁", label: "Offerwall Postbacks", group: "Traffic" },
 
   { to: "/superadmin/withdrawals", icon: "💸", label: "Withdrawals", group: "Money" },

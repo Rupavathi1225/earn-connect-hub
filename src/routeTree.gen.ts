@@ -25,6 +25,7 @@ import { Route as SuperadminRevenueRouteImport } from './routes/superadmin/reven
 import { Route as SuperadminPublishersRouteImport } from './routes/superadmin/publishers'
 import { Route as SuperadminPostbacksRouteImport } from './routes/superadmin/postbacks'
 import { Route as SuperadminOfferwallsRouteImport } from './routes/superadmin/offerwalls'
+import { Route as SuperadminOffersRouteImport } from './routes/superadmin/offers'
 import { Route as SuperadminNetworkRequestsRouteImport } from './routes/superadmin/network-requests'
 import { Route as SuperadminLogsRouteImport } from './routes/superadmin/logs'
 import { Route as SuperadminGeneratePostbackRouteImport } from './routes/superadmin/generate-postback'
@@ -137,6 +138,11 @@ const SuperadminPostbacksRoute = SuperadminPostbacksRouteImport.update({
 const SuperadminOfferwallsRoute = SuperadminOfferwallsRouteImport.update({
   id: '/offerwalls',
   path: '/offerwalls',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminOffersRoute = SuperadminOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
 const SuperadminNetworkRequestsRoute =
@@ -351,6 +357,7 @@ export interface FileRoutesByFullPath {
   '/superadmin/generate-postback': typeof SuperadminGeneratePostbackRoute
   '/superadmin/logs': typeof SuperadminLogsRoute
   '/superadmin/network-requests': typeof SuperadminNetworkRequestsRoute
+  '/superadmin/offers': typeof SuperadminOffersRoute
   '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/postbacks': typeof SuperadminPostbacksRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
@@ -401,6 +408,7 @@ export interface FileRoutesByTo {
   '/superadmin/generate-postback': typeof SuperadminGeneratePostbackRoute
   '/superadmin/logs': typeof SuperadminLogsRoute
   '/superadmin/network-requests': typeof SuperadminNetworkRequestsRoute
+  '/superadmin/offers': typeof SuperadminOffersRoute
   '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/postbacks': typeof SuperadminPostbacksRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
@@ -454,6 +462,7 @@ export interface FileRoutesById {
   '/superadmin/generate-postback': typeof SuperadminGeneratePostbackRoute
   '/superadmin/logs': typeof SuperadminLogsRoute
   '/superadmin/network-requests': typeof SuperadminNetworkRequestsRoute
+  '/superadmin/offers': typeof SuperadminOffersRoute
   '/superadmin/offerwalls': typeof SuperadminOfferwallsRoute
   '/superadmin/postbacks': typeof SuperadminPostbacksRoute
   '/superadmin/publishers': typeof SuperadminPublishersRoute
@@ -507,6 +516,7 @@ export interface FileRouteTypes {
     | '/superadmin/generate-postback'
     | '/superadmin/logs'
     | '/superadmin/network-requests'
+    | '/superadmin/offers'
     | '/superadmin/offerwalls'
     | '/superadmin/postbacks'
     | '/superadmin/publishers'
@@ -557,6 +567,7 @@ export interface FileRouteTypes {
     | '/superadmin/generate-postback'
     | '/superadmin/logs'
     | '/superadmin/network-requests'
+    | '/superadmin/offers'
     | '/superadmin/offerwalls'
     | '/superadmin/postbacks'
     | '/superadmin/publishers'
@@ -609,6 +620,7 @@ export interface FileRouteTypes {
     | '/superadmin/generate-postback'
     | '/superadmin/logs'
     | '/superadmin/network-requests'
+    | '/superadmin/offers'
     | '/superadmin/offerwalls'
     | '/superadmin/postbacks'
     | '/superadmin/publishers'
@@ -760,6 +772,13 @@ declare module '@tanstack/react-router' {
       path: '/offerwalls'
       fullPath: '/superadmin/offerwalls'
       preLoaderRoute: typeof SuperadminOfferwallsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/offers': {
+      id: '/superadmin/offers'
+      path: '/offers'
+      fullPath: '/superadmin/offers'
+      preLoaderRoute: typeof SuperadminOffersRouteImport
       parentRoute: typeof SuperadminRouteRoute
     }
     '/superadmin/network-requests': {
@@ -1071,6 +1090,7 @@ interface SuperadminRouteRouteChildren {
   SuperadminGeneratePostbackRoute: typeof SuperadminGeneratePostbackRoute
   SuperadminLogsRoute: typeof SuperadminLogsRoute
   SuperadminNetworkRequestsRoute: typeof SuperadminNetworkRequestsRoute
+  SuperadminOffersRoute: typeof SuperadminOffersRoute
   SuperadminOfferwallsRoute: typeof SuperadminOfferwallsRoute
   SuperadminPostbacksRoute: typeof SuperadminPostbacksRoute
   SuperadminPublishersRoute: typeof SuperadminPublishersRoute
@@ -1092,6 +1112,7 @@ const SuperadminRouteRouteChildren: SuperadminRouteRouteChildren = {
   SuperadminGeneratePostbackRoute: SuperadminGeneratePostbackRoute,
   SuperadminLogsRoute: SuperadminLogsRoute,
   SuperadminNetworkRequestsRoute: SuperadminNetworkRequestsRoute,
+  SuperadminOffersRoute: SuperadminOffersRoute,
   SuperadminOfferwallsRoute: SuperadminOfferwallsRoute,
   SuperadminPostbacksRoute: SuperadminPostbacksRoute,
   SuperadminPublishersRoute: SuperadminPublishersRoute,
@@ -1120,13 +1141,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
