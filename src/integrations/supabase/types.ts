@@ -807,6 +807,7 @@ export type Database = {
         Row: {
           amount: number | null
           created_at: string
+          created_by_admin_id: string | null
           error: string | null
           id: string
           ip_address: string | null
@@ -817,11 +818,11 @@ export type Database = {
           signature_valid: boolean
           transaction_id: string | null
           user_id: string | null
-          created_by_admin_id: string | null
         }
         Insert: {
           amount?: number | null
           created_at?: string
+          created_by_admin_id?: string | null
           error?: string | null
           id?: string
           ip_address?: string | null
@@ -832,11 +833,11 @@ export type Database = {
           signature_valid?: boolean
           transaction_id?: string | null
           user_id?: string | null
-          created_by_admin_id?: string | null
         }
         Update: {
           amount?: number | null
           created_at?: string
+          created_by_admin_id?: string | null
           error?: string | null
           id?: string
           ip_address?: string | null
@@ -847,7 +848,6 @@ export type Database = {
           signature_valid?: boolean
           transaction_id?: string | null
           user_id?: string | null
-          created_by_admin_id?: string | null
         }
         Relationships: []
       }
@@ -927,6 +927,7 @@ export type Database = {
           city: string | null
           country: string | null
           created_at: string
+          created_by: string | null
           currency: Database["public"]["Enums"]["currency_type"]
           domain_id: string | null
           email: string
@@ -941,7 +942,6 @@ export type Database = {
           state: string | null
           updated_at: string
           verified: boolean
-          created_by: string | null
         }
         Insert: {
           banned?: boolean
@@ -949,6 +949,7 @@ export type Database = {
           city?: string | null
           country?: string | null
           created_at?: string
+          created_by?: string | null
           currency?: Database["public"]["Enums"]["currency_type"]
           domain_id?: string | null
           email: string
@@ -963,7 +964,6 @@ export type Database = {
           state?: string | null
           updated_at?: string
           verified?: boolean
-          created_by?: string | null
         }
         Update: {
           banned?: boolean
@@ -971,6 +971,7 @@ export type Database = {
           city?: string | null
           country?: string | null
           created_at?: string
+          created_by?: string | null
           currency?: Database["public"]["Enums"]["currency_type"]
           domain_id?: string | null
           email?: string
@@ -985,7 +986,6 @@ export type Database = {
           state?: string | null
           updated_at?: string
           verified?: boolean
-          created_by?: string | null
         }
         Relationships: [
           {
