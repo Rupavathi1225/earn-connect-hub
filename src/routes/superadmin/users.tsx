@@ -248,7 +248,20 @@ function Users() {
                       {r.banned ? "Unban" : "Ban"}
                     </Btn>
                     <Btn
+                      tone="blue"
+                      disabled={role.isPending}
+                      onClick={() =>
+                        role.mutate({
+                          user_id: r.id,
+                          admin: !roleSet.has(`${r.id}:admin`),
+                        })
+                      }
+                    >
+                      {roleSet.has(`${r.id}:admin`) ? "Revoke Admin" : "Make Admin"}
+                    </Btn>
+                    <Btn
                       tone="purple"
+                      disabled={role.isPending}
                       onClick={() =>
                         role.mutate({
                           user_id: r.id,
@@ -259,6 +272,7 @@ function Users() {
                     >
                       {roleSet.has(`${r.id}:super_admin`) ? "Revoke Super" : "Make Super"}
                     </Btn>
+
                   </div>
                 ),
               },
