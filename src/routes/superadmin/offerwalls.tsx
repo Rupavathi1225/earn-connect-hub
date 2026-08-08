@@ -8,7 +8,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/superadmin/offerwalls")({
   head: () => ({
     meta: [
-      { title: "Manage Offerwalls · Super Admin · GlobalPrime" },
+      { title: "Manage Offerwalls · Super Admin · PrimePath Services" },
       { name: "description", content: "Add, edit, enable or disable offerwall providers network-wide." },
       { property: "og:title", content: "Manage Offerwalls · Super Admin" },
       { property: "og:description", content: "Offerwall providers, API keys, priorities and revenue share." },

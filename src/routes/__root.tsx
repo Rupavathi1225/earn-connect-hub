@@ -77,14 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Global Prime" },
-      { name: "description", content: "GlobalPrime rewards platform" },
-      { name: "author", content: "GlobalPrime" },
-      { property: "og:title", content: "Global Prime" },
-      { property: "og:description", content: "GlobalPrime rewards platform" },
+      { title: "PrimePath Services" },
+      { name: "description", content: "PrimePath Services rewards platform" },
+      { name: "author", content: "PrimePath Services" },
+      { property: "og:title", content: "PrimePath Services" },
+      { property: "og:description", content: "PrimePath Services rewards platform" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@GlobalPrime" },
+      { name: "twitter:site", content: "@PrimePath Services" },
     ],
     links: [
       {

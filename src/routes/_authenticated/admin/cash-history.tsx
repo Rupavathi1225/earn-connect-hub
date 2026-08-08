@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_authenticated/admin/cash-history")({
   beforeLoad: async ({ context }) => {
     await guardAdminPanel(context.user.id);
   },
-  head: () => ({ meta: [{ title: "Member Cash History — Admin — GlobalPrime" }, { name: "description", content: "View member cash transaction history." }] }),
+  head: () => ({ meta: [{ title: "Member Cash History — Admin — PrimePath Services" }, { name: "description", content: "View member cash transaction history." }] }),
   component: CashHistory,
 });
 

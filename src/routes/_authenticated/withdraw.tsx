@@ -6,7 +6,7 @@ import { fmtDate, fmtMoney } from "@/lib/format";
 import { StatusBadge } from "@/components/StatusBadge";
 
 export const Route = createFileRoute("/_authenticated/withdraw")({
-  head: () => ({ meta: [{ title: "Withdraw — GlobalPrime" }, { name: "description", content: "Request a withdrawal." }] }),
+  head: () => ({ meta: [{ title: "Withdraw — PrimePath Services" }, { name: "description", content: "Request a withdrawal." }] }),
   component: WithdrawPage,
 });
 

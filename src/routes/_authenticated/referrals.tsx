@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { fmtDate, fmtPoints } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/referrals")({
-  head: () => ({ meta: [{ title: "Referrals — GlobalPrime" }, { name: "description", content: "Invite friends and earn commissions." }] }),
+  head: () => ({ meta: [{ title: "Referrals — PrimePath Services" }, { name: "description", content: "Invite friends and earn commissions." }] }),
   component: RefPage,
 });
 

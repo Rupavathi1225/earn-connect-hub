@@ -22,7 +22,7 @@ import { fmtDate } from "@/lib/format";
 export const Route = createFileRoute("/superadmin/users")({
   head: () => ({
     meta: [
-      { title: "Users · Super Admin · GlobalPrime" },
+      { title: "Users · Super Admin · PrimePath Services" },
       { name: "description", content: "Full member directory with balances, verification, bans and role control." },
       { property: "og:title", content: "Users · Super Admin" },
       { property: "og:description", content: "Global member directory and balance tools." },

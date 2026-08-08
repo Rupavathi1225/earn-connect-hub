@@ -21,7 +21,7 @@ const dashboardSearchSchema = z.object({
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   validateSearch: dashboardSearchSchema,
-  head: () => ({ meta: [{ title: "Dashboard — GlobalPrime" }, { name: "description", content: "Your rewards dashboard." }] }),
+  head: () => ({ meta: [{ title: "Dashboard — PrimePath Services" }, { name: "description", content: "Your rewards dashboard." }] }),
   component: Dashboard,
 });
 
@@ -381,11 +381,11 @@ function Dashboard() {
                 {subTab === "admin" && (
                   <>
                     <div className="font-bold text-[#e8734a] mb-2">Dear User,</div>
-                    <p>Thanks for being a part of GlobalPrime Community. Kindly pay attention to mentioned points as they are important.</p>
+                    <p>Thanks for being a part of PrimePath Services Community. Kindly pay attention to mentioned points as they are important.</p>
                     <ol className="list-decimal ml-5 mt-3 space-y-1 text-xs">
                       <li>Do not use fake information during taking.</li>
                       <li>Do not make multiple profiles. It will get you banned permanently.</li>
-                      <li>Do not use VPN or proxy when using GlobalPrime. Doing so will get you banned permanently.</li>
+                      <li>Do not use VPN or proxy when using PrimePath Services. Doing so will get you banned permanently.</li>
                     </ol>
                   </>
                 )}
@@ -476,7 +476,7 @@ function Dashboard() {
                       <p className="text-green-700 font-semibold flex items-center gap-1">✓ Your account is verified.</p>
                     ) : (
                       <>
-                        <p>We have detected that your account is not verified yet. Account verification is necessary to use GlobalPrime as it helps us in providing our users quality surveys by filtering our cheaters/fake users.</p>
+                        <p>We have detected that your account is not verified yet. Account verification is necessary to use PrimePath Services as it helps us in providing our users quality surveys by filtering our cheaters/fake users.</p>
                         <p className="mt-2">Verifying your account is easy and it will take only few minutes. After verification you will be awarded with 10 bonus points.</p>
                         <Link to="/tickets" className="text-[#2563eb] underline font-bold mt-3 inline-block">Click here to verify your account.</Link>
                       </>
@@ -498,7 +498,7 @@ function Dashboard() {
                 <li>Take the time given for the survey; do not rush through it.</li>
                 <li>Read the question carefully before answering.</li>
                 <li>Do not make multiple accounts. It will get you banned permanently.</li>
-                <li>Do not use VPN or proxy when using Global prime.</li>
+                <li>Do not use VPN or proxy when using PrimePath Services.</li>
               </ol>
             </div>
           </>

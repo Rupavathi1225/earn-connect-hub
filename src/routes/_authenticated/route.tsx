@@ -113,7 +113,7 @@ function Layout() {
     <div className="flex min-h-screen bg-[#f0f2f5]">
       <aside className="w-56 bg-[#1a1c3a] text-white flex flex-col shrink-0">
         <div className="p-4 border-b border-white/10 text-center">
-          <div className="text-lg font-extrabold tracking-wider">GLOBALPRIME</div>
+          <div className="text-lg font-extrabold tracking-wider">PRIMEPATH SERVICES</div>
           <div className="text-[10px] italic text-[#f59e0b]">Earn. Complete. Withdraw.</div>
         </div>
         <nav className="flex-1 overflow-y-auto py-2">

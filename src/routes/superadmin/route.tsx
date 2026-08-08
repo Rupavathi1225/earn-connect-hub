@@ -17,9 +17,9 @@ export const Route = createFileRoute("/superadmin")({
   },
   head: () => ({
     meta: [
-      { title: "Super Admin Control · GlobalPrime" },
-      { name: "description", content: "Global super admin control panel for the GlobalPrime rewards network." },
-      { property: "og:title", content: "Super Admin Control · GlobalPrime" },
+      { title: "Super Admin Control · PrimePath Services" },
+      { name: "description", content: "Global super admin control panel for the PrimePath Services rewards network." },
+      { property: "og:title", content: "Super Admin Control · PrimePath Services" },
       { property: "og:description", content: "Manage domains, admins, networks, offerwalls and revenue." },
       { name: "robots", content: "noindex" },
     ],
@@ -121,7 +121,7 @@ function SuperAdminLayout() {
       >
         <div className="border-b border-[var(--sa-border)] px-4 py-4">
           <div className="text-[15px] font-extrabold tracking-wide">🛡 SUPER ADMIN</div>
-          <div className="mt-0.5 text-[10px] text-[var(--sa-muted)]">GlobalPrime Control</div>
+          <div className="mt-0.5 text-[10px] text-[var(--sa-muted)]">PrimePath Services Control</div>
         </div>
 
         <nav className="flex-1 overflow-y-auto py-2">
