@@ -29,7 +29,7 @@ import { fmtDate } from "@/lib/format";
 export const Route = createFileRoute("/superadmin/admins")({
   head: () => ({
     meta: [
-      { title: "Manage Admins · Super Admin · GlobalPrime" },
+      { title: "Manage Admins · Super Admin · PrimePath Services" },
       { name: "description", content: "Create admin logins, assign roles, reset passwords and revoke access." },
       { property: "og:title", content: "Manage Admins · Super Admin" },
       { property: "og:description", content: "Admin accounts, roles and revenue share." },

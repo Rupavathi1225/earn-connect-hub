@@ -8,7 +8,7 @@ import { listSystemLogs } from "@/lib/superadmin.functions";
 export const Route = createFileRoute("/superadmin/logs")({
   head: () => ({
     meta: [
-      { title: "System Logs · Super Admin · GlobalPrime" },
+      { title: "System Logs · Super Admin · PrimePath Services" },
       { name: "description", content: "Browse platform system logs by level, category and actor." },
       { property: "og:title", content: "System Logs · Super Admin" },
       { property: "og:description", content: "Platform system log stream." },

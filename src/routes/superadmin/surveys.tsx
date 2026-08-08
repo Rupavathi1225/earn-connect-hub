@@ -5,7 +5,7 @@ import { Badge } from "@/components/superadmin/kit";
 export const Route = createFileRoute("/superadmin/surveys")({
   head: () => ({
     meta: [
-      { title: "Manage Surveys · Super Admin · GlobalPrime" },
+      { title: "Manage Surveys · Super Admin · PrimePath Services" },
       { name: "description", content: "Add, edit, enable or disable survey providers network-wide." },
       { property: "og:title", content: "Manage Surveys · Super Admin" },
       { property: "og:description", content: "Survey providers, reward points, offer IDs and country targeting." },

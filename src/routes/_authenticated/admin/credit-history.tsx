@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_authenticated/admin/credit-history")({
   beforeLoad: async ({ context }) => {
     await guardAdminPanel(context.user.id);
   },
-  head: () => ({ meta: [{ title: "Member Credit History — Admin — GlobalPrime" }, { name: "description", content: "View member points credit history." }] }),
+  head: () => ({ meta: [{ title: "Member Credit History — Admin — PrimePath Services" }, { name: "description", content: "View member points credit history." }] }),
   component: CreditHistory,
 });
 

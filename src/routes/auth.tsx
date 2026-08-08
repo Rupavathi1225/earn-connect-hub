@@ -23,8 +23,8 @@ export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Sign In / Sign Up — GlobalPrime" },
-      { name: "description", content: "Sign in or create your GlobalPrime account to start earning cash rewards." },
+      { title: "Sign In / Sign Up — PrimePath Services" },
+      { name: "description", content: "Sign in or create your PrimePath Services account to start earning cash rewards." },
       { name: "robots", content: "noindex" },
     ],
     scripts: TURNSTILE_ENABLED
@@ -130,7 +130,7 @@ function Auth() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1c3a] to-[#2a2d5a] p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
         <div className="text-center mb-4">
-          <div className="text-xl font-extrabold text-[#1a1c3a] tracking-wider">GLOBALPRIME</div>
+          <div className="text-xl font-extrabold text-[#1a1c3a] tracking-wider">PRIMEPATH SERVICES</div>
           <div className="text-[10px] italic text-[#f59e0b]">Earn. Complete. Withdraw.</div>
         </div>
         <div className="flex mb-4 rounded-lg overflow-hidden border">

@@ -10,7 +10,7 @@ import { fmtDate } from "@/lib/format";
 export const Route = createFileRoute("/superadmin/withdrawals")({
   head: () => ({
     meta: [
-      { title: "Withdrawals · Super Admin · GlobalPrime" },
+      { title: "Withdrawals · Super Admin · PrimePath Services" },
       { name: "description", content: "Approve, reject or mark paid every withdrawal request across all domains." },
       { property: "og:title", content: "Withdrawals · Super Admin" },
       { property: "og:description", content: "Network-wide payout queue management." },

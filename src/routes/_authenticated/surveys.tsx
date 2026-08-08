@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { RightSidebar } from "@/components/RightSidebar";
 
 export const Route = createFileRoute("/_authenticated/surveys")({
-  head: () => ({ meta: [{ title: "Daily Surveys — GlobalPrime" }, { name: "description", content: "Complete daily surveys and earn points." }] }),
+  head: () => ({ meta: [{ title: "Daily Surveys — PrimePath Services" }, { name: "description", content: "Complete daily surveys and earn points." }] }),
   component: SurveysPage,
 });
 

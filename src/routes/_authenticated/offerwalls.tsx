@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/offerwalls")({
-  head: () => ({ meta: [{ title: "Offer Walls — GlobalPrime" }, { name: "description", content: "Complete offers from top providers." }] }),
+  head: () => ({ meta: [{ title: "Offer Walls — PrimePath Services" }, { name: "description", content: "Complete offers from top providers." }] }),
   component: OfferwallsPage,
 });
 

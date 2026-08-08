@@ -22,7 +22,7 @@ import { fmtDate } from "@/lib/format";
 export const Route = createFileRoute("/superadmin/network-requests")({
   head: () => ({
     meta: [
-      { title: "Network Requests · Super Admin · GlobalPrime" },
+      { title: "Network Requests · Super Admin · PrimePath Services" },
       { name: "description", content: "Review and approve/reject custom network integrations." },
       { name: "robots", content: "noindex" },
     ],

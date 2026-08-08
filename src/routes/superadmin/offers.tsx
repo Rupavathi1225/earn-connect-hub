@@ -5,7 +5,7 @@ import { Badge } from "@/components/superadmin/kit";
 export const Route = createFileRoute("/superadmin/offers")({
   head: () => ({
     meta: [
-      { title: "Manage Offers · Super Admin · GlobalPrime" },
+      { title: "Manage Offers · Super Admin · PrimePath Services" },
       { name: "description", content: "Create, edit and publish offers that appear in the user Daily Surveys section." },
       { property: "og:title", content: "Manage Offers · Super Admin" },
       { property: "og:description", content: "Offer IDs, payouts, tracking URLs, targeting and publishing controls." },
