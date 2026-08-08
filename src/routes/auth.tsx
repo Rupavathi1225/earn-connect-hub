@@ -57,6 +57,8 @@ function Auth() {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [checkEmail, setCheckEmail] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
@@ -105,7 +107,7 @@ function Auth() {
     setLoading(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -114,6 +116,10 @@ function Auth() {
           },
         });
         if (error) throw error;
+        if (!data.session) {
+          setCheckEmail(true);
+          return;
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -126,6 +132,29 @@ function Auth() {
     }
   }
 
+
+  if (checkEmail) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1c3a] to-[#2a2d5a] p-4">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 text-center">
+          <div className="text-4xl mb-3">📧</div>
+          <h1 className="text-lg font-extrabold text-[#1a1c3a] mb-2">Check your email</h1>
+          <p className="text-sm text-gray-600">
+            We sent a confirmation link to <span className="font-semibold">{email}</span>. Click it to
+            activate your account, then sign in.
+          </p>
+          <button
+            type="button"
+            onClick={() => { setCheckEmail(false); setMode("signin"); }}
+            className="mt-5 w-full bg-[#e8734a] hover:bg-[#d66339] text-white font-bold py-2.5 rounded-md text-sm"
+          >
+            Back to Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1c3a] to-[#2a2d5a] p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
@@ -133,6 +162,7 @@ function Auth() {
           <div className="text-xl font-extrabold text-[#1a1c3a] tracking-wider">PRIMEPATH SERVICES</div>
           <div className="text-[10px] italic text-[#f59e0b]">Earn. Complete. Withdraw.</div>
         </div>
+
         <div className="flex mb-4 rounded-lg overflow-hidden border">
           <button onClick={() => setMode("signin")} className={`flex-1 py-2 text-sm font-semibold ${mode === "signin" ? "bg-[#1a8a7d] text-white" : "bg-gray-50 text-gray-700"}`}>Sign In</button>
           <button onClick={() => setMode("signup")} className={`flex-1 py-2 text-sm font-semibold ${mode === "signup" ? "bg-[#1a8a7d] text-white" : "bg-gray-50 text-gray-700"}`}>Sign Up</button>
