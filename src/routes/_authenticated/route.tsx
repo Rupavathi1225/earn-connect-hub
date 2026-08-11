@@ -22,7 +22,7 @@ function Layout() {
   const { user } = Route.useRouteContext();
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isSuper, setIsSuper] = useState(false);
+
   const [profile, setProfile] = useState<{ name: string | null; email: string } | null>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
 
@@ -30,7 +30,7 @@ function Layout() {
     (async () => {
       const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id);
       const list = (roles ?? []).map((r) => r.role as string);
-      setIsSuper(list.includes("super_admin"));
+
       setIsAdmin(list.includes("admin"));
       const { data: p } = await supabase.from("profiles").select("name,email").eq("id", user.id).maybeSingle();
       if (p) setProfile(p);
