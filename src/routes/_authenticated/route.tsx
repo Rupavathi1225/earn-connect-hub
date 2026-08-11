@@ -163,11 +163,6 @@ function Layout() {
         </nav>
         <div className="p-3 border-t border-white/10 text-xs">
           <div className="mb-2 text-[#b0b3c5] truncate">{profile?.name ?? profile?.email ?? user.email}</div>
-          {isSuper && (
-            <Link to="/superadmin" className="block mb-2 text-center bg-[#5a3dba] hover:bg-[#4a2fa8] rounded py-1.5">
-              Super Admin Panel →
-            </Link>
-          )}
           {isAdmin && (
             <Link
               to={inAdmin ? "/dashboard" : "/admin"}
