@@ -29,8 +29,6 @@ const balances = [
   { icon: "🎁", label: "Referral Earnings", desc: "Lifetime commission from every friend you invite.", bg: "from-[#7c2d12] via-[#c2410c] to-[#f59e0b]" },
 ];
 
-const surveys = ["ROM Survey IN", "PollReach", "MYPINIO", "Crunchyroll", "Amazon Music"];
-const offerwalls = ["CPX Research", "BitLabs", "Pollfish", "AdscendMedia", "Lootably", "Monlix", "GemiAds", "PrimeWall"];
 const payouts = [
   { icon: "🇮🇳", name: "UPI" },
   { icon: "📱", name: "Paytm" },
@@ -126,37 +124,6 @@ function Landing() {
               <p className="mt-1 text-xs leading-relaxed text-gray-600">{f.body}</p>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section className="bg-white py-14">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-2">
-          <div>
-            <h2 className="text-2xl font-bold">📋 Daily Surveys</h2>
-            <p className="mt-1 text-sm text-gray-500">Complete a survey, earn points instantly.</p>
-            <ul className="mt-4 space-y-2">
-              {surveys.map((s) => (
-                <li key={s} className="flex items-center justify-between rounded-lg bg-[#f0f2f5] px-4 py-3 text-sm font-semibold">
-                  <span>{s}</span>
-                  <span className="text-xs font-bold text-[#1a8a7d]">Earn points</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold">🎯 Offer Walls</h2>
-            <p className="mt-1 text-sm text-gray-500">Trusted providers, thousands of offers.</p>
-            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {offerwalls.map((o) => (
-                <div key={o} className="rounded-lg border border-gray-100 bg-[#f0f2f5] p-3 text-center">
-                  <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#1a1c3a] text-sm font-bold text-white">
-                    {o[0]}
-                  </div>
-                  <div className="mt-2 text-[11px] font-semibold">{o}</div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
