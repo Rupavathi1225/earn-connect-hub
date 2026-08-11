@@ -20,7 +20,7 @@ import { fmtDate } from "@/lib/format";
 export const Route = createFileRoute("/superadmin/api-keys")({
   head: () => ({
     meta: [
-      { title: "Manage API Keys · Super Admin · PrimePath Services" },
+      { title: "Manage API Keys · Super Admin · Global Prime" },
       { name: "description", content: "Create, rotate and revoke system access API keys." },
       { name: "robots", content: "noindex" },
     ],

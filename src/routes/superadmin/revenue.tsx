@@ -14,7 +14,7 @@ import {
 export const Route = createFileRoute("/superadmin/revenue")({
   head: () => ({
     meta: [
-      { title: "Revenue & Analytics · Super Admin · PrimePath Services" },
+      { title: "Revenue & Analytics · Super Admin · Global Prime" },
       { name: "description", content: "Platform revenue, administrator shares, and offerwall performance reports." },
       { name: "robots", content: "noindex" },
     ],

@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { fmtDate } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/announcements")({
-  head: () => ({ meta: [{ title: "News — PrimePath Services" }, { name: "description", content: "Platform announcements." }] }),
+  head: () => ({ meta: [{ title: "News — Global Prime" }, { name: "description", content: "Platform announcements." }] }),
   component: A,
 });
 

@@ -16,7 +16,7 @@ import { saveGeneratedPostback } from "@/lib/superadmin.functions";
 export const Route = createFileRoute("/superadmin/generate-postback")({
   head: () => ({
     meta: [
-      { title: "Generate Postback URL · Super Admin · PrimePath Services" },
+      { title: "Generate Postback URL · Super Admin · Global Prime" },
       { name: "description", content: "Manually build and parameterize postback callback URLs." },
       { name: "robots", content: "noindex" },
     ],

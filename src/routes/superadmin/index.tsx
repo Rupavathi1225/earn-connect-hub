@@ -31,9 +31,9 @@ import {
 export const Route = createFileRoute("/superadmin/")({
   head: () => ({
     meta: [
-      { title: "Super Admin Dashboard · PrimePath Services" },
+      { title: "Super Admin Dashboard · Global Prime" },
       { name: "description", content: "Platform-wide metrics for admins, users, revenue and networks." },
-      { property: "og:title", content: "Super Admin Dashboard · PrimePath Services" },
+      { property: "og:title", content: "Super Admin Dashboard · Global Prime" },
       { property: "og:description", content: "Platform-wide metrics for admins, users, revenue and networks." },
       { name: "robots", content: "noindex" },
     ],

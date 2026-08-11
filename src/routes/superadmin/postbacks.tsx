@@ -13,7 +13,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/superadmin/postbacks")({
   head: () => ({
     meta: [
-      { title: "Offerwall Postbacks · Super Admin · PrimePath Services" },
+      { title: "Offerwall Postbacks · Super Admin · Global Prime" },
       { name: "description", content: "Integration details, callback URLs and iframe codes." },
       { name: "robots", content: "noindex" },
     ],

@@ -6,7 +6,7 @@ import { fmtDate } from "@/lib/format";
 export const Route = createFileRoute("/superadmin/cron")({
   head: () => ({
     meta: [
-      { title: "Cron Monitor · Super Admin · PrimePath Services" },
+      { title: "Cron Monitor · Super Admin · Global Prime" },
       { name: "description", content: "Monitor scheduled jobs, their last run status and queue depth." },
       { property: "og:title", content: "Cron Monitor · Super Admin" },
       { property: "og:description", content: "Scheduled job health and queue depth." },

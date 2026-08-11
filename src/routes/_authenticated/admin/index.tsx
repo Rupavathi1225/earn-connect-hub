@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_authenticated/admin/")({
   beforeLoad: async ({ context }) => {
     await guardAdminPanel(context.user.id);
   },
-  head: () => ({ meta: [{ title: " PrimePath Services" }, { name: "description", content: "Admin dashboard." }] }),
+  head: () => ({ meta: [{ title: " Global Prime" }, { name: "description", content: "Admin dashboard." }] }),
   component: Overview,
 });
 
@@ -47,7 +47,7 @@ function Overview() {
   ];
   return (
     <div>
-      <h1 className="text-lg font-bold text-[#1a1c3a] mb-3">📊 PrimePath Services</h1>
+      <h1 className="text-lg font-bold text-[#1a1c3a] mb-3">📊 Global Prime</h1>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
         {cards.map((c) => (
           <div key={c.l} style={{ background: c.bg }} className="rounded-lg p-4 text-white">
