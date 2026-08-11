@@ -9,66 +9,65 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as SuperadminRouteRouteImport } from './routes/superadmin/route'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SuperadminIndexRouteImport } from './routes/superadmin/index'
-import { Route as SuperadminWithdrawalsRouteImport } from './routes/superadmin/withdrawals'
-import { Route as SuperadminUsersRouteImport } from './routes/superadmin/users'
-import { Route as SuperadminSurveysRouteImport } from './routes/superadmin/surveys'
-import { Route as SuperadminSettingsRouteImport } from './routes/superadmin/settings'
-import { Route as SuperadminRolesRouteImport } from './routes/superadmin/roles'
-import { Route as SuperadminRevenueRouteImport } from './routes/superadmin/revenue'
-import { Route as SuperadminPublishersRouteImport } from './routes/superadmin/publishers'
-import { Route as SuperadminPostbacksRouteImport } from './routes/superadmin/postbacks'
-import { Route as SuperadminOfferwallsRouteImport } from './routes/superadmin/offerwalls'
-import { Route as SuperadminOffersRouteImport } from './routes/superadmin/offers'
-import { Route as SuperadminNetworkRequestsRouteImport } from './routes/superadmin/network-requests'
-import { Route as SuperadminLogsRouteImport } from './routes/superadmin/logs'
-import { Route as SuperadminGeneratePostbackRouteImport } from './routes/superadmin/generate-postback'
-import { Route as SuperadminDomainsRouteImport } from './routes/superadmin/domains'
-import { Route as SuperadminCronRouteImport } from './routes/superadmin/cron'
-import { Route as SuperadminAuditRouteImport } from './routes/superadmin/audit'
-import { Route as SuperadminApiKeysRouteImport } from './routes/superadmin/api-keys'
-import { Route as SuperadminAdminsRouteImport } from './routes/superadmin/admins'
-import { Route as AuthenticatedWithdrawRouteImport } from './routes/_authenticated/withdraw'
-import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
-import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
-import { Route as AuthenticatedReferralsRouteImport } from './routes/_authenticated/referrals'
-import { Route as AuthenticatedPromocodeRouteImport } from './routes/_authenticated/promocode'
-import { Route as AuthenticatedOfferwallsRouteImport } from './routes/_authenticated/offerwalls'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedContestsRouteImport } from './routes/_authenticated/contests'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as SuperadminRouteRouteImport } from './routes/superadmin/route'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAnnouncementsRouteImport } from './routes/_authenticated/announcements'
+import { Route as AuthenticatedContestsRouteImport } from './routes/_authenticated/contests'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedOfferwallsRouteImport } from './routes/_authenticated/offerwalls'
+import { Route as AuthenticatedPromocodeRouteImport } from './routes/_authenticated/promocode'
+import { Route as AuthenticatedReferralsRouteImport } from './routes/_authenticated/referrals'
+import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
+import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
+import { Route as AuthenticatedWithdrawRouteImport } from './routes/_authenticated/withdraw'
+import { Route as SuperadminIndexRouteImport } from './routes/superadmin/index'
+import { Route as SuperadminAdminsRouteImport } from './routes/superadmin/admins'
+import { Route as SuperadminApiKeysRouteImport } from './routes/superadmin/api-keys'
+import { Route as SuperadminAuditRouteImport } from './routes/superadmin/audit'
+import { Route as SuperadminCronRouteImport } from './routes/superadmin/cron'
+import { Route as SuperadminDomainsRouteImport } from './routes/superadmin/domains'
+import { Route as SuperadminGeneratePostbackRouteImport } from './routes/superadmin/generate-postback'
+import { Route as SuperadminLogsRouteImport } from './routes/superadmin/logs'
+import { Route as SuperadminNetworkRequestsRouteImport } from './routes/superadmin/network-requests'
+import { Route as SuperadminOffersRouteImport } from './routes/superadmin/offers'
+import { Route as SuperadminOfferwallsRouteImport } from './routes/superadmin/offerwalls'
+import { Route as SuperadminPostbacksRouteImport } from './routes/superadmin/postbacks'
+import { Route as SuperadminPublishersRouteImport } from './routes/superadmin/publishers'
+import { Route as SuperadminRevenueRouteImport } from './routes/superadmin/revenue'
+import { Route as SuperadminRolesRouteImport } from './routes/superadmin/roles'
+import { Route as SuperadminSettingsRouteImport } from './routes/superadmin/settings'
+import { Route as SuperadminSurveysRouteImport } from './routes/superadmin/surveys'
+import { Route as SuperadminUsersRouteImport } from './routes/superadmin/users'
+import { Route as SuperadminWithdrawalsRouteImport } from './routes/superadmin/withdrawals'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
-import { Route as AuthenticatedAdminWithdrawalsRouteImport } from './routes/_authenticated/admin/withdrawals'
-import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
-import { Route as AuthenticatedAdminTicketsRouteImport } from './routes/_authenticated/admin/tickets'
-import { Route as AuthenticatedAdminSurveysRouteImport } from './routes/_authenticated/admin/surveys'
-import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
-import { Route as AuthenticatedAdminReferralsRouteImport } from './routes/_authenticated/admin/referrals'
-import { Route as AuthenticatedAdminPromocodesRouteImport } from './routes/_authenticated/admin/promocodes'
-import { Route as AuthenticatedAdminPostbackLogsRouteImport } from './routes/_authenticated/admin/postback-logs'
-import { Route as AuthenticatedAdminOfferwallsRouteImport } from './routes/_authenticated/admin/offerwalls'
-import { Route as AuthenticatedAdminLockedFundsRouteImport } from './routes/_authenticated/admin/locked-funds'
-import { Route as AuthenticatedAdminCreditHistoryRouteImport } from './routes/_authenticated/admin/credit-history'
-import { Route as AuthenticatedAdminContestsRouteImport } from './routes/_authenticated/admin/contests'
-import { Route as AuthenticatedAdminChatFeedRouteImport } from './routes/_authenticated/admin/chat-feed'
-import { Route as AuthenticatedAdminCashHistoryRouteImport } from './routes/_authenticated/admin/cash-history'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin/announcements'
+import { Route as AuthenticatedAdminCashHistoryRouteImport } from './routes/_authenticated/admin/cash-history'
+import { Route as AuthenticatedAdminChatFeedRouteImport } from './routes/_authenticated/admin/chat-feed'
+import { Route as AuthenticatedAdminContestsRouteImport } from './routes/_authenticated/admin/contests'
+import { Route as AuthenticatedAdminCreditHistoryRouteImport } from './routes/_authenticated/admin/credit-history'
+import { Route as AuthenticatedAdminLockedFundsRouteImport } from './routes/_authenticated/admin/locked-funds'
+import { Route as AuthenticatedAdminOfferwallsRouteImport } from './routes/_authenticated/admin/offerwalls'
+import { Route as AuthenticatedAdminPostbackLogsRouteImport } from './routes/_authenticated/admin/postback-logs'
+import { Route as AuthenticatedAdminPromocodesRouteImport } from './routes/_authenticated/admin/promocodes'
+import { Route as AuthenticatedAdminReferralsRouteImport } from './routes/_authenticated/admin/referrals'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
+import { Route as AuthenticatedAdminSurveysRouteImport } from './routes/_authenticated/admin/surveys'
+import { Route as AuthenticatedAdminTicketsRouteImport } from './routes/_authenticated/admin/tickets'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminWithdrawalsRouteImport } from './routes/_authenticated/admin/withdrawals'
 import { Route as ApiPublicPostbackProviderRouteImport } from './routes/api/public/postback/$provider'
 
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -76,84 +75,95 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SuperadminRouteRoute = SuperadminRouteRouteImport.update({
   id: '/superadmin',
   path: '/superadmin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedAnnouncementsRoute =
+  AuthenticatedAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedContestsRoute = AuthenticatedContestsRouteImport.update({
+  id: '/contests',
+  path: '/contests',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOfferwallsRoute = AuthenticatedOfferwallsRouteImport.update({
+  id: '/offerwalls',
+  path: '/offerwalls',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPromocodeRoute = AuthenticatedPromocodeRouteImport.update({
+  id: '/promocode',
+  path: '/promocode',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReferralsRoute = AuthenticatedReferralsRouteImport.update({
+  id: '/referrals',
+  path: '/referrals',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSurveysRoute = AuthenticatedSurveysRouteImport.update({
+  id: '/surveys',
+  path: '/surveys',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTicketsRoute = AuthenticatedTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWithdrawRoute = AuthenticatedWithdrawRouteImport.update({
+  id: '/withdraw',
+  path: '/withdraw',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const SuperadminIndexRoute = SuperadminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const SuperadminWithdrawalsRoute = SuperadminWithdrawalsRouteImport.update({
-  id: '/withdrawals',
-  path: '/withdrawals',
+const SuperadminAdminsRoute = SuperadminAdminsRouteImport.update({
+  id: '/admins',
+  path: '/admins',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const SuperadminUsersRoute = SuperadminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
+const SuperadminApiKeysRoute = SuperadminApiKeysRouteImport.update({
+  id: '/api-keys',
+  path: '/api-keys',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const SuperadminSurveysRoute = SuperadminSurveysRouteImport.update({
-  id: '/surveys',
-  path: '/surveys',
+const SuperadminAuditRoute = SuperadminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const SuperadminSettingsRoute = SuperadminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
+const SuperadminCronRoute = SuperadminCronRouteImport.update({
+  id: '/cron',
+  path: '/cron',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const SuperadminRolesRoute = SuperadminRolesRouteImport.update({
-  id: '/roles',
-  path: '/roles',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const SuperadminRevenueRoute = SuperadminRevenueRouteImport.update({
-  id: '/revenue',
-  path: '/revenue',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const SuperadminPublishersRoute = SuperadminPublishersRouteImport.update({
-  id: '/publishers',
-  path: '/publishers',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const SuperadminPostbacksRoute = SuperadminPostbacksRouteImport.update({
-  id: '/postbacks',
-  path: '/postbacks',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const SuperadminOfferwallsRoute = SuperadminOfferwallsRouteImport.update({
-  id: '/offerwalls',
-  path: '/offerwalls',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const SuperadminOffersRoute = SuperadminOffersRouteImport.update({
-  id: '/offers',
-  path: '/offers',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const SuperadminNetworkRequestsRoute =
-  SuperadminNetworkRequestsRouteImport.update({
-    id: '/network-requests',
-    path: '/network-requests',
-    getParentRoute: () => SuperadminRouteRoute,
-  } as any)
-const SuperadminLogsRoute = SuperadminLogsRouteImport.update({
-  id: '/logs',
-  path: '/logs',
+const SuperadminDomainsRoute = SuperadminDomainsRouteImport.update({
+  id: '/domains',
+  path: '/domains',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
 const SuperadminGeneratePostbackRoute =
@@ -162,157 +172,76 @@ const SuperadminGeneratePostbackRoute =
     path: '/generate-postback',
     getParentRoute: () => SuperadminRouteRoute,
   } as any)
-const SuperadminDomainsRoute = SuperadminDomainsRouteImport.update({
-  id: '/domains',
-  path: '/domains',
+const SuperadminLogsRoute = SuperadminLogsRouteImport.update({
+  id: '/logs',
+  path: '/logs',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const SuperadminCronRoute = SuperadminCronRouteImport.update({
-  id: '/cron',
-  path: '/cron',
+const SuperadminNetworkRequestsRoute =
+  SuperadminNetworkRequestsRouteImport.update({
+    id: '/network-requests',
+    path: '/network-requests',
+    getParentRoute: () => SuperadminRouteRoute,
+  } as any)
+const SuperadminOffersRoute = SuperadminOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
   getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const SuperadminAuditRoute = SuperadminAuditRouteImport.update({
-  id: '/audit',
-  path: '/audit',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const SuperadminApiKeysRoute = SuperadminApiKeysRouteImport.update({
-  id: '/api-keys',
-  path: '/api-keys',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const SuperadminAdminsRoute = SuperadminAdminsRouteImport.update({
-  id: '/admins',
-  path: '/admins',
-  getParentRoute: () => SuperadminRouteRoute,
-} as any)
-const AuthenticatedWithdrawRoute = AuthenticatedWithdrawRouteImport.update({
-  id: '/withdraw',
-  path: '/withdraw',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedTicketsRoute = AuthenticatedTicketsRouteImport.update({
-  id: '/tickets',
-  path: '/tickets',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedSurveysRoute = AuthenticatedSurveysRouteImport.update({
-  id: '/surveys',
-  path: '/surveys',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedReferralsRoute = AuthenticatedReferralsRouteImport.update({
-  id: '/referrals',
-  path: '/referrals',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedPromocodeRoute = AuthenticatedPromocodeRouteImport.update({
-  id: '/promocode',
-  path: '/promocode',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedOfferwallsRoute = AuthenticatedOfferwallsRouteImport.update({
+const SuperadminOfferwallsRoute = SuperadminOfferwallsRouteImport.update({
   id: '/offerwalls',
   path: '/offerwalls',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const SuperadminPostbacksRoute = SuperadminPostbacksRouteImport.update({
+  id: '/postbacks',
+  path: '/postbacks',
+  getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const AuthenticatedContestsRoute = AuthenticatedContestsRouteImport.update({
-  id: '/contests',
-  path: '/contests',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const SuperadminPublishersRoute = SuperadminPublishersRouteImport.update({
+  id: '/publishers',
+  path: '/publishers',
+  getParentRoute: () => SuperadminRouteRoute,
 } as any)
-const AuthenticatedAnnouncementsRoute =
-  AuthenticatedAnnouncementsRouteImport.update({
-    id: '/announcements',
-    path: '/announcements',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
+const SuperadminRevenueRoute = SuperadminRevenueRouteImport.update({
+  id: '/revenue',
+  path: '/revenue',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminRolesRoute = SuperadminRolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminSettingsRoute = SuperadminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminSurveysRoute = SuperadminSurveysRouteImport.update({
+  id: '/surveys',
+  path: '/surveys',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminUsersRoute = SuperadminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
+const SuperadminWithdrawalsRoute = SuperadminWithdrawalsRouteImport.update({
+  id: '/withdrawals',
+  path: '/withdrawals',
+  getParentRoute: () => SuperadminRouteRoute,
+} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedAdminWithdrawalsRoute =
-  AuthenticatedAdminWithdrawalsRouteImport.update({
-    id: '/admin/withdrawals',
-    path: '/admin/withdrawals',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminTicketsRoute =
-  AuthenticatedAdminTicketsRouteImport.update({
-    id: '/admin/tickets',
-    path: '/admin/tickets',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminSurveysRoute =
-  AuthenticatedAdminSurveysRouteImport.update({
-    id: '/admin/surveys',
-    path: '/admin/surveys',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminSettingsRoute =
-  AuthenticatedAdminSettingsRouteImport.update({
-    id: '/admin/settings',
-    path: '/admin/settings',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminReferralsRoute =
-  AuthenticatedAdminReferralsRouteImport.update({
-    id: '/admin/referrals',
-    path: '/admin/referrals',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminPromocodesRoute =
-  AuthenticatedAdminPromocodesRouteImport.update({
-    id: '/admin/promocodes',
-    path: '/admin/promocodes',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminPostbackLogsRoute =
-  AuthenticatedAdminPostbackLogsRouteImport.update({
-    id: '/admin/postback-logs',
-    path: '/admin/postback-logs',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminOfferwallsRoute =
-  AuthenticatedAdminOfferwallsRouteImport.update({
-    id: '/admin/offerwalls',
-    path: '/admin/offerwalls',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminLockedFundsRoute =
-  AuthenticatedAdminLockedFundsRouteImport.update({
-    id: '/admin/locked-funds',
-    path: '/admin/locked-funds',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminCreditHistoryRoute =
-  AuthenticatedAdminCreditHistoryRouteImport.update({
-    id: '/admin/credit-history',
-    path: '/admin/credit-history',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminContestsRoute =
-  AuthenticatedAdminContestsRouteImport.update({
-    id: '/admin/contests',
-    path: '/admin/contests',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminChatFeedRoute =
-  AuthenticatedAdminChatFeedRouteImport.update({
-    id: '/admin/chat-feed',
-    path: '/admin/chat-feed',
+const AuthenticatedAdminAnnouncementsRoute =
+  AuthenticatedAdminAnnouncementsRouteImport.update({
+    id: '/admin/announcements',
+    path: '/admin/announcements',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminCashHistoryRoute =
@@ -321,10 +250,81 @@ const AuthenticatedAdminCashHistoryRoute =
     path: '/admin/cash-history',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminAnnouncementsRoute =
-  AuthenticatedAdminAnnouncementsRouteImport.update({
-    id: '/admin/announcements',
-    path: '/admin/announcements',
+const AuthenticatedAdminChatFeedRoute =
+  AuthenticatedAdminChatFeedRouteImport.update({
+    id: '/admin/chat-feed',
+    path: '/admin/chat-feed',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminContestsRoute =
+  AuthenticatedAdminContestsRouteImport.update({
+    id: '/admin/contests',
+    path: '/admin/contests',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminCreditHistoryRoute =
+  AuthenticatedAdminCreditHistoryRouteImport.update({
+    id: '/admin/credit-history',
+    path: '/admin/credit-history',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminLockedFundsRoute =
+  AuthenticatedAdminLockedFundsRouteImport.update({
+    id: '/admin/locked-funds',
+    path: '/admin/locked-funds',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminOfferwallsRoute =
+  AuthenticatedAdminOfferwallsRouteImport.update({
+    id: '/admin/offerwalls',
+    path: '/admin/offerwalls',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminPostbackLogsRoute =
+  AuthenticatedAdminPostbackLogsRouteImport.update({
+    id: '/admin/postback-logs',
+    path: '/admin/postback-logs',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminPromocodesRoute =
+  AuthenticatedAdminPromocodesRouteImport.update({
+    id: '/admin/promocodes',
+    path: '/admin/promocodes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminReferralsRoute =
+  AuthenticatedAdminReferralsRouteImport.update({
+    id: '/admin/referrals',
+    path: '/admin/referrals',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/admin/settings',
+    path: '/admin/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSurveysRoute =
+  AuthenticatedAdminSurveysRouteImport.update({
+    id: '/admin/surveys',
+    path: '/admin/surveys',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminTicketsRoute =
+  AuthenticatedAdminTicketsRouteImport.update({
+    id: '/admin/tickets',
+    path: '/admin/tickets',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminWithdrawalsRoute =
+  AuthenticatedAdminWithdrawalsRouteImport.update({
+    id: '/admin/withdrawals',
+    path: '/admin/withdrawals',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const ApiPublicPostbackProviderRoute =
@@ -662,32 +662,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/superadmin': {
-      id: '/superadmin'
-      path: '/superadmin'
-      fullPath: '/superadmin'
-      preLoaderRoute: typeof SuperadminRouteRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -697,193 +676,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/superadmin/': {
-      id: '/superadmin/'
-      path: '/'
-      fullPath: '/superadmin/'
-      preLoaderRoute: typeof SuperadminIndexRouteImport
-      parentRoute: typeof SuperadminRouteRoute
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/superadmin/withdrawals': {
-      id: '/superadmin/withdrawals'
-      path: '/withdrawals'
-      fullPath: '/superadmin/withdrawals'
-      preLoaderRoute: typeof SuperadminWithdrawalsRouteImport
-      parentRoute: typeof SuperadminRouteRoute
+    '/superadmin': {
+      id: '/superadmin'
+      path: '/superadmin'
+      fullPath: '/superadmin'
+      preLoaderRoute: typeof SuperadminRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/superadmin/users': {
-      id: '/superadmin/users'
-      path: '/users'
-      fullPath: '/superadmin/users'
-      preLoaderRoute: typeof SuperadminUsersRouteImport
-      parentRoute: typeof SuperadminRouteRoute
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/superadmin/surveys': {
-      id: '/superadmin/surveys'
-      path: '/surveys'
-      fullPath: '/superadmin/surveys'
-      preLoaderRoute: typeof SuperadminSurveysRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/settings': {
-      id: '/superadmin/settings'
-      path: '/settings'
-      fullPath: '/superadmin/settings'
-      preLoaderRoute: typeof SuperadminSettingsRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/roles': {
-      id: '/superadmin/roles'
-      path: '/roles'
-      fullPath: '/superadmin/roles'
-      preLoaderRoute: typeof SuperadminRolesRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/revenue': {
-      id: '/superadmin/revenue'
-      path: '/revenue'
-      fullPath: '/superadmin/revenue'
-      preLoaderRoute: typeof SuperadminRevenueRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/publishers': {
-      id: '/superadmin/publishers'
-      path: '/publishers'
-      fullPath: '/superadmin/publishers'
-      preLoaderRoute: typeof SuperadminPublishersRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/postbacks': {
-      id: '/superadmin/postbacks'
-      path: '/postbacks'
-      fullPath: '/superadmin/postbacks'
-      preLoaderRoute: typeof SuperadminPostbacksRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/offerwalls': {
-      id: '/superadmin/offerwalls'
-      path: '/offerwalls'
-      fullPath: '/superadmin/offerwalls'
-      preLoaderRoute: typeof SuperadminOfferwallsRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/offers': {
-      id: '/superadmin/offers'
-      path: '/offers'
-      fullPath: '/superadmin/offers'
-      preLoaderRoute: typeof SuperadminOffersRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/network-requests': {
-      id: '/superadmin/network-requests'
-      path: '/network-requests'
-      fullPath: '/superadmin/network-requests'
-      preLoaderRoute: typeof SuperadminNetworkRequestsRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/logs': {
-      id: '/superadmin/logs'
-      path: '/logs'
-      fullPath: '/superadmin/logs'
-      preLoaderRoute: typeof SuperadminLogsRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/generate-postback': {
-      id: '/superadmin/generate-postback'
-      path: '/generate-postback'
-      fullPath: '/superadmin/generate-postback'
-      preLoaderRoute: typeof SuperadminGeneratePostbackRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/domains': {
-      id: '/superadmin/domains'
-      path: '/domains'
-      fullPath: '/superadmin/domains'
-      preLoaderRoute: typeof SuperadminDomainsRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/cron': {
-      id: '/superadmin/cron'
-      path: '/cron'
-      fullPath: '/superadmin/cron'
-      preLoaderRoute: typeof SuperadminCronRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/audit': {
-      id: '/superadmin/audit'
-      path: '/audit'
-      fullPath: '/superadmin/audit'
-      preLoaderRoute: typeof SuperadminAuditRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/api-keys': {
-      id: '/superadmin/api-keys'
-      path: '/api-keys'
-      fullPath: '/superadmin/api-keys'
-      preLoaderRoute: typeof SuperadminApiKeysRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/superadmin/admins': {
-      id: '/superadmin/admins'
-      path: '/admins'
-      fullPath: '/superadmin/admins'
-      preLoaderRoute: typeof SuperadminAdminsRouteImport
-      parentRoute: typeof SuperadminRouteRoute
-    }
-    '/_authenticated/withdraw': {
-      id: '/_authenticated/withdraw'
-      path: '/withdraw'
-      fullPath: '/withdraw'
-      preLoaderRoute: typeof AuthenticatedWithdrawRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/tickets': {
-      id: '/_authenticated/tickets'
-      path: '/tickets'
-      fullPath: '/tickets'
-      preLoaderRoute: typeof AuthenticatedTicketsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/surveys': {
-      id: '/_authenticated/surveys'
-      path: '/surveys'
-      fullPath: '/surveys'
-      preLoaderRoute: typeof AuthenticatedSurveysRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/referrals': {
-      id: '/_authenticated/referrals'
-      path: '/referrals'
-      fullPath: '/referrals'
-      preLoaderRoute: typeof AuthenticatedReferralsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/promocode': {
-      id: '/_authenticated/promocode'
-      path: '/promocode'
-      fullPath: '/promocode'
-      preLoaderRoute: typeof AuthenticatedPromocodeRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/offerwalls': {
-      id: '/_authenticated/offerwalls'
-      path: '/offerwalls'
-      fullPath: '/offerwalls'
-      preLoaderRoute: typeof AuthenticatedOfferwallsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+    '/_authenticated/announcements': {
+      id: '/_authenticated/announcements'
+      path: '/announcements'
+      fullPath: '/announcements'
+      preLoaderRoute: typeof AuthenticatedAnnouncementsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/contests': {
@@ -893,12 +718,187 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedContestsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/announcements': {
-      id: '/_authenticated/announcements'
-      path: '/announcements'
-      fullPath: '/announcements'
-      preLoaderRoute: typeof AuthenticatedAnnouncementsRouteImport
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/offerwalls': {
+      id: '/_authenticated/offerwalls'
+      path: '/offerwalls'
+      fullPath: '/offerwalls'
+      preLoaderRoute: typeof AuthenticatedOfferwallsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/promocode': {
+      id: '/_authenticated/promocode'
+      path: '/promocode'
+      fullPath: '/promocode'
+      preLoaderRoute: typeof AuthenticatedPromocodeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/referrals': {
+      id: '/_authenticated/referrals'
+      path: '/referrals'
+      fullPath: '/referrals'
+      preLoaderRoute: typeof AuthenticatedReferralsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/surveys': {
+      id: '/_authenticated/surveys'
+      path: '/surveys'
+      fullPath: '/surveys'
+      preLoaderRoute: typeof AuthenticatedSurveysRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tickets': {
+      id: '/_authenticated/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof AuthenticatedTicketsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/withdraw': {
+      id: '/_authenticated/withdraw'
+      path: '/withdraw'
+      fullPath: '/withdraw'
+      preLoaderRoute: typeof AuthenticatedWithdrawRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/superadmin/': {
+      id: '/superadmin/'
+      path: '/'
+      fullPath: '/superadmin/'
+      preLoaderRoute: typeof SuperadminIndexRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/admins': {
+      id: '/superadmin/admins'
+      path: '/admins'
+      fullPath: '/superadmin/admins'
+      preLoaderRoute: typeof SuperadminAdminsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/api-keys': {
+      id: '/superadmin/api-keys'
+      path: '/api-keys'
+      fullPath: '/superadmin/api-keys'
+      preLoaderRoute: typeof SuperadminApiKeysRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/audit': {
+      id: '/superadmin/audit'
+      path: '/audit'
+      fullPath: '/superadmin/audit'
+      preLoaderRoute: typeof SuperadminAuditRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/cron': {
+      id: '/superadmin/cron'
+      path: '/cron'
+      fullPath: '/superadmin/cron'
+      preLoaderRoute: typeof SuperadminCronRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/domains': {
+      id: '/superadmin/domains'
+      path: '/domains'
+      fullPath: '/superadmin/domains'
+      preLoaderRoute: typeof SuperadminDomainsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/generate-postback': {
+      id: '/superadmin/generate-postback'
+      path: '/generate-postback'
+      fullPath: '/superadmin/generate-postback'
+      preLoaderRoute: typeof SuperadminGeneratePostbackRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/logs': {
+      id: '/superadmin/logs'
+      path: '/logs'
+      fullPath: '/superadmin/logs'
+      preLoaderRoute: typeof SuperadminLogsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/network-requests': {
+      id: '/superadmin/network-requests'
+      path: '/network-requests'
+      fullPath: '/superadmin/network-requests'
+      preLoaderRoute: typeof SuperadminNetworkRequestsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/offers': {
+      id: '/superadmin/offers'
+      path: '/offers'
+      fullPath: '/superadmin/offers'
+      preLoaderRoute: typeof SuperadminOffersRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/offerwalls': {
+      id: '/superadmin/offerwalls'
+      path: '/offerwalls'
+      fullPath: '/superadmin/offerwalls'
+      preLoaderRoute: typeof SuperadminOfferwallsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/postbacks': {
+      id: '/superadmin/postbacks'
+      path: '/postbacks'
+      fullPath: '/superadmin/postbacks'
+      preLoaderRoute: typeof SuperadminPostbacksRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/publishers': {
+      id: '/superadmin/publishers'
+      path: '/publishers'
+      fullPath: '/superadmin/publishers'
+      preLoaderRoute: typeof SuperadminPublishersRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/revenue': {
+      id: '/superadmin/revenue'
+      path: '/revenue'
+      fullPath: '/superadmin/revenue'
+      preLoaderRoute: typeof SuperadminRevenueRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/roles': {
+      id: '/superadmin/roles'
+      path: '/roles'
+      fullPath: '/superadmin/roles'
+      preLoaderRoute: typeof SuperadminRolesRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/settings': {
+      id: '/superadmin/settings'
+      path: '/settings'
+      fullPath: '/superadmin/settings'
+      preLoaderRoute: typeof SuperadminSettingsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/surveys': {
+      id: '/superadmin/surveys'
+      path: '/surveys'
+      fullPath: '/superadmin/surveys'
+      preLoaderRoute: typeof SuperadminSurveysRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/users': {
+      id: '/superadmin/users'
+      path: '/users'
+      fullPath: '/superadmin/users'
+      preLoaderRoute: typeof SuperadminUsersRouteImport
+      parentRoute: typeof SuperadminRouteRoute
+    }
+    '/superadmin/withdrawals': {
+      id: '/superadmin/withdrawals'
+      path: '/withdrawals'
+      fullPath: '/superadmin/withdrawals'
+      preLoaderRoute: typeof SuperadminWithdrawalsRouteImport
+      parentRoute: typeof SuperadminRouteRoute
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
@@ -907,95 +907,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/withdrawals': {
-      id: '/_authenticated/admin/withdrawals'
-      path: '/admin/withdrawals'
-      fullPath: '/admin/withdrawals'
-      preLoaderRoute: typeof AuthenticatedAdminWithdrawalsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/users': {
-      id: '/_authenticated/admin/users'
-      path: '/admin/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/tickets': {
-      id: '/_authenticated/admin/tickets'
-      path: '/admin/tickets'
-      fullPath: '/admin/tickets'
-      preLoaderRoute: typeof AuthenticatedAdminTicketsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/surveys': {
-      id: '/_authenticated/admin/surveys'
-      path: '/admin/surveys'
-      fullPath: '/admin/surveys'
-      preLoaderRoute: typeof AuthenticatedAdminSurveysRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/settings': {
-      id: '/_authenticated/admin/settings'
-      path: '/admin/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/referrals': {
-      id: '/_authenticated/admin/referrals'
-      path: '/admin/referrals'
-      fullPath: '/admin/referrals'
-      preLoaderRoute: typeof AuthenticatedAdminReferralsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/promocodes': {
-      id: '/_authenticated/admin/promocodes'
-      path: '/admin/promocodes'
-      fullPath: '/admin/promocodes'
-      preLoaderRoute: typeof AuthenticatedAdminPromocodesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/postback-logs': {
-      id: '/_authenticated/admin/postback-logs'
-      path: '/admin/postback-logs'
-      fullPath: '/admin/postback-logs'
-      preLoaderRoute: typeof AuthenticatedAdminPostbackLogsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/offerwalls': {
-      id: '/_authenticated/admin/offerwalls'
-      path: '/admin/offerwalls'
-      fullPath: '/admin/offerwalls'
-      preLoaderRoute: typeof AuthenticatedAdminOfferwallsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/locked-funds': {
-      id: '/_authenticated/admin/locked-funds'
-      path: '/admin/locked-funds'
-      fullPath: '/admin/locked-funds'
-      preLoaderRoute: typeof AuthenticatedAdminLockedFundsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/credit-history': {
-      id: '/_authenticated/admin/credit-history'
-      path: '/admin/credit-history'
-      fullPath: '/admin/credit-history'
-      preLoaderRoute: typeof AuthenticatedAdminCreditHistoryRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/contests': {
-      id: '/_authenticated/admin/contests'
-      path: '/admin/contests'
-      fullPath: '/admin/contests'
-      preLoaderRoute: typeof AuthenticatedAdminContestsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/chat-feed': {
-      id: '/_authenticated/admin/chat-feed'
-      path: '/admin/chat-feed'
-      fullPath: '/admin/chat-feed'
-      preLoaderRoute: typeof AuthenticatedAdminChatFeedRouteImport
+    '/_authenticated/admin/announcements': {
+      id: '/_authenticated/admin/announcements'
+      path: '/admin/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/cash-history': {
@@ -1005,11 +921,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCashHistoryRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/announcements': {
-      id: '/_authenticated/admin/announcements'
-      path: '/admin/announcements'
-      fullPath: '/admin/announcements'
-      preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
+    '/_authenticated/admin/chat-feed': {
+      id: '/_authenticated/admin/chat-feed'
+      path: '/admin/chat-feed'
+      fullPath: '/admin/chat-feed'
+      preLoaderRoute: typeof AuthenticatedAdminChatFeedRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/contests': {
+      id: '/_authenticated/admin/contests'
+      path: '/admin/contests'
+      fullPath: '/admin/contests'
+      preLoaderRoute: typeof AuthenticatedAdminContestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/credit-history': {
+      id: '/_authenticated/admin/credit-history'
+      path: '/admin/credit-history'
+      fullPath: '/admin/credit-history'
+      preLoaderRoute: typeof AuthenticatedAdminCreditHistoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/locked-funds': {
+      id: '/_authenticated/admin/locked-funds'
+      path: '/admin/locked-funds'
+      fullPath: '/admin/locked-funds'
+      preLoaderRoute: typeof AuthenticatedAdminLockedFundsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/offerwalls': {
+      id: '/_authenticated/admin/offerwalls'
+      path: '/admin/offerwalls'
+      fullPath: '/admin/offerwalls'
+      preLoaderRoute: typeof AuthenticatedAdminOfferwallsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/postback-logs': {
+      id: '/_authenticated/admin/postback-logs'
+      path: '/admin/postback-logs'
+      fullPath: '/admin/postback-logs'
+      preLoaderRoute: typeof AuthenticatedAdminPostbackLogsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/promocodes': {
+      id: '/_authenticated/admin/promocodes'
+      path: '/admin/promocodes'
+      fullPath: '/admin/promocodes'
+      preLoaderRoute: typeof AuthenticatedAdminPromocodesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/referrals': {
+      id: '/_authenticated/admin/referrals'
+      path: '/admin/referrals'
+      fullPath: '/admin/referrals'
+      preLoaderRoute: typeof AuthenticatedAdminReferralsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/surveys': {
+      id: '/_authenticated/admin/surveys'
+      path: '/admin/surveys'
+      fullPath: '/admin/surveys'
+      preLoaderRoute: typeof AuthenticatedAdminSurveysRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/tickets': {
+      id: '/_authenticated/admin/tickets'
+      path: '/admin/tickets'
+      fullPath: '/admin/tickets'
+      preLoaderRoute: typeof AuthenticatedAdminTicketsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/withdrawals': {
+      id: '/_authenticated/admin/withdrawals'
+      path: '/admin/withdrawals'
+      fullPath: '/admin/withdrawals'
+      preLoaderRoute: typeof AuthenticatedAdminWithdrawalsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/public/postback/$provider': {
@@ -1141,3 +1141,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
