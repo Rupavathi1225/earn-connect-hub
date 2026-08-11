@@ -272,37 +272,49 @@ function Dashboard() {
   }
 
   const quickTiles = [
-    { to: "/surveys", label: "Daily Surveys", icon: "📋" },
-    { to: "/referrals", label: "Refer a Friends", icon: "👥" },
-    { to: "/withdraw", label: "Withdraw Cash", icon: "🏦" },
-    { to: "/dashboard", search: { tab: "convert_pts" }, label: "Convert Points", icon: "💱" },
+    { to: "/surveys", label: "Daily Surveys", icon: "📋", ring: "from-[#1a8a7d] to-[#34d399]" },
+    { to: "/referrals", label: "Refer a Friend", icon: "👥", ring: "from-[#6366f1] to-[#a855f7]" },
+    { to: "/withdraw", label: "Withdraw Cash", icon: "🏦", ring: "from-[#e8734a] to-[#f59e0b]" },
+    { to: "/dashboard", search: { tab: "convert_pts" }, label: "Convert Points", icon: "💱", ring: "from-[#2563eb] to-[#38bdf8]" },
   ] as const;
 
   const balCards = [
-    { label: "Cash Balance", val: fmtMoney(Number(profile.cash_balance), cur), bg: "bg-[#1a8a7d]" },
-    { label: "Points Balance", val: fmtPoints(profile.points_balance), bg: "bg-[#2563eb]" },
-    { label: "Locked Balance", val: fmtPoints(Number(profile.locked_balance)), bg: "bg-[#1a1c3a]" },
-    { label: "Referral Earning", val: fmtPoints(referralEarned), bg: "bg-[#1a1c3a]" },
+    { label: "Cash Balance", val: fmtMoney(Number(profile.cash_balance), cur), icon: "💵", bg: "from-[#0f766e] via-[#1a8a7d] to-[#34d399]" },
+    { label: "Points Balance", val: fmtPoints(profile.points_balance), icon: "⭐", bg: "from-[#1d4ed8] via-[#2563eb] to-[#38bdf8]" },
+    { label: "Locked Balance", val: fmtPoints(Number(profile.locked_balance)), icon: "🔒", bg: "from-[#1a1c3a] via-[#2d2f5c] to-[#4c4f8a]" },
+    { label: "Referral Earning", val: fmtPoints(referralEarned), icon: "🎁", bg: "from-[#7c2d12] via-[#c2410c] to-[#f59e0b]" },
   ];
+
 
   const COUNTRIES = ["India","United States","United Kingdom","Canada","Australia","Germany","France","Spain","Italy","Netherlands","Brazil","Mexico","Argentina","United Arab Emirates","Saudi Arabia","Singapore","Malaysia","Indonesia","Philippines","Vietnam","Thailand","Japan","South Korea","China","Hong Kong","Taiwan","Pakistan","Bangladesh","Sri Lanka","Nepal","Turkey","South Africa","Nigeria","Kenya","Egypt","Russia","Ukraine","Poland","Sweden","Norway","Denmark","Finland","Ireland","Portugal","Greece","Switzerland","Belgium","Austria","New Zealand","Other"];
 
   // Welcome Banner (common header for dashboard and inner tabs)
   const renderWelcomeBanner = () => (
-    <div className="bg-gradient-to-r from-[#1a8a7d] to-[#0f6b60] text-white rounded-lg p-5 flex flex-col md:flex-row items-center gap-4">
-      <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-3xl shrink-0">👤</div>
-      <div className="flex-1 min-w-0">
-        <div className="text-sm opacity-90">Welcome,</div>
-        <div className="text-2xl font-extrabold truncate">{displayName}</div>
-      </div>
-      <div className="flex w-full md:w-auto gap-2">
-        <input readOnly value={referralLink} className="flex-1 md:w-80 bg-white text-gray-700 text-xs px-3 py-2 rounded truncate" />
-        <button
-          onClick={() => { navigator.clipboard.writeText(referralLink); setCopied(true); setTimeout(() => setCopied(false), 1500); }}
-          className="bg-[#1a1c3a] hover:bg-[#0f1128] text-white text-xs font-semibold px-4 py-2 rounded transition"
-        >
-          {copied ? "Copied!" : "Copy"}
-        </button>
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0f6b60] via-[#1a8a7d] to-[#2563eb] p-6 text-white shadow-lg">
+      <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-20 left-1/3 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
+      <div className="relative flex flex-col items-center gap-4 md:flex-row">
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white/20 text-3xl ring-4 ring-white/20 backdrop-blur">
+          👤
+        </div>
+        <div className="min-w-0 flex-1 text-center md:text-left">
+          <div className="text-[11px] uppercase tracking-[0.2em] opacity-80">Welcome back</div>
+          <div className="truncate text-2xl font-extrabold md:text-3xl">{displayName}</div>
+          <div className="mt-1 text-xs opacity-80">Share your link and earn on every referral 🚀</div>
+        </div>
+        <div className="flex w-full gap-2 md:w-auto">
+          <input
+            readOnly
+            value={referralLink}
+            className="flex-1 truncate rounded-lg border border-white/30 bg-white/15 px-3 py-2 text-xs text-white placeholder-white/60 backdrop-blur md:w-80"
+          />
+          <button
+            onClick={() => { navigator.clipboard.writeText(referralLink); setCopied(true); setTimeout(() => setCopied(false), 1500); }}
+            className="rounded-lg bg-white px-4 py-2 text-xs font-bold text-[#0f6b60] shadow transition hover:scale-[1.03] active:scale-95"
+          >
+            {copied ? "✓ Copied" : "Copy"}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -315,42 +327,64 @@ function Dashboard() {
         {currentTab === "dashboard" && (
           <>
             {/* Small stat pills */}
-            <div className="flex justify-center gap-3">
-              <Link to="/tickets" className="bg-[#1a8a7d] text-white text-xs font-semibold px-4 py-2 rounded flex items-center gap-2">✉️ 0</Link>
-              <Link to="/withdraw" className="bg-[#1a1c3a] text-white text-xs font-semibold px-4 py-2 rounded flex items-center gap-2">💳</Link>
-              <Link to="/promocode" className="bg-[#1a8a7d] text-white text-xs font-semibold px-4 py-2 rounded flex items-center gap-2">🎁 {fmtPoints(profile.points_balance)}</Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link to="/tickets" className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#1a1c3a] shadow-sm ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-md">✉️ Support</Link>
+              <Link to="/withdraw" className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#1a1c3a] shadow-sm ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-md">💳 Withdraw</Link>
+              <Link to="/promocode" className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#e8734a] to-[#f59e0b] px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">🎁 {fmtPoints(profile.points_balance)} pts</Link>
             </div>
 
             {/* Quick tiles */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               {quickTiles.map((t) => (
-                <Link key={t.label} to={t.to} search={(t as any).search} className="bg-white rounded-lg py-6 text-center shadow-sm hover:shadow-md transition">
-                  <div className="text-3xl">{t.icon}</div>
-                  <div className="mt-2 font-bold text-sm text-[#1a1c3a]">{t.label}</div>
+                <Link
+                  key={t.label}
+                  to={t.to}
+                  search={(t as any).search}
+                  className="group relative overflow-hidden rounded-2xl bg-white py-6 text-center shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${t.ring}`} />
+                  <div className={`mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${t.ring} text-2xl shadow-inner transition group-hover:scale-110`}>
+                    {t.icon}
+                  </div>
+                  <div className="mt-2 text-sm font-bold text-[#1a1c3a]">{t.label}</div>
                 </Link>
               ))}
             </div>
 
             {/* Balance cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               {balCards.map((c) => (
-                <div key={c.label} className={`${c.bg} text-white rounded-lg p-4`}>
-                  <div className="text-xs opacity-85">{c.label}</div>
-                  <div className="text-2xl font-extrabold mt-2">{c.val}</div>
+                <div
+                  key={c.label}
+                  className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${c.bg} p-4 text-white shadow-md transition hover:-translate-y-1 hover:shadow-xl`}
+                >
+                  <div className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-white/15 blur-xl" />
+                  <div className="flex items-center justify-between">
+                    <div className="text-[11px] font-medium uppercase tracking-wide opacity-90">{c.label}</div>
+                    <div className="text-lg opacity-90">{c.icon}</div>
+                  </div>
+                  <div className="mt-3 text-2xl font-extrabold">{c.val}</div>
                 </div>
               ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="bg-[#1a8a7d] text-white rounded-lg p-4">
-                <div className="text-xs opacity-85">Refral Added</div>
-                <div className="text-2xl font-extrabold mt-2">{referralCount}</div>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              <div className="flex items-center gap-4 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1a8a7d]/10 text-2xl">👥</div>
+                <div>
+                  <div className="text-xs text-gray-500">Referrals Added</div>
+                  <div className="text-2xl font-extrabold text-[#1a1c3a]">{referralCount}</div>
+                </div>
               </div>
-              <div className="bg-[#2563eb] text-white rounded-lg p-4">
-                <div className="text-xs opacity-85">Total Withdraw</div>
-                <div className="text-2xl font-extrabold mt-2">{fmtMoney(totalWithdraw, cur)}</div>
+              <div className="flex items-center gap-4 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2563eb]/10 text-2xl">🏦</div>
+                <div>
+                  <div className="text-xs text-gray-500">Total Withdrawn</div>
+                  <div className="text-2xl font-extrabold text-[#1a1c3a]">{fmtMoney(totalWithdraw, cur)}</div>
+                </div>
               </div>
             </div>
+
 
             {/* Main Tabs */}
             <div className="bg-white rounded-lg">
