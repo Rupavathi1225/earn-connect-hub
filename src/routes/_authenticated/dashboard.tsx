@@ -272,18 +272,19 @@ function Dashboard() {
   }
 
   const quickTiles = [
-    { to: "/surveys", label: "Daily Surveys", icon: "📋" },
-    { to: "/referrals", label: "Refer a Friends", icon: "👥" },
-    { to: "/withdraw", label: "Withdraw Cash", icon: "🏦" },
-    { to: "/dashboard", search: { tab: "convert_pts" }, label: "Convert Points", icon: "💱" },
+    { to: "/surveys", label: "Daily Surveys", icon: "📋", ring: "from-[#1a8a7d] to-[#34d399]" },
+    { to: "/referrals", label: "Refer a Friend", icon: "👥", ring: "from-[#6366f1] to-[#a855f7]" },
+    { to: "/withdraw", label: "Withdraw Cash", icon: "🏦", ring: "from-[#e8734a] to-[#f59e0b]" },
+    { to: "/dashboard", search: { tab: "convert_pts" }, label: "Convert Points", icon: "💱", ring: "from-[#2563eb] to-[#38bdf8]" },
   ] as const;
 
   const balCards = [
-    { label: "Cash Balance", val: fmtMoney(Number(profile.cash_balance), cur), bg: "bg-[#1a8a7d]" },
-    { label: "Points Balance", val: fmtPoints(profile.points_balance), bg: "bg-[#2563eb]" },
-    { label: "Locked Balance", val: fmtPoints(Number(profile.locked_balance)), bg: "bg-[#1a1c3a]" },
-    { label: "Referral Earning", val: fmtPoints(referralEarned), bg: "bg-[#1a1c3a]" },
+    { label: "Cash Balance", val: fmtMoney(Number(profile.cash_balance), cur), icon: "💵", bg: "from-[#0f766e] via-[#1a8a7d] to-[#34d399]" },
+    { label: "Points Balance", val: fmtPoints(profile.points_balance), icon: "⭐", bg: "from-[#1d4ed8] via-[#2563eb] to-[#38bdf8]" },
+    { label: "Locked Balance", val: fmtPoints(Number(profile.locked_balance)), icon: "🔒", bg: "from-[#1a1c3a] via-[#2d2f5c] to-[#4c4f8a]" },
+    { label: "Referral Earning", val: fmtPoints(referralEarned), icon: "🎁", bg: "from-[#7c2d12] via-[#c2410c] to-[#f59e0b]" },
   ];
+
 
   const COUNTRIES = ["India","United States","United Kingdom","Canada","Australia","Germany","France","Spain","Italy","Netherlands","Brazil","Mexico","Argentina","United Arab Emirates","Saudi Arabia","Singapore","Malaysia","Indonesia","Philippines","Vietnam","Thailand","Japan","South Korea","China","Hong Kong","Taiwan","Pakistan","Bangladesh","Sri Lanka","Nepal","Turkey","South Africa","Nigeria","Kenya","Egypt","Russia","Ukraine","Poland","Sweden","Norway","Denmark","Finland","Ireland","Portugal","Greece","Switzerland","Belgium","Austria","New Zealand","Other"];
 
