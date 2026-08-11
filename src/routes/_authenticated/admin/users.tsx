@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
   beforeLoad: async ({ context }) => {
     await guardAdminPanel(context.user.id);
   },
-  head: () => ({ meta: [{ title: "Users — Admin — PrimePath Services" }, { name: "description", content: "Manage users." }] }),
+  head: () => ({ meta: [{ title: "Users — Admin — Global Prime" }, { name: "description", content: "Manage users." }] }),
   component: Users,
 });
 

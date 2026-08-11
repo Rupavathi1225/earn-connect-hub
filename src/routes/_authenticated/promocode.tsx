@@ -3,7 +3,7 @@ import { useState } from "react";
 import { redeemPromocode } from "@/lib/rewards.functions";
 
 export const Route = createFileRoute("/_authenticated/promocode")({
-  head: () => ({ meta: [{ title: "Promo Code — PrimePath Services" }, { name: "description", content: "Redeem promo codes." }] }),
+  head: () => ({ meta: [{ title: "Promo Code — Global Prime" }, { name: "description", content: "Redeem promo codes." }] }),
   component: P,
 });
 

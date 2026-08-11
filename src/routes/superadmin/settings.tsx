@@ -15,7 +15,7 @@ import {
 export const Route = createFileRoute("/superadmin/settings")({
   head: () => ({
     meta: [
-      { title: "Global Settings · Super Admin · PrimePath Services" },
+      { title: "Global Settings · Super Admin · Global Prime" },
       { name: "description", content: "Manage system wide configuration and points values." },
       { name: "robots", content: "noindex" },
     ],

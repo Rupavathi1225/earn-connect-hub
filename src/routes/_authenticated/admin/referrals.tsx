@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_authenticated/admin/referrals")({
   beforeLoad: async ({ context }) => {
     await guardAdminPanel(context.user.id);
   },
-  head: () => ({ meta: [{ title: "Referrals — Admin — PrimePath Services" }, { name: "description", content: "Manage referrals." }] }),
+  head: () => ({ meta: [{ title: "Referrals — Admin — Global Prime" }, { name: "description", content: "Manage referrals." }] }),
   component: AdminReferrals,
 });
 

@@ -6,7 +6,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { TicketChat } from "@/components/TicketChat";
 
 export const Route = createFileRoute("/_authenticated/tickets")({
-  head: () => ({ meta: [{ title: "Support — PrimePath Services" }, { name: "description", content: "Raise a support ticket." }] }),
+  head: () => ({ meta: [{ title: "Support — Global Prime" }, { name: "description", content: "Raise a support ticket." }] }),
   component: TicketsPage,
 });
 

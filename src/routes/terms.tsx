@@ -3,8 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms & Conditions — PrimePath Services" },
-      { name: "description", content: "Read the PrimePath Services Terms & Conditions." },
+      { title: "Terms & Conditions — Global Prime" },
+      { name: "description", content: "Read the Global Prime Terms & Conditions." },
     ],
   }),
   component: Terms,
@@ -15,7 +15,7 @@ function Terms() {
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-[#1a1c3a]">Terms &amp; Conditions</h1>
       <p className="mt-4 text-sm text-gray-600">
-        Welcome to PrimePath Services. By using our platform, you agree to the following terms and conditions.
+        Welcome to Global Prime. By using our platform, you agree to the following terms and conditions.
       </p>
       <section className="mt-6 space-y-4 text-sm text-gray-700">
         <div>

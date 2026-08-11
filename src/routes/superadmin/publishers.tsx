@@ -6,7 +6,7 @@ import { fmtDate } from "@/lib/format";
 export const Route = createFileRoute("/superadmin/publishers")({
   head: () => ({
     meta: [
-      { title: "Publishers · Super Admin · PrimePath Services" },
+      { title: "Publishers · Super Admin · Global Prime" },
       { name: "description", content: "Manage publisher accounts, traffic and revenue across the network." },
       { property: "og:title", content: "Publishers · Super Admin" },
       { property: "og:description", content: "Publisher accounts, clicks, conversions and revenue." },

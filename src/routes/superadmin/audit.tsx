@@ -7,7 +7,7 @@ import { fmtDate } from "@/lib/format";
 export const Route = createFileRoute("/superadmin/audit")({
   head: () => ({
     meta: [
-      { title: "Audit Trail · Super Admin · PrimePath Services" },
+      { title: "Audit Trail · Super Admin · Global Prime" },
       { name: "description", content: "Every privileged change made on the platform with before and after values." },
       { property: "og:title", content: "Audit Trail · Super Admin" },
       { property: "og:description", content: "Immutable record of privileged platform changes." },
