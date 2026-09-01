@@ -18,9 +18,22 @@ function OfferwallsPage() {
   }, []);
 
   function open(o: OW) {
-    const url = o.url_template.replaceAll("{user_id}", user.id);
+    let tpl = (o.url_template || "").trim();
+    // Admin may have pasted a full <iframe ...> snippet — pull the src out of it
+    const m = tpl.match(/src\s*=\s*["']([^"']+)["']/i);
+    if (m) tpl = m[1];
+    const url = tpl
+      .replaceAll("{user_id}", user.id)
+      .replaceAll("{USER_ID}", user.id)
+      .replaceAll("%7Buser_id%7D", user.id)
+      .replaceAll("%7BUSER_ID%7D", user.id);
+    if (!/^https?:\/\//i.test(url)) {
+      alert("This offerwall URL is not configured correctly. Please contact support.");
+      return;
+    }
     window.open(url, "_blank", "noopener,noreferrer");
   }
+
 
   return (
     <div>
