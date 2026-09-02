@@ -17,16 +17,25 @@ function OfferwallsPage() {
     supabase.from("offerwalls").select("id,provider,display_name,url_template,logo_url,description").eq("active", true).then(({ data }) => setItems((data ?? []) as OW[]));
   }, []);
 
-  function open(o: OW) {
+  async function open(o: OW) {
     let tpl = (o.url_template || "").trim();
     // Admin may have pasted a full <iframe ...> snippet — pull the src out of it
     const m = tpl.match(/src\s*=\s*["']([^"']+)["']/i);
     if (m) tpl = m[1];
-    const url = tpl
+    let url = tpl
       .replaceAll("{user_id}", user.id)
       .replaceAll("{USER_ID}", user.id)
       .replaceAll("%7Buser_id%7D", user.id)
       .replaceAll("%7BUSER_ID%7D", user.id);
+    // Server-side macros (e.g. CPX secure_hash) must be signed on the server
+    if (url.includes("{secure_hash}")) {
+      const { url: signed } = await getSignedWallUrl({ data: { offerwallId: o.id } });
+      if (!signed) {
+        alert("This offerwall is not configured correctly. Please contact support.");
+        return;
+      }
+      url = signed.replaceAll("{user_id}", user.id).replaceAll("{USER_ID}", user.id);
+    }
     if (!/^https?:\/\//i.test(url)) {
       alert("This offerwall URL is not configured correctly. Please contact support.");
       return;
