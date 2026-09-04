@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSignedWallUrl } from "@/lib/offerwall.functions";
+import { wallLogo } from "@/lib/logos";
 
 export const Route = createFileRoute("/_authenticated/offerwalls")({
   head: () => ({ meta: [{ title: "Offer Walls — Global Prime" }, { name: "description", content: "Complete offers from top providers." }] }),
@@ -51,7 +52,7 @@ function OfferwallsPage() {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {items.map((o) => (
           <div key={o.id} className="bg-white rounded-lg p-4 text-center shadow-sm hover:shadow-md transition">
-            {o.logo_url ? <img src={o.logo_url} alt={o.display_name} className="w-16 h-16 mx-auto object-contain" /> : <div className="w-16 h-16 mx-auto rounded-full bg-[#1a1c3a] text-white flex items-center justify-center font-bold">{o.display_name[0]}</div>}
+            {wallLogo(o.logo_url, o.url_template) ? <img src={wallLogo(o.logo_url, o.url_template)!} alt={`${o.display_name} logo`} loading="lazy" className="w-16 h-16 mx-auto object-contain" /> : <div className="w-16 h-16 mx-auto rounded-full bg-[#1a1c3a] text-white flex items-center justify-center font-bold">{o.display_name[0]}</div>}
             <div className="mt-2 font-bold text-sm">{o.display_name}</div>
             {o.description && <div className="text-xs text-gray-500 line-clamp-2 mt-1">{o.description}</div>}
             <button onClick={() => open(o)} className="mt-3 w-full bg-[#5a3dba] hover:bg-[#4a2fa8] text-white text-xs font-semibold py-2 rounded">
