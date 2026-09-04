@@ -6,6 +6,7 @@ import { fmtMoney, fmtPoints, fmtDate } from "@/lib/format";
 import { RightSidebar } from "@/components/RightSidebar";
 import { convertPointsToCash, convertCashToPoints } from "@/lib/rewards.functions";
 import { StatusBadge } from "@/components/StatusBadge";
+import { wallLogo } from "@/lib/logos";
 
 const dashboardSearchSchema = z.object({
   tab: z.enum([
