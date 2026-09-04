@@ -1,3 +1,4 @@
+import { WallLogo } from "@/components/WallLogo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -30,7 +31,16 @@ const balances = [
 ];
 
 const surveys = ["ROM Survey IN", "PollReach", "MYPINIO", "Crunchyroll", "Amazon Music"];
-const offerwalls = ["CPX Research", "BitLabs", "Pollfish", "AdscendMedia", "Lootably", "Monlix", "GemiAds", "PrimeWall"];
+const offerwalls: Array<{ name: string; provider: string }> = [
+  { name: "CPX Research", provider: "cpx_research" },
+  { name: "BitLabs", provider: "bitlabs" },
+  { name: "Pollfish", provider: "pollfish" },
+  { name: "AdscendMedia", provider: "adscend" },
+  { name: "Lootably", provider: "lootably" },
+  { name: "Monlix", provider: "monlix" },
+  { name: "GemiAds", provider: "gemiads" },
+  { name: "PrimeWall", provider: "primewall" },
+];
 const payouts = [
   { icon: "🇮🇳", name: "UPI" },
   { icon: "📱", name: "Paytm" },
@@ -148,11 +158,11 @@ function Landing() {
             <p className="mt-1 text-sm text-gray-500">Trusted providers, thousands of offers.</p>
             <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
               {offerwalls.map((o) => (
-                <div key={o} className="rounded-lg border border-gray-100 bg-[#f0f2f5] p-3 text-center">
-                  <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#1a1c3a] text-sm font-bold text-white">
-                    {o[0]}
+                <div key={o.provider} className="rounded-lg border border-gray-100 bg-[#f0f2f5] p-3 text-center">
+                  <div className="mx-auto flex h-9 w-9 items-center justify-center">
+                    <WallLogo name={o.name} provider={o.provider} className="h-9 w-9" />
                   </div>
-                  <div className="mt-2 text-[11px] font-semibold">{o}</div>
+                  <div className="mt-2 text-[11px] font-semibold">{o.name}</div>
                 </div>
               ))}
             </div>
