@@ -29,6 +29,7 @@ export function ChatFeed({ compact = false }: { compact?: boolean }) {
 
   const iconFor = (t: string) => {
     if (t === "user_joined") return "👋";
+    if (t === "user_login") return "🟢";
     if (t === "survey_completed") return "✅";
     if (t === "points_earned") return "💰";
     if (t === "withdrawal_requested") return "💸";

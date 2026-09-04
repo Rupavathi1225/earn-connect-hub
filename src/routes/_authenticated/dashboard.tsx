@@ -795,22 +795,31 @@ function Dashboard() {
 }
 
 function OfferwallsPreview() {
-  const [items, setItems] = useState<Array<{ id: string; display_name: string; url_template: string }>>([]);
+  const [items, setItems] = useState<Array<{ id: string; display_name: string; url_template: string; logo_url: string | null }>>([]);
   useEffect(() => {
-    supabase.from("offerwalls").select("id,display_name,url_template").eq("active", true).limit(16).then(({ data }) => setItems((data ?? []) as any));
+    supabase.from("offerwalls").select("id,display_name,url_template,logo_url").eq("active", true).limit(16).then(({ data }) => setItems((data ?? []) as any));
   }, []);
   return (
     <div className="bg-[#1a1c3a] text-white rounded-lg p-4">
       <div className="font-bold text-lg mb-1">Offerwalls</div>
       <p className="text-xs text-white/70 mb-4">We only work with Trusted and Genuine Market Researchers. We Don't work with fake or obscure offerwalls.</p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {items.map((o) => (
-          <a key={o.id} href={o.url_template} target="_blank" rel="noreferrer" className="bg-white text-[#1a1c3a] rounded-lg py-6 text-center font-bold text-sm hover:shadow-md transition">
-            {o.display_name}
-          </a>
-        ))}
+        {items.map((o) => {
+          const logo = wallLogo(o.logo_url, o.url_template);
+          return (
+            <a key={o.id} href={o.url_template} target="_blank" rel="noreferrer" className="bg-white text-[#1a1c3a] rounded-lg py-5 px-2 text-center font-bold text-sm hover:shadow-md transition flex flex-col items-center gap-2">
+              {logo ? (
+                <img src={logo} alt={`${o.display_name} logo`} loading="lazy" className="h-10 w-10 object-contain rounded" />
+              ) : (
+                <span className="h-10 w-10 rounded-full bg-[#1a1c3a] text-white flex items-center justify-center">{o.display_name[0]}</span>
+              )}
+              <span>{o.display_name}</span>
+            </a>
+          );
+        })}
         {items.length === 0 && <div className="col-span-full text-xs text-white/50 text-center py-4">No offerwalls configured.</div>}
       </div>
     </div>
   );
 }
+
