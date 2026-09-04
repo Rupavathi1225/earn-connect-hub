@@ -1647,6 +1647,7 @@ export type Database = {
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
       is_super_admin: { Args: { _user_id: string }; Returns: boolean }
+      log_login_event: { Args: never; Returns: undefined }
       release_locked_fund: { Args: { _id: string }; Returns: undefined }
     }
     Enums: {
