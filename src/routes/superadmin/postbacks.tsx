@@ -56,7 +56,7 @@ function OfferwallPostbacks() {
       )}
 
       {list.map((o) => {
-        const postbackUrl = `${origin}/api/postback/${o.provider}`;
+        const postbackUrl = `${origin}/api/public/postback/${o.provider}?user_id={user_id}&points={points}&tx_id={transaction_id}&sig={signature}`;
         const iframeEmbed = `<iframe src="${o.iframe_url || o.url_template || ""}" width="100%" height="600" frameborder="0"></iframe>`;
 
         return (
