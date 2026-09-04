@@ -1657,6 +1657,7 @@ export type Database = {
         | "points_earned"
         | "withdrawal_requested"
         | "withdrawal_approved"
+        | "user_login"
       currency_type: "INR" | "USD"
       lock_status: "locked" | "released"
       ticket_priority: "low" | "medium" | "high"
@@ -1796,6 +1797,7 @@ export const Constants = {
         "points_earned",
         "withdrawal_requested",
         "withdrawal_approved",
+        "user_login",
       ],
       currency_type: ["INR", "USD"],
       lock_status: ["locked", "released"],
