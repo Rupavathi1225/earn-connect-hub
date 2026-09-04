@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSignedWallUrl } from "@/lib/offerwall.functions";
-import { wallLogo } from "@/lib/logos";
+import { WallLogo } from "@/components/WallLogo";
 
 export const Route = createFileRoute("/_authenticated/offerwalls")({
   head: () => ({ meta: [{ title: "Offer Walls — Global Prime" }, { name: "description", content: "Complete offers from top providers." }] }),
