@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { getSignedWallUrl } from "@/lib/offerwall.functions";
 import { WallLogo } from "@/components/WallLogo";
-import { toast } from "sonner";
+import { openWall, wallNotReady } from "@/lib/openWall";
 
 export const Route = createFileRoute("/_authenticated/offerwalls")({
   head: () => ({ meta: [{ title: "Offer Walls — Global Prime" }, { name: "description", content: "Complete offers from top providers." }] }),
@@ -20,47 +19,8 @@ function OfferwallsPage() {
     supabase.from("offerwalls").select("id,provider,display_name,url_template,logo_url,description").eq("active", true).then(({ data }) => setItems((data ?? []) as OW[]));
   }, []);
 
-  function cleanTemplate(o: OW) {
-    let tpl = (o.url_template || "").trim();
-    const m = tpl.match(/src\s*=\s*["']([^"']+)["']/i);
-    if (m) tpl = m[1];
-    return tpl;
-  }
+  const ready = items.filter((o) => !wallNotReady(o));
 
-  /** A wall is unusable while its link still holds setup placeholders. */
-  function notReady(o: OW) {
-    const tpl = cleanTemplate(o);
-    if (!/^https?:\/\//i.test(tpl)) return true;
-    return /YOUR[_A-Z]*|PLACEMENT_ID|\bYOUR\b/i.test(tpl.replace(/\{[^}]+\}/g, ""));
-  }
-
-  async function open(o: OW) {
-    // Open the tab synchronously so browsers don't treat it as a blocked popup
-    const win = window.open("about:blank", "_blank", "noopener,noreferrer");
-    let url = cleanTemplate(o)
-      .replaceAll("{user_id}", user.id)
-      .replaceAll("{USER_ID}", user.id)
-      .replaceAll("%7Buser_id%7D", user.id)
-      .replaceAll("%7BUSER_ID%7D", user.id);
-    // Server-side macros (e.g. CPX secure_hash) must be signed on the server
-    if (url.includes("{secure_hash}")) {
-      const res = await getSignedWallUrl({ data: { offerwallId: o.id } }).catch(() => null);
-      const signed = res?.url;
-      if (!signed) {
-        win?.close();
-        toast.error("This offer wall isn't set up yet. Please try another one.");
-        return;
-      }
-      url = signed.replaceAll("{user_id}", user.id).replaceAll("{USER_ID}", user.id);
-    }
-    if (!/^https?:\/\//i.test(url)) {
-      win?.close();
-      toast.error("This offer wall isn't set up yet. Please try another one.");
-      return;
-    }
-    if (win) win.location.replace(url);
-    else window.location.href = url;
-  }
 
 
   return (
