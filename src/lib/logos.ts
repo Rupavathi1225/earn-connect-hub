@@ -50,8 +50,9 @@ export function wallLogoCandidates(
   if (logoUrl && logoUrl.trim()) out.push(logoUrl.trim());
   const domain = wallDomain(provider, urlTemplate);
   if (domain) {
-    out.push(`https://icons.duckduckgo.com/ip3/${domain}.ico`);
     out.push(`https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=128`);
+    out.push(`https://logo.clearbit.com/${domain}`);
+    out.push(`https://icons.duckduckgo.com/ip3/${domain}.ico`);
   }
   return out;
 }
