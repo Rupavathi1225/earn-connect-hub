@@ -223,7 +223,7 @@ function Layout() {
           </button>
         </div>
       </aside>
-      <main className="flex-1 overflow-y-auto p-4">
+      <main className="flex-1 min-w-0 overflow-y-auto p-3 pt-16 sm:p-4 sm:pt-16 lg:pt-4">
         <Outlet />
       </main>
     </div>
