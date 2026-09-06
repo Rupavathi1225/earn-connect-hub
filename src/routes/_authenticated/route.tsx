@@ -109,9 +109,55 @@ function Layout() {
   const inAdmin = path.startsWith("/admin");
   const links = inAdmin ? adminLinks : userLinks;
 
+  const [navOpen, setNavOpen] = useState(false);
+
+  // Close the mobile drawer whenever the route changes
+  useEffect(() => {
+    setNavOpen(false);
+    setOpenMenu(null);
+  }, [path]);
+
   return (
     <div className="flex min-h-screen bg-[#f0f2f5]">
-      <aside className="w-56 bg-[#1a1c3a] text-white flex flex-col shrink-0">
+      {/* Mobile top bar */}
+      <div className="fixed inset-x-0 top-0 z-40 flex items-center gap-3 bg-[#1a1c3a] px-4 py-3 text-white lg:hidden">
+        <button
+          onClick={() => setNavOpen(true)}
+          aria-label="Open menu"
+          className="flex h-9 w-9 items-center justify-center rounded-md bg-white/10 text-lg"
+        >
+          ☰
+        </button>
+        <div className="text-sm font-extrabold tracking-wider">GLOBAL PRIME</div>
+        <div className="ml-auto truncate text-[11px] text-[#b0b3c5]">{profile?.name ?? user.email}</div>
+      </div>
+
+      {/* Backdrop for mobile drawer */}
+      {navOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+          onClick={() => setNavOpen(false)}
+        />
+      )}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-[#1a1c3a] text-white transition-transform duration-200 lg:static lg:z-auto lg:w-56 lg:shrink-0 lg:translate-x-0 ${
+          navOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="p-4 border-b border-white/10 flex items-center justify-between">
+          <div className="text-center flex-1">
+            <div className="text-lg font-extrabold tracking-wider">GLOBAL PRIME</div>
+            <div className="text-[10px] italic text-[#f59e0b]">Earn. Complete. Withdraw.</div>
+          </div>
+          <button
+            onClick={() => setNavOpen(false)}
+            aria-label="Close menu"
+            className="ml-2 flex h-8 w-8 items-center justify-center rounded-md bg-white/10 text-sm lg:hidden"
+          >
+            ✕
+          </button>
+        </div>
         <div className="p-4 border-b border-white/10 text-center">
           <div className="text-lg font-extrabold tracking-wider">GLOBAL PRIME</div>
           <div className="text-[10px] italic text-[#f59e0b]">Earn. Complete. Withdraw.</div>
