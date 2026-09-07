@@ -96,6 +96,9 @@ function SurveysPage() {
             ))}
           </div>
         )}
+        <div className="mt-4 lg:hidden">
+          <ChatFeed compact />
+        </div>
       </div>
       <div className="hidden lg:block">
         <RightSidebar />
