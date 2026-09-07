@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { RightSidebar } from "@/components/RightSidebar";
+import { ChatFeed } from "@/components/ChatFeed";
 
 export const Route = createFileRoute("/_authenticated/surveys")({
   head: () => ({ meta: [{ title: "Daily Surveys — Global Prime" }, { name: "description", content: "Complete daily surveys and earn points." }] }),
