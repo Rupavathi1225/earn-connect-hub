@@ -64,16 +64,29 @@ export function ChatFeed({ compact = false }: { compact?: boolean }) {
     void load();
 
     // Live stream of new events
-    const ch = supabase
-      .channel("chat_feed_stream")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat_feed" }, (payload) => {
-        setItems((cur) => mergeFeed(cur, [payload.new as FeedItem]));
-        setNow(Date.now());
-      })
-      .subscribe((status) => {
-        // If the live connection (re)opens, catch up on anything we may have missed
-        if (status === "SUBSCRIBED") void load();
-      });
+    let ch = undefined as any;
+    try {
+      // Use a unique channel name so repeated mounts / HMR won't try to re-use
+      // an already-subscribed channel and cause `postgres_changes` to be added
+      // after subscribe (which throws in the realtime client).
+      const channelName = `chat_feed_stream_${Math.floor(Math.random() * 1e9)}`;
+      ch = supabase
+        .channel(channelName)
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat_feed" }, (payload) => {
+          setItems((cur) => mergeFeed(cur, [payload.new as FeedItem]));
+          setNow(Date.now());
+        })
+        .subscribe((status) => {
+          // If the live connection (re)opens, catch up on anything we may have missed
+          if (status === "SUBSCRIBED") void load();
+        });
+    } catch (err) {
+      // Defensive: log the error but don't let the whole UI crash. Polling will
+      // still keep the feed reasonably fresh.
+      // eslint-disable-next-line no-console
+      console.error("ChatFeed realtime subscription failed:", err);
+      ch = undefined;
+    }
 
     // Safety net: poll in case the live connection is blocked or drops silently
     const poll = setInterval(() => void load(), POLL_MS);
