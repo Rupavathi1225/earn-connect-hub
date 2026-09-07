@@ -4,6 +4,7 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { fmtMoney, fmtPoints, fmtDate } from "@/lib/format";
 import { RightSidebar } from "@/components/RightSidebar";
+import { ChatFeed } from "@/components/ChatFeed";
 import { convertPointsToCash, convertCashToPoints } from "@/lib/rewards.functions";
 import { StatusBadge } from "@/components/StatusBadge";
 import { WallLogo } from "@/components/WallLogo";
@@ -787,6 +788,9 @@ function Dashboard() {
             </div>
           </div>
         )}
+        <div className="mt-4 lg:hidden">
+          <ChatFeed compact />
+        </div>
       </div>
 
       <div className="hidden lg:block">
