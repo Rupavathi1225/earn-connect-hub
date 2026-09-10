@@ -27,7 +27,18 @@ export function wallNotReady(o: Pick<WallLike, "url_template">): boolean {
 
 /** Opens the wall in a new tab with the user id (and any server-signed hash) filled in. */
 export async function openWall(o: WallLike, userId: string) {
-  const win = window.open("about:blank", "_blank", "noopener,noreferrer");
+  // Open a blank tab synchronously. Don't pass `noopener` here so we keep a
+  // usable window reference for later navigation (some browsers return null
+  // when `noopener` is used). Immediately null out `opener` to avoid exposing
+  // the originating window.
+  const win = window.open("about:blank", "_blank");
+  if (win) {
+    try {
+      win.opener = null;
+    } catch (e) {
+      // ignore if setting opener is disallowed
+    }
+  }
   let url = cleanTemplate(o)
     .replaceAll("{user_id}", userId)
     .replaceAll("{USER_ID}", userId)
@@ -51,6 +62,12 @@ export async function openWall(o: WallLike, userId: string) {
     return;
   }
 
-  if (win) win.location.replace(url);
-  else window.location.href = url;
+  try {
+    if (win) win.location.replace(url);
+    else window.location.href = url;
+  } catch (e) {
+    // If navigating the opened window fails for some reason, fallback to
+    // opening the URL directly (will create a new tab/window).
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 }
